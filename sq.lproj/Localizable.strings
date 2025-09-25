@@ -1,0 +1,75 @@
+"app_name" = "Kurani";
+"tabs.library" = "Suret";
+"tabs.notes" = "Shënimet e mia";
+"tabs.settings" = "Cilësimet";
+
+"action.ok" = "U krye";
+"action.cancel" = "Anulo";
+"action.back" = "Mbrapa";
+"action.next" = "Tjetra";
+"action.skip" = "Kalo";
+"action.continue" = "Vazhdo";
+"action.search" = "Kërko";
+"action.copy" = "Kopjo";
+"action.share" = "Ndaj";
+"action.edit" = "Ndrysho";
+"action.add" = "Shto";
+"action.signin" = "Hyr";
+"action.signout" = "Dil";
+
+"library.search.placeholder" = "Kërko sure…";
+"library.lastread" = "Leximi i fundit";
+"library.continueReading" = "Vazhdo leximin";
+"library.surah" = "Sure";
+"library.ayahs" = "ajete";
+
+"reader.title.compact" = "%d • %@";
+"reader.textSize" = "Madhësia e tekstit";
+"reader.lineSpacing" = "Hapësira ndër rreshta";
+"reader.progress" = "%ld / %ld";
+"reader.note.add" = "Shkruaj shënim";
+"reader.note.edit" = "Ndrysho shënimin";
+"reader.note.saved" = "Shënimi u ruajt";
+
+"notes.title" = "Shënimet e mia";
+"notes.empty" = "S’ka shënime ende";
+"notes.signinRequired" = "Për të parë shënimet, hyni në llogari.";
+
+"settings.title" = "Cilësimet";
+"settings.signin" = "Hyr në llogari";
+"settings.signout" = "Dil nga llogaria";
+"settings.account" = "Llogaria";
+"settings.translation" = "Përkthimi (shqip)";
+"settings.import" = "Importo përkthimin";
+"settings.import.success" = "Përkthimi u importua";
+"settings.import.invalid" = "Skedari i pavlefshëm";
+"settings.about" = "Rreth aplikacionit";
+
+"notes.lastUpdated" = "Përditësuar: %@";
+"notes.section" = "Sure %@";
+"notes.openReader" = "Hap leximin";
+"notes.signInPrompt" = "Për të ruajtur shënime, fillimisht hyni.";
+"signin.apple" = "Hyr me Apple";
+"signin.email" = "Dërgo lidhje me email";
+"signin.email.placeholder" = "Adresa juaj e emailit";
+"signin.email.sent" = "Kontrolloni emailin për lidhjen e hyrjes.";
+"signin.required" = "Kjo veçori kërkon hyrje.";
+"toast.importing" = "Po importohet…";
+"toast.error" = "Ndodhi një gabim";
+"toast.success" = "U ruajt me sukses";
+"reader.notesButton" = "Shënimet e mia";
+"reader.font.increase" = "Rrite tekstin";
+"reader.font.decrease" = "Zvogëlo tekstin";
+"reader.lineSpacing.increase" = "Rrite hapësirën";
+"reader.lineSpacing.decrease" = "Zvogëlo hapësirën";
+"reader.noteBanner" = "Shënim i ruajtur • %@";
+"settings.about.disclaimer" = "Përkthimet e plota mund të jenë të mbrojtura nga të drejtat e autorit. Importoni një skedar JSON të ligjshëm për lexim të plotë.";
+"settings.version" = "Versioni";
+"library.sampleOnly" = "Shembull demonstrues (Sure 1 dhe 112).";
+"notes.loading" = "Po ngarkohet…";
+"notes.noAccess" = "Hyr për të parë shënimet e tua.";
+"reader.share.subject" = "Ajet nga Kurani";
+"reader.copy.confirmation" = "Teksti u kopjua";
+"settings.translation.loaded" = "Përkthimi i ngarkuar";
+"settings.translation.sample" = "Po shfaqet përkthimi i mostrës";
+"reader.jumpLastRead" = "Shko te leximi i fundit";
