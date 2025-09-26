@@ -90,8 +90,8 @@ struct SettingsView: View {
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
-            .onChange(of: viewModel.toast) { _ in
-                guard viewModel.toast != nil else { return }
+            .onChange(of: viewModel.toast) { _, newValue in
+                guard newValue != nil else { return }
                 withAnimation { toastVisible = true }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     withAnimation { toastVisible = false }

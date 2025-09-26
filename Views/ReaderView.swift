@@ -167,8 +167,8 @@ struct ReaderView: View {
                     .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
-        .onChange(of: viewModel.toast) { _ in
-            guard viewModel.toast != nil else { return }
+        .onChange(of: viewModel.toast) { _, newValue in
+            guard newValue != nil else { return }
             withAnimation { showToast = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 withAnimation { showToast = false }
@@ -199,3 +199,4 @@ struct ReaderView: View {
         "\(viewModel.surahTitle) \(ayah.number): \(ayah.text)"
     }
 }
+

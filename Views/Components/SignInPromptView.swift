@@ -84,7 +84,8 @@ struct SignInPromptView: View {
     private func sendMagicLink() async {
         guard !email.isEmpty else { return }
         isSendingEmail = true
-        await authManager.sendMagicLink(email: email)
+        await authManager.sendMagicLink(to: email)
         isSendingEmail = false
     }
 }
+

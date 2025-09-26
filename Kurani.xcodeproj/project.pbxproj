@@ -1,539 +1,539 @@
 // !$*UTF8*$!
 {
-archiveVersion = 1;
-classes = {};
-objectVersion = 56;
-objects = {
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
 
 /* Begin PBXBuildFile section */
-D47AD4DA2A6B02A30000003B /* QuranApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000001D /* QuranApp.swift */; };
-D47AD4DA2A6B02A30000003C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000001E /* Theme.swift */; };
-D47AD4DA2A6B02A30000003D /* TranslationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000001F /* TranslationStore.swift */; };
-D47AD4DA2A6B02A30000003E /* Ayah.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000022 /* Ayah.swift */; };
-D47AD4DA2A6B02A30000003F /* Surah.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000023 /* Surah.swift */; };
-D47AD4DA2A6B02A300000040 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000024 /* Note.swift */; };
-D47AD4DA2A6B02A300000041 /* NotesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000025 /* NotesStore.swift */; };
-D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000026 /* AuthManager.swift */; };
-D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */; };
-D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000028 /* ShareSheet.swift */; };
-D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000029 /* FileIO.swift */; };
-D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002A /* Haptics.swift */; };
-D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */; };
-D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */; };
-D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */; };
-D47AD4DA2A6B02A30000004A /* ReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */; };
-D47AD4DA2A6B02A30000004B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */; };
-D47AD4DA2A6B02A30000004C /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000030 /* ReaderView.swift */; };
-D47AD4DA2A6B02A30000004D /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000031 /* LibraryView.swift */; };
-D47AD4DA2A6B02A30000004E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000032 /* SettingsView.swift */; };
-D47AD4DA2A6B02A30000004F /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */; };
-D47AD4DA2A6B02A300000050 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000034 /* NotesView.swift */; };
-D47AD4DA2A6B02A300000051 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000035 /* RootView.swift */; };
-D47AD4DA2A6B02A300000052 /* SurahRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000036 /* SurahRow.swift */; };
-D47AD4DA2A6B02A300000053 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000037 /* ContentView.swift */; };
-D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */; };
-D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000019 /* Assets.xcassets */; };
-D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
-D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
-D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
-D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D47AD4DA2A6B02A30000005B /* Supabase */; };
+		D47AD4DA2A6B02A30000003B /* QuranApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000001D /* QuranApp.swift */; };
+		D47AD4DA2A6B02A30000003C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000001E /* Theme.swift */; };
+		D47AD4DA2A6B02A30000003D /* TranslationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000001F /* TranslationStore.swift */; };
+		D47AD4DA2A6B02A30000003E /* Ayah.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000022 /* Ayah.swift */; };
+		D47AD4DA2A6B02A30000003F /* Surah.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000023 /* Surah.swift */; };
+		D47AD4DA2A6B02A300000040 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000024 /* Note.swift */; };
+		D47AD4DA2A6B02A300000041 /* NotesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000025 /* NotesStore.swift */; };
+		D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000026 /* AuthManager.swift */; };
+		D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */; };
+		D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000028 /* ShareSheet.swift */; };
+		D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000029 /* FileIO.swift */; };
+		D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002A /* Haptics.swift */; };
+		D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */; };
+		D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */; };
+		D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */; };
+		D47AD4DA2A6B02A30000004A /* ReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */; };
+		D47AD4DA2A6B02A30000004B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */; };
+		D47AD4DA2A6B02A30000004C /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000030 /* ReaderView.swift */; };
+		D47AD4DA2A6B02A30000004D /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000031 /* LibraryView.swift */; };
+		D47AD4DA2A6B02A30000004E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000032 /* SettingsView.swift */; };
+		D47AD4DA2A6B02A30000004F /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */; };
+		D47AD4DA2A6B02A300000050 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000034 /* NotesView.swift */; };
+		D47AD4DA2A6B02A300000051 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000035 /* RootView.swift */; };
+		D47AD4DA2A6B02A300000052 /* SurahRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000036 /* SurahRow.swift */; };
+		D47AD4DA2A6B02A300000053 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000037 /* ContentView.swift */; };
+		D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */; };
+		D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000019 /* Assets.xcassets */; };
+		D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
+		D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
+		D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
+		D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D47AD4DA2A6B02A30000005B /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-D47AD4DA2A6B02A300000019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000001A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000001B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000001C /* Kurani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurani.app; sourceTree = BUILT_PRODUCTS_DIR; };
-D47AD4DA2A6B02A30000001D /* QuranApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranApp.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000001E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000001F /* TranslationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationStore.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000020 /* QuranMeta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuranMeta.json; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000021 /* sample_translation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample_translation.json; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000022 /* Ayah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ayah.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000023 /* Surah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surah.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000024 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000025 /* NotesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesStore.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000026 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000028 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000029 /* FileIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIO.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000002A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKeys.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewModel.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000030 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000031 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000032 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000034 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000035 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000036 /* SurahRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahRow.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000037 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPromptView.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A30000003A /* sq */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sq; path = sq.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000001A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000001B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000001C /* Kurani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurani.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D47AD4DA2A6B02A30000001D /* QuranApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranApp.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000001E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000001F /* TranslationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationStore.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000020 /* QuranMeta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuranMeta.json; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000021 /* sample_translation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample_translation.json; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000022 /* Ayah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ayah.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000023 /* Surah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surah.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000024 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000025 /* NotesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesStore.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000026 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000028 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000029 /* FileIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIO.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000002A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKeys.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewModel.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000030 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000031 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000032 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000034 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000035 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000036 /* SurahRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahRow.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000037 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPromptView.swift; sourceTree = "<group>"; };
+		D47AD4DA2A6B02A30000003A /* sq */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sq; path = sq.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-D47AD4DA2A6B02A30000000A /* Frameworks */ = {
-isa = PBXFrameworksBuildPhase;
-buildActionMask = 2147483647;
-files = (
-D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */,
-);
-runOnlyForDeploymentPostprocessing = 0;
-};
+		D47AD4DA2A6B02A30000000A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-D47AD4DA2A6B02A30000000C = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A30000000D /* App */,
-D47AD4DA2A6B02A300000014 /* Data */,
-D47AD4DA2A6B02A30000000E /* Models */,
-D47AD4DA2A6B02A300000013 /* Supabase */,
-D47AD4DA2A6B02A300000012 /* Utils */,
-D47AD4DA2A6B02A300000011 /* ViewModels */,
-D47AD4DA2A6B02A30000000F /* Views */,
-D47AD4DA2A6B02A300000015 /* Resources */,
-D47AD4DA2A6B02A30000001A /* Config.xcconfig */,
-D47AD4DA2A6B02A300000016 /* Products */,
-);
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A30000000D /* App */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A30000001D /* QuranApp.swift */,
-D47AD4DA2A6B02A30000001E /* Theme.swift */,
-D47AD4DA2A6B02A30000001B /* Info.plist */,
-);
-path = App;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A30000000E /* Models */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A300000022 /* Ayah.swift */,
-D47AD4DA2A6B02A300000023 /* Surah.swift */,
-D47AD4DA2A6B02A300000024 /* Note.swift */,
-);
-path = Models;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A30000000F /* Views */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A300000010 /* Components */,
-D47AD4DA2A6B02A300000037 /* ContentView.swift */,
-D47AD4DA2A6B02A300000035 /* RootView.swift */,
-D47AD4DA2A6B02A300000031 /* LibraryView.swift */,
-D47AD4DA2A6B02A300000030 /* ReaderView.swift */,
-D47AD4DA2A6B02A300000034 /* NotesView.swift */,
-D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */,
-D47AD4DA2A6B02A300000032 /* SettingsView.swift */,
-D47AD4DA2A6B02A300000036 /* SurahRow.swift */,
-);
-path = Views;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A300000010 /* Components */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */,
-);
-path = Components;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A300000011 /* ViewModels */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */,
-D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */,
-D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */,
-D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */,
-);
-path = ViewModels;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A300000012 /* Utils */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A300000028 /* ShareSheet.swift */,
-D47AD4DA2A6B02A300000029 /* FileIO.swift */,
-D47AD4DA2A6B02A30000002A /* Haptics.swift */,
-D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */,
-);
-path = Utils;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A300000013 /* Supabase */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A300000025 /* NotesStore.swift */,
-D47AD4DA2A6B02A300000026 /* AuthManager.swift */,
-D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */,
-);
-path = Supabase;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A300000014 /* Data */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A30000001F /* TranslationStore.swift */,
-D47AD4DA2A6B02A300000020 /* QuranMeta.json */,
-D47AD4DA2A6B02A300000021 /* sample_translation.json */,
-);
-path = Data;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A300000015 /* Resources */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A300000019 /* Assets.xcassets */,
-D47AD4DA2A6B02A300000039 /* Localizable.strings */,
-);
-path = Resources;
-sourceTree = "<group>";
-};
-D47AD4DA2A6B02A300000016 /* Products */ = {
-isa = PBXGroup;
-children = (
-D47AD4DA2A6B02A30000001C /* Kurani.app */,
-);
-name = Products;
-sourceTree = "<group>";
-};
+		D47AD4DA2A6B02A30000000C = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A30000000D /* App */,
+				D47AD4DA2A6B02A300000014 /* Data */,
+				D47AD4DA2A6B02A30000000E /* Models */,
+				D47AD4DA2A6B02A300000013 /* Supabase */,
+				D47AD4DA2A6B02A300000012 /* Utils */,
+				D47AD4DA2A6B02A300000011 /* ViewModels */,
+				D47AD4DA2A6B02A30000000F /* Views */,
+				D47AD4DA2A6B02A300000015 /* Resources */,
+				D47AD4DA2A6B02A30000001A /* Config.xcconfig */,
+				D47AD4DA2A6B02A300000016 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A30000000D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A30000001D /* QuranApp.swift */,
+				D47AD4DA2A6B02A30000001E /* Theme.swift */,
+				D47AD4DA2A6B02A30000001B /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A30000000E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A300000022 /* Ayah.swift */,
+				D47AD4DA2A6B02A300000023 /* Surah.swift */,
+				D47AD4DA2A6B02A300000024 /* Note.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A30000000F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A300000010 /* Components */,
+				D47AD4DA2A6B02A300000037 /* ContentView.swift */,
+				D47AD4DA2A6B02A300000035 /* RootView.swift */,
+				D47AD4DA2A6B02A300000031 /* LibraryView.swift */,
+				D47AD4DA2A6B02A300000030 /* ReaderView.swift */,
+				D47AD4DA2A6B02A300000034 /* NotesView.swift */,
+				D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */,
+				D47AD4DA2A6B02A300000032 /* SettingsView.swift */,
+				D47AD4DA2A6B02A300000036 /* SurahRow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A300000010 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A300000011 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */,
+				D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */,
+				D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */,
+				D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A300000012 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A300000028 /* ShareSheet.swift */,
+				D47AD4DA2A6B02A300000029 /* FileIO.swift */,
+				D47AD4DA2A6B02A30000002A /* Haptics.swift */,
+				D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A300000013 /* Supabase */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A300000025 /* NotesStore.swift */,
+				D47AD4DA2A6B02A300000026 /* AuthManager.swift */,
+				D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */,
+			);
+			path = Supabase;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A300000014 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A30000001F /* TranslationStore.swift */,
+				D47AD4DA2A6B02A300000020 /* QuranMeta.json */,
+				D47AD4DA2A6B02A300000021 /* sample_translation.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A300000015 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A300000019 /* Assets.xcassets */,
+				D47AD4DA2A6B02A300000039 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D47AD4DA2A6B02A300000016 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D47AD4DA2A6B02A30000001C /* Kurani.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-D47AD4DA2A6B02A300000005 /* Kurani */ = {
-isa = PBXNativeTarget;
-buildConfigurationList = D47AD4DA2A6B02A300000006 /* Build configuration list for PBXNativeTarget "Kurani" */;
-buildPhases = (
-D47AD4DA2A6B02A300000009 /* Sources */,
-D47AD4DA2A6B02A30000000A /* Frameworks */,
-D47AD4DA2A6B02A30000000B /* Resources */,
-);
-buildRules = (
-);
-dependencies = (
-);
-name = Kurani;
-packageProductDependencies = (
-D47AD4DA2A6B02A30000005B /* Supabase */,
-);
-productName = Kurani;
-productReference = D47AD4DA2A6B02A30000001C /* Kurani.app */;
-productType = "com.apple.product-type.application";
-};
+		D47AD4DA2A6B02A300000005 /* Kurani */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D47AD4DA2A6B02A300000006 /* Build configuration list for PBXNativeTarget "Kurani" */;
+			buildPhases = (
+				D47AD4DA2A6B02A300000009 /* Sources */,
+				D47AD4DA2A6B02A30000000A /* Frameworks */,
+				D47AD4DA2A6B02A30000000B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Kurani;
+			packageProductDependencies = (
+				D47AD4DA2A6B02A30000005B /* Supabase */,
+			);
+			productName = Kurani;
+			productReference = D47AD4DA2A6B02A30000001C /* Kurani.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-D47AD4DA2A6B02A300000001 /* Project object */ = {
-isa = PBXProject;
-attributes = {
-BuildIndependentTargetsInParallel = YES;
-LastSwiftUpdateCheck = 1500;
-LastUpgradeCheck = 1500;
-};
-buildConfigurationList = D47AD4DA2A6B02A300000002 /* Build configuration list for PBXProject "Kurani" */;
-compatibilityVersion = "Xcode 14.0";
-developmentRegion = sq;
-hasScannedForEncodings = 0;
-knownRegions = (
-en,
-Base,
-sq,
-);
-mainGroup = D47AD4DA2A6B02A30000000C;
-packageReferences = (
-D47AD4DA2A6B02A30000005A /* XCRemoteSwiftPackageReference "supabase-swift" */,
-);
-productRefGroup = D47AD4DA2A6B02A300000016 /* Products */;
-projectDirPath = "";
-projectRoot = "";
-targets = (
-D47AD4DA2A6B02A300000005 /* Kurani */,
-);
-};
+		D47AD4DA2A6B02A300000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = D47AD4DA2A6B02A300000002 /* Build configuration list for PBXProject "Kurani" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = sq;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				sq,
+			);
+			mainGroup = D47AD4DA2A6B02A30000000C;
+			packageReferences = (
+				D47AD4DA2A6B02A30000005A /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			productRefGroup = D47AD4DA2A6B02A300000016 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D47AD4DA2A6B02A300000005 /* Kurani */,
+			);
+		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-D47AD4DA2A6B02A30000000B /* Resources */ = {
-isa = PBXResourcesBuildPhase;
-buildActionMask = 2147483647;
-files = (
-D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
-D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
-D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
-D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
-);
-runOnlyForDeploymentPostprocessing = 0;
-};
+		D47AD4DA2A6B02A30000000B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
+				D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
+				D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
+				D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-D47AD4DA2A6B02A300000009 /* Sources */ = {
-isa = PBXSourcesBuildPhase;
-buildActionMask = 2147483647;
-files = (
-D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */,
-D47AD4DA2A6B02A300000053 /* ContentView.swift in Sources */,
-D47AD4DA2A6B02A300000052 /* SurahRow.swift in Sources */,
-D47AD4DA2A6B02A300000051 /* RootView.swift in Sources */,
-D47AD4DA2A6B02A300000050 /* NotesView.swift in Sources */,
-D47AD4DA2A6B02A30000004F /* NoteEditorView.swift in Sources */,
-D47AD4DA2A6B02A30000004E /* SettingsView.swift in Sources */,
-D47AD4DA2A6B02A30000004D /* LibraryView.swift in Sources */,
-D47AD4DA2A6B02A30000004C /* ReaderView.swift in Sources */,
-D47AD4DA2A6B02A30000004B /* SettingsViewModel.swift in Sources */,
-D47AD4DA2A6B02A30000004A /* ReaderViewModel.swift in Sources */,
-D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */,
-D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */,
-D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */,
-D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
-D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */,
-D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */,
-D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */,
-D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */,
-D47AD4DA2A6B02A300000041 /* NotesStore.swift in Sources */,
-D47AD4DA2A6B02A300000040 /* Note.swift in Sources */,
-D47AD4DA2A6B02A30000003F /* Surah.swift in Sources */,
-D47AD4DA2A6B02A30000003E /* Ayah.swift in Sources */,
-D47AD4DA2A6B02A30000003D /* TranslationStore.swift in Sources */,
-D47AD4DA2A6B02A30000003C /* Theme.swift in Sources */,
-D47AD4DA2A6B02A30000003B /* QuranApp.swift in Sources */,
-);
-runOnlyForDeploymentPostprocessing = 0;
-};
+		D47AD4DA2A6B02A300000009 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */,
+				D47AD4DA2A6B02A300000053 /* ContentView.swift in Sources */,
+				D47AD4DA2A6B02A300000052 /* SurahRow.swift in Sources */,
+				D47AD4DA2A6B02A300000051 /* RootView.swift in Sources */,
+				D47AD4DA2A6B02A300000050 /* NotesView.swift in Sources */,
+				D47AD4DA2A6B02A30000004F /* NoteEditorView.swift in Sources */,
+				D47AD4DA2A6B02A30000004E /* SettingsView.swift in Sources */,
+				D47AD4DA2A6B02A30000004D /* LibraryView.swift in Sources */,
+				D47AD4DA2A6B02A30000004C /* ReaderView.swift in Sources */,
+				D47AD4DA2A6B02A30000004B /* SettingsViewModel.swift in Sources */,
+				D47AD4DA2A6B02A30000004A /* ReaderViewModel.swift in Sources */,
+				D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */,
+				D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */,
+				D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */,
+				D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
+				D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */,
+				D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */,
+				D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */,
+				D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */,
+				D47AD4DA2A6B02A300000041 /* NotesStore.swift in Sources */,
+				D47AD4DA2A6B02A300000040 /* Note.swift in Sources */,
+				D47AD4DA2A6B02A30000003F /* Surah.swift in Sources */,
+				D47AD4DA2A6B02A30000003E /* Ayah.swift in Sources */,
+				D47AD4DA2A6B02A30000003D /* TranslationStore.swift in Sources */,
+				D47AD4DA2A6B02A30000003C /* Theme.swift in Sources */,
+				D47AD4DA2A6B02A30000003B /* QuranApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-D47AD4DA2A6B02A300000039 /* Localizable.strings */ = {
-isa = PBXVariantGroup;
-children = (
-D47AD4DA2A6B02A30000003A /* sq */,
-);
-name = Localizable.strings;
-sourceTree = "<group>";
-};
+		D47AD4DA2A6B02A300000039 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D47AD4DA2A6B02A30000003A /* sq */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-D47AD4DA2A6B02A300000003 /* Debug */ = {
-isa = XCBuildConfiguration;
-buildSettings = {
-ALWAYS_SEARCH_USER_PATHS = NO;
-CLANG_ANALYZER_NONNULL = YES;
-CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-CLANG_ENABLE_MODULES = YES;
-CLANG_ENABLE_OBJC_ARC = YES;
-CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-CLANG_WARN_BOOL_CONVERSION = YES;
-CLANG_WARN_COMMA = YES;
-CLANG_WARN_CONSTANT_CONVERSION = YES;
-CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-CLANG_WARN_EMPTY_BODY = YES;
-CLANG_WARN_ENUM_CONVERSION = YES;
-CLANG_WARN_INFINITE_RECURSION = YES;
-CLANG_WARN_INT_CONVERSION = YES;
-CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-CLANG_WARN_STRICT_PROTOTYPES = YES;
-CLANG_WARN_SUSPICIOUS_MOVE = YES;
-CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-COPY_PHASE_STRIP = NO;
-DEAD_CODE_STRIPPING = YES;
-ENABLE_STRICT_OBJC_MSGSEND = YES;
-ENABLE_TESTABILITY = YES;
-GCC_C_LANGUAGE_STANDARD = gnu11;
-GCC_DYNAMIC_NO_PIC = NO;
-GCC_NO_COMMON_BLOCKS = YES;
-GCC_OPTIMIZATION_LEVEL = 0;
-GCC_PREPROCESSOR_DEFINITIONS = (
-"DEBUG=1",
-"$(inherited)",
-);
-GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-GCC_WARN_UNDECLARED_SELECTOR = YES;
-GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-GCC_WARN_UNUSED_FUNCTION = YES;
-GCC_WARN_UNUSED_VARIABLE = YES;
-IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-ONLY_ACTIVE_ARCH = YES;
-SDKROOT = iphoneos;
-SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-};
-name = Debug;
-};
-D47AD4DA2A6B02A300000004 /* Release */ = {
-isa = XCBuildConfiguration;
-buildSettings = {
-ALWAYS_SEARCH_USER_PATHS = NO;
-CLANG_ANALYZER_NONNULL = YES;
-CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-CLANG_ENABLE_MODULES = YES;
-CLANG_ENABLE_OBJC_ARC = YES;
-CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-CLANG_WARN_BOOL_CONVERSION = YES;
-CLANG_WARN_COMMA = YES;
-CLANG_WARN_CONSTANT_CONVERSION = YES;
-CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-CLANG_WARN_EMPTY_BODY = YES;
-CLANG_WARN_ENUM_CONVERSION = YES;
-CLANG_WARN_INFINITE_RECURSION = YES;
-CLANG_WARN_INT_CONVERSION = YES;
-CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-CLANG_WARN_STRICT_PROTOTYPES = YES;
-CLANG_WARN_SUSPICIOUS_MOVE = YES;
-CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-COPY_PHASE_STRIP = NO;
-DEAD_CODE_STRIPPING = YES;
-ENABLE_NS_ASSERTIONS = NO;
-ENABLE_STRICT_OBJC_MSGSEND = YES;
-GCC_C_LANGUAGE_STANDARD = gnu11;
-GCC_NO_COMMON_BLOCKS = YES;
-GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-GCC_WARN_UNDECLARED_SELECTOR = YES;
-GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-GCC_WARN_UNUSED_FUNCTION = YES;
-GCC_WARN_UNUSED_VARIABLE = YES;
-IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-MTL_ENABLE_DEBUG_INFO = NO;
-SDKROOT = iphoneos;
-SWIFT_COMPILATION_MODE = wholemodule;
-SWIFT_OPTIMIZATION_LEVEL = "-O";
-};
-name = Release;
-};
-D47AD4DA2A6B02A300000007 /* Debug */ = {
-isa = XCBuildConfiguration;
-baseConfigurationReference = D47AD4DA2A6B02A30000001A /* Config.xcconfig */;
-buildSettings = {
-ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-CODE_SIGN_IDENTITY = "Apple Development";
-CODE_SIGN_STYLE = Automatic;
-CURRENT_PROJECT_VERSION = 1;
-DEVELOPMENT_TEAM = "";
-ENABLE_PREVIEWS = YES;
-GENERATE_INFOPLIST_FILE = NO;
-INFOPLIST_FILE = App/Info.plist;
-INFOPLIST_KEY_CFBundleDevelopmentRegion = sq;
-INFOPLIST_KEY_CFBundleDisplayName = Kurani;
-IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-LD_RUNPATH_SEARCH_PATHS = (
-"$(inherited)",
-"@executable_path/Frameworks",
-);
-MARKETING_VERSION = 1.0;
-PRODUCT_BUNDLE_IDENTIFIER = com.example.Kurani;
-PRODUCT_MODULE_NAME = Kurani;
-PRODUCT_NAME = Kurani;
-PROVISIONING_PROFILE_SPECIFIER = "";
-SDKROOT = iphoneos;
-SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-SWIFT_EMIT_LOC_STRINGS = YES;
-SWIFT_VERSION = 5.9;
-TARGETED_DEVICE_FAMILY = "1,2";
-};
-name = Debug;
-};
-D47AD4DA2A6B02A300000008 /* Release */ = {
-isa = XCBuildConfiguration;
-baseConfigurationReference = D47AD4DA2A6B02A30000001A /* Config.xcconfig */;
-buildSettings = {
-ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-CODE_SIGN_IDENTITY = "Apple Development";
-CODE_SIGN_STYLE = Automatic;
-CURRENT_PROJECT_VERSION = 1;
-DEVELOPMENT_TEAM = "";
-ENABLE_PREVIEWS = YES;
-GENERATE_INFOPLIST_FILE = NO;
-INFOPLIST_FILE = App/Info.plist;
-INFOPLIST_KEY_CFBundleDevelopmentRegion = sq;
-INFOPLIST_KEY_CFBundleDisplayName = Kurani;
-IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-LD_RUNPATH_SEARCH_PATHS = (
-"$(inherited)",
-"@executable_path/Frameworks",
-);
-MARKETING_VERSION = 1.0;
-PRODUCT_BUNDLE_IDENTIFIER = com.example.Kurani;
-PRODUCT_MODULE_NAME = Kurani;
-PRODUCT_NAME = Kurani;
-PROVISIONING_PROFILE_SPECIFIER = "";
-SDKROOT = iphoneos;
-SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-SWIFT_EMIT_LOC_STRINGS = YES;
-SWIFT_VERSION = 5.9;
-TARGETED_DEVICE_FAMILY = "1,2";
-};
-name = Release;
-};
+		D47AD4DA2A6B02A300000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D47AD4DA2A6B02A300000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		D47AD4DA2A6B02A300000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D47AD4DA2A6B02A30000001A /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z42L76XL3P;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDevelopmentRegion = sq;
+				INFOPLIST_KEY_CFBundleDisplayName = Kurani;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.Kurani;
+				PRODUCT_MODULE_NAME = Kurani;
+				PRODUCT_NAME = Kurani;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D47AD4DA2A6B02A300000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D47AD4DA2A6B02A30000001A /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z42L76XL3P;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDevelopmentRegion = sq;
+				INFOPLIST_KEY_CFBundleDisplayName = Kurani;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.Kurani;
+				PRODUCT_MODULE_NAME = Kurani;
+				PRODUCT_NAME = Kurani;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-D47AD4DA2A6B02A300000002 /* Build configuration list for PBXProject "Kurani" */ = {
-isa = XCConfigurationList;
-buildConfigurations = (
-D47AD4DA2A6B02A300000003 /* Debug */,
-D47AD4DA2A6B02A300000004 /* Release */,
-);
-defaultConfigurationIsVisible = 0;
-defaultConfigurationName = Release;
-};
-D47AD4DA2A6B02A300000006 /* Build configuration list for PBXNativeTarget "Kurani" */ = {
-isa = XCConfigurationList;
-buildConfigurations = (
-D47AD4DA2A6B02A300000007 /* Debug */,
-D47AD4DA2A6B02A300000008 /* Release */,
-);
-defaultConfigurationIsVisible = 0;
-defaultConfigurationName = Release;
-};
+		D47AD4DA2A6B02A300000002 /* Build configuration list for PBXProject "Kurani" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D47AD4DA2A6B02A300000003 /* Debug */,
+				D47AD4DA2A6B02A300000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D47AD4DA2A6B02A300000006 /* Build configuration list for PBXNativeTarget "Kurani" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D47AD4DA2A6B02A300000007 /* Debug */,
+				D47AD4DA2A6B02A300000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-D47AD4DA2A6B02A30000005A /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
-isa = XCRemoteSwiftPackageReference;
-repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
-requirement = {
-kind = upToNextMajorVersion;
-minimumVersion = 2.0.0;
-};
-};
+		D47AD4DA2A6B02A30000005A /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-D47AD4DA2A6B02A30000005B /* Supabase */ = {
-isa = XCSwiftPackageProductDependency;
-package = D47AD4DA2A6B02A30000005A /* XCRemoteSwiftPackageReference "supabase-swift" */;
-productName = Supabase;
-};
+		D47AD4DA2A6B02A30000005B /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D47AD4DA2A6B02A30000005A /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
 /* End XCSwiftPackageProductDependency section */
-
-};
-rootObject = D47AD4DA2A6B02A300000001 /* Project object */;
+	};
+	rootObject = D47AD4DA2A6B02A300000001 /* Project object */;
 }
