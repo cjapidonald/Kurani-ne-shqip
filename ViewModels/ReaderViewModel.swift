@@ -20,41 +20,29 @@ final class ReaderViewModel: ObservableObject {
 
     private let translationStore: TranslationStore
     private let notesStore: NotesStore
- codex/add-reading-progress-bar-and-reset-button-rfxbyq
-
- codex/add-reading-progress-bar-and-reset-button
- main
+    private let favoritesStore: FavoritesStore
     private let progressStore: ReadingProgressStore
     private var cancellables: Set<AnyCancellable> = []
 
-    init(surahNumber: Int, translationStore: TranslationStore, notesStore: NotesStore, progressStore: ReadingProgressStore) {
-        self.surahNumber = surahNumber
-        self.translationStore = translationStore
-        self.notesStore = notesStore
-        self.progressStore = progressStore
- codex/add-reading-progress-bar-and-reset-button-rfxbyq
-
-
-    private let favoritesStore: FavoritesStore
-    private var cancellables: Set<AnyCancellable> = []
-
-    init(surahNumber: Int, translationStore: TranslationStore, notesStore: NotesStore, favoritesStore: FavoritesStore) {
+    init(
+        surahNumber: Int,
+        translationStore: TranslationStore,
+        notesStore: NotesStore,
+        favoritesStore: FavoritesStore,
+        progressStore: ReadingProgressStore
+    ) {
         self.surahNumber = surahNumber
         self.translationStore = translationStore
         self.notesStore = notesStore
         self.favoritesStore = favoritesStore
- main
- main
+        self.progressStore = progressStore
+
         let storedFont = UserDefaults.standard.double(forKey: AppStorageKeys.fontScale)
         fontScale = storedFont == 0 ? 1.0 : storedFont
         let storedSpacing = UserDefaults.standard.double(forKey: AppStorageKeys.lineSpacingScale)
         lineSpacingScale = storedSpacing == 0 ? 1.0 : storedSpacing
-        loadAyahs()
- codex/add-reading-progress-bar-and-reset-button-rfxbyq
-        observeProgressChanges()
-        refreshProgress()
 
- codex/add-reading-progress-bar-and-reset-button
+        loadAyahs()
         observeProgressChanges()
         refreshProgress()
 
@@ -65,8 +53,6 @@ final class ReaderViewModel: ObservableObject {
                 self?.favoriteAyahIds = Set(favorites.map { $0.id })
             }
             .store(in: &cancellables)
- main
- main
     }
 
     var surahTitle: String {
@@ -85,7 +71,7 @@ final class ReaderViewModel: ObservableObject {
     func loadAyahs() {
         ayahs = translationStore.ayahs(for: surahNumber)
         totalAyahs = translationStore.ayahCount(for: surahNumber)
-         refreshProgress()
+        refreshProgress()
     }
 
     func note(for ayah: Ayah) -> Note? {
@@ -139,10 +125,14 @@ final class ReaderViewModel: ObservableObject {
         UserDefaults.standard.set(lineSpacingScale, forKey: AppStorageKeys.lineSpacingScale)
     }
 
-                         codex/add-reading-progress-bar-and-reset-button-rfxbyq
-                                                                                                                                                                                                              
- codex/add-reading-progress-bar-and-reset-button
- main
+    func toggleFavorite(for ayah: Ayah) {
+        favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
+    }
+
+    func isFavorite(_ ayah: Ayah) -> Bool {
+        favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
+    }
+
     private func observeProgressChanges() {
         progressStore.$highestReadAyahBySurah
             .receive(on: DispatchQueue.main)
@@ -158,16 +148,5 @@ final class ReaderViewModel: ObservableObject {
             totalAyahs = translationStore.ayahCount(for: surahNumber)
         }
         readingProgress = progressStore.progress(for: surahNumber, totalAyahs: totalAyahs)
- codex/add-reading-progress-bar-and-reset-button-rfxbyq
-
-
-    func toggleFavorite(for ayah: Ayah) {
-        favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
-    }
-
-    func isFavorite(_ ayah: Ayah) -> Bool {
-        favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
- main
-main
     }
 }
