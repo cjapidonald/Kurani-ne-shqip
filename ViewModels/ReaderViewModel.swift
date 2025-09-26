@@ -21,7 +21,7 @@ final class ReaderViewModel: ObservableObject {
     private let translationStore: TranslationStore
     private let notesStore: NotesStore
     private let favoritesStore: FavoritesStore
-    private let progressStore: ReadingProgressStore
+    private let readingProgressStore: ReadingProgressStore
     private var cancellables: Set<AnyCancellable> = []
 
     init(
@@ -35,7 +35,7 @@ final class ReaderViewModel: ObservableObject {
         self.translationStore = translationStore
         self.notesStore = notesStore
         self.favoritesStore = favoritesStore
-        self.progressStore = progressStore
+        self.readingProgressStore = progressStore
 
         let storedFont = UserDefaults.standard.double(forKey: AppStorageKeys.fontScale)
         fontScale = storedFont == 0 ? 1.0 : storedFont
@@ -101,7 +101,7 @@ final class ReaderViewModel: ObservableObject {
     func updateLastRead(ayah: Int) {
         UserDefaults.standard.set(surahNumber, forKey: AppStorageKeys.lastReadSurah)
         UserDefaults.standard.set(ayah, forKey: AppStorageKeys.lastReadAyah)
-        progressStore.updateHighestAyah(ayah, for: surahNumber, totalAyahs: totalAyahs)
+        readingProgressStore.updateHighestAyah(ayah, for: surahNumber, totalAyahs: totalAyahs)
         refreshProgress()
     }
 
@@ -134,7 +134,7 @@ final class ReaderViewModel: ObservableObject {
     }
 
     private func observeProgressChanges() {
-        progressStore.$highestReadAyahBySurah
+        readingProgressStore.$highestReadAyahBySurah
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.refreshProgress()
@@ -143,10 +143,10 @@ final class ReaderViewModel: ObservableObject {
     }
 
     private func refreshProgress() {
-        highestAyahRead = progressStore.highestAyahRead(for: surahNumber)
+        highestAyahRead = readingProgressStore.highestAyahRead(for: surahNumber)
         if totalAyahs == 0 {
             totalAyahs = translationStore.ayahCount(for: surahNumber)
         }
-        readingProgress = progressStore.progress(for: surahNumber, totalAyahs: totalAyahs)
+        readingProgress = readingProgressStore.progress(for: surahNumber, totalAyahs: totalAyahs)
     }
 }
