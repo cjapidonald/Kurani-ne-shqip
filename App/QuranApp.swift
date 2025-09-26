@@ -13,7 +13,7 @@ struct KuraniApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView(translationStore: translationStore, notesStore: notesStore, authManager: authManager)
+            RootView(translationStore: translationStore, notesStore: notesStore)
                 .environmentObject(translationStore)
                 .environmentObject(notesStore)
                 .environmentObject(authManager)

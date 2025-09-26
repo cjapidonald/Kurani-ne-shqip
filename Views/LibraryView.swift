@@ -11,7 +11,6 @@ struct LibraryView: View {
 
     @EnvironmentObject private var translationStore: TranslationStore
     @EnvironmentObject private var notesStore: NotesStore
-    @EnvironmentObject private var authManager: AuthManager
 
     @State private var path: [ReaderRoute] = []
 
@@ -88,7 +87,6 @@ struct LibraryView: View {
                     startingAyah: route.ayah,
                     openNotesTab: openNotesTab
                 )
-                .environmentObject(authManager)
             }
             .onAppear {
                 viewModel.refreshLastRead()

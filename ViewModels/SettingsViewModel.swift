@@ -7,19 +7,13 @@ final class SettingsViewModel: ObservableObject {
     @Published var isImporting: Bool = false
 
     private let translationStore: TranslationStore
-    private let authManager: AuthManager
 
-    init(translationStore: TranslationStore, authManager: AuthManager) {
+    init(translationStore: TranslationStore) {
         self.translationStore = translationStore
-        self.authManager = authManager
     }
 
     var isUsingSampleTranslation: Bool {
         translationStore.isUsingSample
-    }
-
-    var isSignedIn: Bool {
-        authManager.userId != nil
     }
 
     func importTranslation(from url: URL) async {
@@ -31,14 +25,5 @@ final class SettingsViewModel: ObservableObject {
             toast = LocalizedStringKey("settings.import.invalid")
         }
         isImporting = false
-    }
-
-    func signOut() async {
-        await authManager.signOut()
-    }
-
-    func sendMagicLink(email: String) async {
-        await authManager.sendMagicLink(to: email)
-        toast = LocalizedStringKey("signin.email.sent")
     }
 }
