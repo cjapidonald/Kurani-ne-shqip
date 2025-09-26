@@ -6,19 +6,22 @@ struct ReaderView: View {
     let startingAyah: Int?
     let openNotesTab: () -> Void
 
-codex/update-app-theme-for-reading
+
     @EnvironmentObject private var authManager: AuthManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
+    @AppStorage(AppStorageKeys.showAlbanianText) private var showAlbanianText = true
 
 
-main
     @State private var selectedAyahForActions: Ayah?
     @State private var showingActions = false
     @State private var shareText: String = ""
     @State private var showingShareSheet = false
     @State private var showToast = false
     @State private var isChromeHidden = false
+    @State private var selectedDictionaryEntry: ArabicDictionaryEntry?
+    @State private var pendingDictionaryWord: String?
 
     private let noteFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -43,8 +46,9 @@ main
                                 .buttonStyle(.plain)
 
                                 VStack(alignment: .leading, spacing: 6) {
+codex/change-font-to-kg-primary-penmanship
                                     Text(ayah.text)
-                                        .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
+                                        .font(KuraniFont.size(18 * viewModel.fontScale, relativeTo: .body))
                                         .foregroundColor(.white)
                                         .lineSpacing(4 * viewModel.lineSpacingScale)
                                         .contextMenu {
@@ -53,22 +57,47 @@ main
                                             }
                                             Button(LocalizedStringKey("action.copy")) {
                                                 copyAyah(ayah)
+
+                                    if showAlbanianText {
+                                        Text(ayah.text)
+                                            .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
+                                            .foregroundColor(.white)
+                                            .lineSpacing(4 * viewModel.lineSpacingScale)
+                                            .contextMenu {
+                                                Button(LocalizedStringKey("action.edit")) {
+                                                    openNoteEditor(for: ayah)
+                                                }
+                                                Button(LocalizedStringKey("action.copy")) {
+                                                    copyAyah(ayah)
+                                                }
+                                                Button(LocalizedStringKey("action.share")) {
+                                                    shareAyah(ayah)
+                                                }
+main
                                             }
-                                            Button(LocalizedStringKey("action.share")) {
-                                                shareAyah(ayah)
+                                            .onTapGesture {
+                                                openNoteEditor(for: ayah)
+                                            }
+codex/add-button-to-redirect-with-ayah-details
+                                            Button("PYET CHATGPT") {
+                                                askChatGPT(about: ayah)
                                             }
                                         }
                                         .onTapGesture {
                                             openNoteEditor(for: ayah)
-                                        }
+
+                                    }
+ main
 
                                     if showArabicText, let arabic = ayah.arabicText {
-                                        Text(arabic)
-                                            .font(.system(size: 20 * viewModel.fontScale, weight: .regular))
-                                            .foregroundColor(.white)
-                                            .multilineTextAlignment(.trailing)
-                                            .frame(maxWidth: .infinity, alignment: .trailing)
-                                            .lineSpacing(4 * viewModel.lineSpacingScale)
+                                        ArabicSelectableTextView(
+                                            text: arabic,
+                                            fontScale: viewModel.fontScale,
+                                            lineSpacingScale: viewModel.lineSpacingScale,
+                                            onSelection: handleDictionarySelection
+                                        )
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
 
@@ -98,7 +127,7 @@ main
                                     Image(systemName: "pencil.and.outline")
                                         .foregroundStyle(Color.kuraniAccentLight)
                                     Text(bannerText)
-                                        .font(.system(.caption, design: .rounded))
+                                        .font(KuraniFont.forTextStyle(.caption))
                                         .foregroundColor(.kuraniTextSecondary)
                                 }
                                 .padding(.vertical, 10)
@@ -140,9 +169,16 @@ main
                     .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
 
                     Button {
-                        showArabicText.toggle()
+                        toggleAlbanian()
                     } label: {
-                        ArabicToggleIcon(isActive: showArabicText)
+                        LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
+                    }
+                    .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
+
+                    Button {
+                        toggleArabic()
+                    } label: {
+                        LanguageToggleIcon(label: "AR", isActive: showArabicText)
                     }
                     .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
                     Button {
@@ -209,10 +245,16 @@ main
         .sheet(isPresented: $showingShareSheet) {
             ShareSheet(items: [shareText])
         }
+        .sheet(item: $selectedDictionaryEntry) { entry in
+            ArabicDictionaryDetailView(entry: entry)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
         .confirmationDialog(LocalizedStringKey("action.edit"), isPresented: $showingActions, presenting: selectedAyahForActions) { ayah in
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
             Button(LocalizedStringKey("action.share")) { shareAyah(ayah) }
             Button(LocalizedStringKey("action.edit")) { openNoteEditor(for: ayah) }
+            Button("PYET CHATGPT") { askChatGPT(about: ayah) }
             Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
         }
         .overlay(alignment: .top) {
@@ -278,12 +320,58 @@ main
         showingShareSheet = true
     }
 
+codex/add-button-to-redirect-with-ayah-details
+    private func askChatGPT(about ayah: Ayah) {
+        let prompt = "Më trego më shumë rreth sures \(viewModel.surahTitle), ajeti \(ayah.number). Teksti: \(ayah.text)"
+        guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+        guard let url = URL(string: "https://chat.openai.com/?q=\(encodedPrompt)") else { return }
+        openURL(url)
+
+    private func toggleAlbanian() {
+        if showAlbanianText {
+            if !showArabicText {
+                showArabicText = true
+            }
+            showAlbanianText = false
+        } else {
+            showAlbanianText = true
+        }
+    }
+
+    private func toggleArabic() {
+        if showArabicText {
+            if !showAlbanianText {
+                showAlbanianText = true
+            }
+            showArabicText = false
+        } else {
+            showArabicText = true
+        }
+main
+    }
+
     private func formattedText(for ayah: Ayah) -> String {
         "\(viewModel.surahTitle) \(ayah.number): \(ayah.text)"
     }
+
+    private func handleDictionarySelection(_ word: String) {
+        guard pendingDictionaryWord != word else { return }
+        pendingDictionaryWord = word
+
+        if let entry = ArabicDictionary.shared.lookup(word: word) {
+            selectedDictionaryEntry = entry
+        } else {
+            viewModel.toast = LocalizedStringKey("dictionary.notFound")
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            pendingDictionaryWord = nil
+        }
+    }
 }
 
-private struct ArabicToggleIcon: View {
+private struct LanguageToggleIcon: View {
+    let label: String
     let isActive: Bool
 
     var body: some View {
@@ -295,10 +383,9 @@ private struct ArabicToggleIcon: View {
                         .stroke(Color.kuraniAccentLight, lineWidth: 1.4)
                 )
 
-            Text("ع")
-                .font(.system(size: 15, weight: .bold, design: .default))
+            Text(label)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(isActive ? Color.kuraniDarkBackground : Color.kuraniAccentLight)
-                .baselineOffset(1)
         }
         .frame(width: 30, height: 30)
     }

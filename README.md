@@ -7,6 +7,12 @@ Kurani është një aplikacion SwiftUI për iOS 17 që ofron një përvojë lexi
 - iOS 17 për ekzekutim në pajisje ose simulator
 - Swift 5.9+
 
+## Tipografia
+- Aplikacioni përdor fontin "KG Primary Penmanship". Për arsye licence skedari
+  `KGPrimaryPenmanship.ttf` nuk është i përfshirë në repo. Pas sigurimit të
+  licencës, vendose skedarin në `Resources/Fonts/` përpara se të ndërtosh
+  aplikacionin.
+
 ## Konfigurimi i Supabase
 1. **Krijo projektin Supabase** dhe shto paketën [`supabase-swift`](https://github.com/supabase-community/supabase-swift) në projekt nëpërmjet Swift Package Manager.
 2. Kopjo skedarin `Config.xcconfig` në projekt dhe lidhe me target-in kryesor.

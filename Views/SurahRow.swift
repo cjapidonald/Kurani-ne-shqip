@@ -9,10 +9,10 @@ struct SurahRow: View {
             Pill(number: surah.number)
             VStack(alignment: .leading, spacing: 4) {
                 Text(surah.name)
-                    .font(.system(.headline, design: .rounded))
+                    .font(KuraniFont.forTextStyle(.headline))
                     .foregroundColor(.kuraniTextPrimary)
                 Text("\(surah.ayahCount) \(NSLocalizedString("library.ayahs", comment: ""))")
-                    .font(.system(.caption, design: .rounded))
+                    .font(KuraniFont.forTextStyle(.caption))
                     .foregroundColor(.kuraniTextSecondary)
             }
             Spacer()
