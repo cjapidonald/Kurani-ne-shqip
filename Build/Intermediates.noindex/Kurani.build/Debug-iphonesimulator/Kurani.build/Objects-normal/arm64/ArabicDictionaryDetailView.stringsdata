@@ -1,0 +1,32 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/Components/ArabicDictionaryDetailView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "dictionary.meanings",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "• %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "dictionary.notes",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 33
+        }
+      }
+    ]
+  },
+  "version": 1
+}

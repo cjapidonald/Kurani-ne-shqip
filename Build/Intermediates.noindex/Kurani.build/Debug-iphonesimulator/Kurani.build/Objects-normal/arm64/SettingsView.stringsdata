@@ -7,7 +7,15 @@
         "key": "settings.title",
         "location": {
           "startingColumn": 49,
-          "startingLine": 72
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.progress.resetConfirm",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 105
         }
       },
       {
@@ -15,7 +23,7 @@
         "key": "settings.account",
         "location": {
           "startingColumn": 57,
-          "startingLine": 14
+          "startingLine": 13
         }
       },
       {
@@ -23,7 +31,15 @@
         "key": "settings.translation",
         "location": {
           "startingColumn": 57,
-          "startingLine": 41
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.progress.title",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 47
         }
       },
       {
@@ -31,71 +47,71 @@
         "key": "settings.about",
         "location": {
           "startingColumn": 57,
-          "startingLine": 57
+          "startingLine": 66
         }
       },
       {
         "comment": "",
-        "key": "notes.signinRequired",
+        "key": "settings.account.offline",
         "location": {
           "startingColumn": 49,
-          "startingLine": 24
-        }
-      },
-      {
-        "comment": "",
-        "key": "settings.signin",
-        "location": {
-          "startingColumn": 51,
-          "startingLine": 29
-        }
-      },
-      {
-        "comment": "",
-        "key": "settings.signout",
-        "location": {
-          "startingColumn": 51,
-          "startingLine": 33
+          "startingLine": 15
         }
       },
       {
         "comment": "",
         "key": "settings.import",
         "location": {
-          "startingColumn": 47,
-          "startingLine": 51
+          "startingColumn": 51,
+          "startingLine": 36
         }
       },
       {
         "comment": "",
         "key": "settings.translation.sample",
         "location": {
-          "startingColumn": 86,
-          "startingLine": 43
+          "startingColumn": 90,
+          "startingLine": 27
         }
       },
       {
         "comment": "",
         "key": "settings.translation.loaded",
         "location": {
-          "startingColumn": 138,
-          "startingLine": 43
+          "startingColumn": 142,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.progress.description",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.progress.reset",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 55
         }
       },
       {
         "comment": "",
         "key": "settings.about.disclaimer",
         "location": {
-          "startingColumn": 45,
-          "startingLine": 58
+          "startingColumn": 49,
+          "startingLine": 68
         }
       },
       {
         "comment": "",
         "key": "settings.version",
         "location": {
-          "startingColumn": 49,
-          "startingLine": 61
+          "startingColumn": 53,
+          "startingLine": 71
         }
       },
       {
@@ -103,7 +119,23 @@
         "key": "settings.import.invalid",
         "location": {
           "startingColumn": 58,
-          "startingLine": 79
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.cancel",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.progress.resetConfirmButton",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 107
         }
       }
     ]

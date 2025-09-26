@@ -191,8 +191,8 @@ struct FavoritesView: View {
                         surahNumber: route.surah,
                         translationStore: translationStore,
                         notesStore: notesStore,
-                        favoritesStore: favoritesStore,
-                        progressStore: progressStore
+                        progressStore: progressStore,
+                        favoritesStore: favoritesStore
                     ),
                     startingAyah: route.ayah,
                     openNotesTab: {

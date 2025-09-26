@@ -7,7 +7,7 @@
         "key": "settings.import.success",
         "location": {
           "startingColumn": 40,
-          "startingLine": 29
+          "startingLine": 25
         }
       },
       {
@@ -15,15 +15,15 @@
         "key": "settings.import.invalid",
         "location": {
           "startingColumn": 40,
-          "startingLine": 31
+          "startingLine": 27
         }
       },
       {
         "comment": "",
-        "key": "signin.email.sent",
+        "key": "settings.progress.resetSuccess",
         "location": {
           "startingColumn": 36,
-          "startingLine": 42
+          "startingLine": 34
         }
       }
     ]

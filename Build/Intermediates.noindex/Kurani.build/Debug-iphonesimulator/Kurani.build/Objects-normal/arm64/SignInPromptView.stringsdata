@@ -7,7 +7,7 @@
         "key": "signin.email",
         "location": {
           "startingColumn": 39,
-          "startingLine": 70
+          "startingLine": 74
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "signin.email",
         "location": {
           "startingColumn": 49,
-          "startingLine": 32
+          "startingLine": 34
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "signin.email.placeholder",
         "location": {
           "startingColumn": 54,
-          "startingLine": 35
+          "startingLine": 37
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "signin.email",
         "location": {
           "startingColumn": 53,
-          "startingLine": 45
+          "startingLine": 48
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "action.cancel",
         "location": {
           "startingColumn": 47,
-          "startingLine": 62
+          "startingLine": 65
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "action.ok",
         "location": {
           "startingColumn": 43,
-          "startingLine": 71
+          "startingLine": 75
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "signin.email.sent",
         "location": {
           "startingColumn": 41,
-          "startingLine": 73
+          "startingLine": 77
         }
       }
     ]
