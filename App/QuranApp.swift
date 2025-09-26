@@ -19,8 +19,8 @@ struct KuraniApp: App {
             RootView(
                 translationStore: translationStore,
                 notesStore: notesStore,
-                favoritesStore: favoritesStore,
-                progressStore: progressStore
+                progressStore: progressStore,
+                favoritesStore: favoritesStore
             )
                 .environmentObject(translationStore)
                 .environmentObject(notesStore)

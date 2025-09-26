@@ -5,8 +5,8 @@ struct RootView: View {
 
     @ObservedObject var translationStore: TranslationStore
     @ObservedObject var notesStore: NotesStore
-    @ObservedObject var favoritesStore: FavoritesStore
     @ObservedObject var progressStore: ReadingProgressStore
+    @ObservedObject var favoritesStore: FavoritesStore
 
     @StateObject private var libraryViewModel: LibraryViewModel
     @StateObject private var notesViewModel: NotesViewModel
@@ -18,13 +18,13 @@ struct RootView: View {
     init(
         translationStore: TranslationStore,
         notesStore: NotesStore,
-        favoritesStore: FavoritesStore,
-        progressStore: ReadingProgressStore
+        progressStore: ReadingProgressStore,
+        favoritesStore: FavoritesStore
     ) {
         self.translationStore = translationStore
         self.notesStore = notesStore
-        self.favoritesStore = favoritesStore
         self.progressStore = progressStore
+        self.favoritesStore = favoritesStore
         _libraryViewModel = StateObject(wrappedValue: LibraryViewModel(translationStore: translationStore))
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
         _favoritesViewModel = StateObject(wrappedValue: FavoritesViewModel(favoritesStore: favoritesStore))
