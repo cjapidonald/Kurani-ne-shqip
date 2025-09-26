@@ -13,6 +13,7 @@ struct SignInPromptView: View {
         NavigationStack {
             VStack(spacing: 24) {
                 BrandHeader(titleKey: "notes.signInPrompt", subtitle: "notes.noAccess")
+                    .padding(.horizontal, 12)
                     .padding(.top)
 
                 VStack(spacing: 16) {
@@ -21,9 +22,10 @@ struct SignInPromptView: View {
                     } onCompletion: { result in
                         Task { await authManager.handleAppleCompletion(result) }
                     }
-                    .signInWithAppleButtonStyle(.whiteOutline)
-                    .frame(height: 50)
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .signInWithAppleButtonStyle(.white)
+                    .frame(height: 54)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .shadow(color: Color.black.opacity(0.25), radius: 18, y: 12)
 
                     Divider()
                         .background(Color.kuraniAccentLight.opacity(0.4))
@@ -35,9 +37,9 @@ struct SignInPromptView: View {
                         TextField(LocalizedStringKey("signin.email.placeholder"), text: $email)
                             .textInputAutocapitalization(.never)
                             .keyboardType(.emailAddress)
-                            .padding(12)
-                            .background(Color.kuraniPrimarySurface.opacity(0.4))
-                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .padding(14)
+                            .background(Color.kuraniPrimarySurface.opacity(0.45))
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .foregroundColor(.kuraniTextPrimary)
                         Button {
                             Task { await sendMagicLink() }
@@ -49,17 +51,17 @@ struct SignInPromptView: View {
                         .disabled(email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSendingEmail)
                     }
                 }
-                .padding()
-                .background(Color.kuraniPrimarySurface.opacity(0.3))
-                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .appleCard(cornerRadius: 26)
+                .padding(.horizontal, 8)
 
                 Spacer()
             }
             .padding()
-            .background(Color.kuraniDarkBackground.ignoresSafeArea())
+            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(LocalizedStringKey("action.cancel")) { dismiss() }
+                        .tint(.kuraniAccentLight)
                 }
             }
             .onReceive(authManager.$userId) { userId in
@@ -78,7 +80,9 @@ struct SignInPromptView: View {
                 }
             }
         }
+        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
     }
+}
 
     @MainActor
     private func sendMagicLink() async {

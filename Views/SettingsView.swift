@@ -12,65 +12,84 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section(header: Text(LocalizedStringKey("settings.account"))) {
-                    if let user = authManager.user {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(user.email ?? "")
-                                .foregroundColor(.kuraniTextPrimary)
-                            Text(user.id.uuidString)
-                                .font(.system(.caption, design: .monospaced))
+                    VStack(alignment: .leading, spacing: 16) {
+                        if let user = authManager.user {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(user.email ?? "")
+                                    .foregroundColor(.kuraniTextPrimary)
+                                Text(user.id.uuidString)
+                                    .font(.system(.caption, design: .monospaced))
+                                    .foregroundColor(.kuraniTextSecondary)
+                            }
+                        } else {
+                            Text(LocalizedStringKey("notes.signinRequired"))
                                 .foregroundColor(.kuraniTextSecondary)
                         }
-                    } else {
-                        Text(LocalizedStringKey("notes.signinRequired"))
-                            .foregroundColor(.kuraniTextSecondary)
-                    }
 
-                    if authManager.userId == nil {
-                        Button(LocalizedStringKey("settings.signin")) {
-                            showingSignInSheet = true
+                        if authManager.userId == nil {
+                            Button(LocalizedStringKey("settings.signin")) {
+                                showingSignInSheet = true
+                            }
+                            .buttonStyle(GradientButtonStyle())
+                        } else {
+                            Button(LocalizedStringKey("settings.signout")) {
+                                Task { await viewModel.signOut() }
+                            }
+                            .buttonStyle(GradientButtonStyle())
                         }
-                    } else {
-                        Button(LocalizedStringKey("settings.signout")) {
-                            Task { await viewModel.signOut() }
-                        }
-                        .foregroundColor(.red)
                     }
+                    .appleCard()
+                    .padding(.horizontal, 12)
                 }
-                .listRowBackground(Color.kuraniPrimarySurface)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
 
                 Section(header: Text(LocalizedStringKey("settings.translation"))) {
-                    HStack {
-                        Text(viewModel.isUsingSampleTranslation ? LocalizedStringKey("settings.translation.sample") : LocalizedStringKey("settings.translation.loaded"))
-                            .foregroundColor(.kuraniTextSecondary)
-                        Spacer()
-                        if viewModel.isImporting {
-                            ProgressView()
+                    VStack(alignment: .leading, spacing: 16) {
+                        HStack {
+                            Text(viewModel.isUsingSampleTranslation ? LocalizedStringKey("settings.translation.sample") : LocalizedStringKey("settings.translation.loaded"))
+                                .foregroundColor(.kuraniTextSecondary)
+                            Spacer()
+                            if viewModel.isImporting {
+                                ProgressView()
+                                    .tint(.kuraniAccentLight)
+                            }
                         }
-                    }
 
-                    Button(LocalizedStringKey("settings.import")) {
-                        showingImporter = true
+                        Button(LocalizedStringKey("settings.import")) {
+                            showingImporter = true
+                        }
+                        .buttonStyle(GradientButtonStyle())
                     }
+                    .appleCard()
+                    .padding(.horizontal, 12)
                 }
-                .listRowBackground(Color.kuraniPrimarySurface)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
 
                 Section(header: Text(LocalizedStringKey("settings.about"))) {
-                    Text(LocalizedStringKey("settings.about.disclaimer"))
-                        .foregroundColor(.kuraniTextSecondary)
-                    HStack {
-                        Text(LocalizedStringKey("settings.version"))
-                        Spacer()
-                        Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(LocalizedStringKey("settings.about.disclaimer"))
                             .foregroundColor(.kuraniTextSecondary)
+                        HStack {
+                            Text(LocalizedStringKey("settings.version"))
+                            Spacer()
+                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
+                                .foregroundColor(.kuraniTextSecondary)
+                        }
                     }
+                    .appleCard()
+                    .padding(.horizontal, 12)
                 }
-                .listRowBackground(Color.kuraniPrimarySurface)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
             }
             .scrollContentBackground(.hidden)
-            .background(Color.kuraniDarkBackground)
-            .tint(Color.kuraniAccentBrand)
+            .listRowSeparator(.hidden)
+            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .tint(Color.kuraniAccentLight)
             .navigationTitle(LocalizedStringKey("settings.title"))
-            .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
+            .toolbarBackground(Color.kuraniDarkBackground.opacity(0.4), for: .navigationBar)
             .fileImporter(isPresented: $showingImporter, allowedContentTypes: [.json]) { result in
                 switch result {
                 case .success(let url):
@@ -99,6 +118,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
     }
 
     private func importTranslation(url: URL) async {
