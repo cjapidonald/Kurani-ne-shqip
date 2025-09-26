@@ -6,16 +6,22 @@ import CoreHaptics
 
 enum Haptics {
     private static let supportsHaptics: Bool = {
-#if targetEnvironment(macCatalyst) || targetEnvironment(simulator)
-        return false
-#else
 #if canImport(CoreHaptics)
+        if ProcessInfo.processInfo.isMacCatalystApp {
+            return false
+        }
+
+        if #available(iOS 14.0, *) {
+            if ProcessInfo.processInfo.isiOSAppOnMac {
+                return false
+            }
+        }
+
         if #available(iOS 13.0, *) {
             return CHHapticEngine.capabilitiesForHardware().supportsHaptics
         }
 #endif
         return false
-#endif
     }()
 
     static func success() {
