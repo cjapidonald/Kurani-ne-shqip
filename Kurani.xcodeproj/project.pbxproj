@@ -50,6 +50,7 @@ D4F6B6D42C9F000100000094 /* ArabicSelectableTextView.swift in Sources */ = {isa 
                 F8643BD45C394BFFA5D99674 /* ReadingProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */; };
                 E4474F56488F4C62929FB0C8 /* ProgressBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333054A5288A4EB490D5C514 /* ProgressBadge.swift */; };
                 D4F6B6E42C9F0001000000AA /* FavoriteFolderPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6E32C9F0001000000AA /* FavoriteFolderPickerView.swift */; };
+                D4F6B6F82C9F0001000000B3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6F72C9F0001000000B2 /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@ D4F6B6D52C9F000100000095 /* ArabicSelectableTextView.swift */ = {isa = PBXFileRe
                 A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingProgressStore.swift; sourceTree = "<group>"; };
                 333054A5288A4EB490D5C514 /* ProgressBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBadge.swift; sourceTree = "<group>"; };
                 D4F6B6E32C9F0001000000AA /* FavoriteFolderPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderPickerView.swift; sourceTree = "<group>"; };
+                D4F6B6F72C9F0001000000B2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
                 D47AD4DA2A6B02A300000025 /* NotesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesStore.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000026 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
@@ -192,11 +194,12 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 			isa = PBXGroup;
 			children = (
 				D47AD4DA2A6B02A300000028 /* ShareSheet.swift */,
-				D47AD4DA2A6B02A300000029 /* FileIO.swift */,
-				D47AD4DA2A6B02A30000002A /* Haptics.swift */,
-				D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */,
-				D4FF6AAA2D00000100000092 /* KuraniFont.swift */,
-				D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */,
+                                D47AD4DA2A6B02A300000029 /* FileIO.swift */,
+                                D47AD4DA2A6B02A30000002A /* Haptics.swift */,
+                                D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */,
+                                D4F6B6F72C9F0001000000B2 /* NotificationManager.swift */,
+                                D4FF6AAA2D00000100000092 /* KuraniFont.swift */,
+                                D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -338,8 +341,9 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 				D47AD4DA2A6B02A30000004A /* ReaderViewModel.swift in Sources */,
 				D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */,
 				D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */,
-				D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */,
-				D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
+                                D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */,
+                                D4F6B6F82C9F0001000000B3 /* NotificationManager.swift in Sources */,
+                                D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
 				D4FF6AAA2D00000100000093 /* KuraniFont.swift in Sources */,
 				D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */,
 				D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */,
