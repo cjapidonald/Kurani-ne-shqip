@@ -30,7 +30,7 @@ struct NoteEditorView: View {
                             )
                             .shadow(color: Color.black.opacity(0.32), radius: 20, y: 14)
                     )
-                    .foregroundColor(.kuraniTextPrimary)
+                    .foregroundColor(.black)
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 24)
