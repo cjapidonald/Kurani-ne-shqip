@@ -9,6 +9,7 @@ struct ReaderView: View {
 codex/update-app-theme-for-reading
     @EnvironmentObject private var authManager: AuthManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
 
 
@@ -56,6 +57,9 @@ main
                                             }
                                             Button(LocalizedStringKey("action.share")) {
                                                 shareAyah(ayah)
+                                            }
+                                            Button("PYET CHATGPT") {
+                                                askChatGPT(about: ayah)
                                             }
                                         }
                                         .onTapGesture {
@@ -199,6 +203,7 @@ main
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
             Button(LocalizedStringKey("action.share")) { shareAyah(ayah) }
             Button(LocalizedStringKey("action.edit")) { openNoteEditor(for: ayah) }
+            Button("PYET CHATGPT") { askChatGPT(about: ayah) }
             Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
         }
         .overlay(alignment: .top) {
@@ -262,6 +267,13 @@ main
     private func shareAyah(_ ayah: Ayah) {
         shareText = formattedText(for: ayah)
         showingShareSheet = true
+    }
+
+    private func askChatGPT(about ayah: Ayah) {
+        let prompt = "Më trego më shumë rreth sures \(viewModel.surahTitle), ajeti \(ayah.number). Teksti: \(ayah.text)"
+        guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+        guard let url = URL(string: "https://chat.openai.com/?q=\(encodedPrompt)") else { return }
+        openURL(url)
     }
 
     private func formattedText(for ayah: Ayah) -> String {
