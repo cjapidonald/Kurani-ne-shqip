@@ -7,7 +7,7 @@
         "key": "action.edit",
         "location": {
           "startingColumn": 48,
-          "startingLine": 236
+          "startingLine": 248
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "reader.favorite.remove",
         "location": {
           "startingColumn": 105,
-          "startingLine": 97
+          "startingLine": 109
         }
       },
       {
@@ -23,15 +23,15 @@
         "key": "reader.favorite.add",
         "location": {
           "startingColumn": 152,
-          "startingLine": 97
+          "startingLine": 109
         }
       },
       {
         "comment": "",
-        "key": "action.edit",
+        "key": "reader.addToNotes",
         "location": {
           "startingColumn": 75,
-          "startingLine": 55
+          "startingLine": 67
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "action.copy",
         "location": {
           "startingColumn": 75,
-          "startingLine": 58
+          "startingLine": 70
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "action.share",
         "location": {
           "startingColumn": 75,
-          "startingLine": 61
+          "startingLine": 73
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "PYET CHATGPT",
         "location": {
           "startingColumn": 56,
-          "startingLine": 64
+          "startingLine": 76
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "reader.copy.confirmation",
         "location": {
           "startingColumn": 46,
-          "startingLine": 310
+          "startingLine": 345
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "dictionary.notFound",
         "location": {
           "startingColumn": 50,
-          "startingLine": 358
+          "startingLine": 393
         }
       },
       {
@@ -79,7 +79,7 @@
         "key": "reader.toggleChrome",
         "location": {
           "startingColumn": 60,
-          "startingLine": 152
+          "startingLine": 164
         }
       },
       {
@@ -87,7 +87,7 @@
         "key": "reader.toggleAlbanian",
         "location": {
           "startingColumn": 60,
-          "startingLine": 159
+          "startingLine": 171
         }
       },
       {
@@ -95,7 +95,7 @@
         "key": "reader.toggleArabic",
         "location": {
           "startingColumn": 60,
-          "startingLine": 166
+          "startingLine": 178
         }
       },
       {
@@ -103,7 +103,7 @@
         "key": "reader.lineSpacing",
         "location": {
           "startingColumn": 60,
-          "startingLine": 188
+          "startingLine": 200
         }
       },
       {
@@ -111,7 +111,7 @@
         "key": "reader.notesButton",
         "location": {
           "startingColumn": 60,
-          "startingLine": 195
+          "startingLine": 207
         }
       },
       {
@@ -119,7 +119,7 @@
         "key": "reader.font.decrease",
         "location": {
           "startingColumn": 68,
-          "startingLine": 171
+          "startingLine": 183
         }
       },
       {
@@ -127,7 +127,7 @@
         "key": "reader.font.increase",
         "location": {
           "startingColumn": 68,
-          "startingLine": 178
+          "startingLine": 190
         }
       },
       {
@@ -135,7 +135,7 @@
         "key": "reader.lineSpacing.decrease",
         "location": {
           "startingColumn": 51,
-          "startingLine": 182
+          "startingLine": 194
         }
       },
       {
@@ -143,7 +143,7 @@
         "key": "reader.lineSpacing.increase",
         "location": {
           "startingColumn": 51,
-          "startingLine": 183
+          "startingLine": 195
         }
       },
       {
@@ -151,7 +151,7 @@
         "key": "action.copy",
         "location": {
           "startingColumn": 39,
-          "startingLine": 237
+          "startingLine": 249
         }
       },
       {
@@ -159,15 +159,15 @@
         "key": "action.share",
         "location": {
           "startingColumn": 39,
-          "startingLine": 238
+          "startingLine": 250
         }
       },
       {
         "comment": "",
-        "key": "action.edit",
+        "key": "reader.addToNotes",
         "location": {
           "startingColumn": 39,
-          "startingLine": 239
+          "startingLine": 251
         }
       },
       {
@@ -175,7 +175,7 @@
         "key": "PYET CHATGPT",
         "location": {
           "startingColumn": 20,
-          "startingLine": 240
+          "startingLine": 252
         }
       },
       {
@@ -183,23 +183,23 @@
         "key": "action.cancel",
         "location": {
           "startingColumn": 39,
-          "startingLine": 241
+          "startingLine": 253
         }
       },
       {
         "comment": "",
         "key": "action.back",
         "location": {
-          "startingColumn": 64,
-          "startingLine": 259
+          "startingColumn": 68,
+          "startingLine": 279
         }
       },
       {
         "comment": "",
         "key": "reader.toggleChrome",
         "location": {
-          "startingColumn": 64,
-          "startingLine": 270
+          "startingColumn": 68,
+          "startingLine": 290
         }
       }
     ]

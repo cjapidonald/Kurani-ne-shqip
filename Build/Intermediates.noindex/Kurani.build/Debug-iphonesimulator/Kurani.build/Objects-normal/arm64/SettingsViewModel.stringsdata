@@ -4,26 +4,138 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "settings.import.success",
-        "location": {
-          "startingColumn": 40,
-          "startingLine": 25
-        }
-      },
-      {
-        "comment": "",
-        "key": "settings.import.invalid",
-        "location": {
-          "startingColumn": 40,
-          "startingLine": 27
-        }
-      },
-      {
-        "comment": "",
         "key": "settings.progress.resetSuccess",
         "location": {
           "startingColumn": 36,
-          "startingLine": 34
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.reminderEnabled",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 137
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.error",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.permissionDenied",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.reminderDisabled",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 142
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.reminderTimeUpdated",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.error",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.permissionDenied",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.verseEnabled",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 173
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.verseUnavailable",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.error",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.permissionDenied",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.verseDisabled",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.verseTimeUpdated",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.verseUnavailable",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.error",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.notifications.permissionDenied",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 93
         }
       }
     ]

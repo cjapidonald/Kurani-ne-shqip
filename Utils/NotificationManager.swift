@@ -9,7 +9,7 @@ final class NotificationManager {
     private init() {}
 
     func authorizationStatus() async -> UNAuthorizationStatus {
-        await withCheckedContinuation { continuation in
+        await withCheckedContinuation { (continuation: CheckedContinuation<UNAuthorizationStatus, Never>) in
             center.getNotificationSettings { settings in
                 continuation.resume(returning: settings.authorizationStatus)
             }
@@ -81,7 +81,7 @@ final class NotificationManager {
     // MARK: - Helpers
 
     private func verseOfDayPendingIdentifiers() async -> [String] {
-        await withCheckedContinuation { continuation in
+        await withCheckedContinuation { (continuation: CheckedContinuation<[String], Never>) in
             center.getPendingNotificationRequests { requests in
                 let identifiers = requests
                     .map(\.identifier)
@@ -106,4 +106,3 @@ final class NotificationManager {
     private static let readingReminderIdentifier = "com.kurani.notifications.readingReminder"
     private static let verseOfDayIdentifierPrefix = "com.kurani.notifications.verseOfDay"
 }
-

@@ -12,17 +12,29 @@
 		<data>
 		p7d7Ojfx0jUANTU39YOCxFt/sbU=
 		</data>
+		<key>ArabicDictionary.json</key>
+		<data>
+		CMc9p1sRSB0+UAbJzIUXJUTRoNc=
+		</data>
+		<key>ArabicText.json</key>
+		<data>
+		9tRJjk1bhLDl0hWfio2IQ/zuNfY=
+		</data>
 		<key>Assets.car</key>
 		<data>
-		b6OMyc1kQTOW2HWuupOKJZXzflM=
+		kMUQzg2ORBRtOL7F6xwgrI54uPk=
+		</data>
+		<key>Fonts/README.md</key>
+		<data>
+		wq0WDPvn13/c1BlqHVBmIa/pe0I=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		6YwG9P5kMLpYqgh2e2TkZmGBJFw=
+		vIazk7RMrxy0ezoXsCcx9w54NOE=
 		</data>
 		<key>Kurani.debug.dylib</key>
 		<data>
-		Cv+z2J8GD8ujJ9I1+wsL81MNR2I=
+		Ytj4Q1b/iQ033vaDj7IFZiveuOc=
 		</data>
 		<key>LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -50,13 +62,13 @@
 		</data>
 		<key>sample_translation.json</key>
 		<data>
-		TKd8EjfC9OkUA72EmBWIqgiBaFw=
+		3P4+SijIgfJ1vWK+d3EMi5Khvdk=
 		</data>
 		<key>sq.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EeG3ZcbwOjzhPbrYmtdgjRsV8lU=
+			xeqMK4GifOjpSZ7aZY6CNF43ehU=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -102,18 +114,39 @@
 			QYW7GAZ3zj3zrwDbm46u8M9MrulJjRLcM/WDKMRBDSw=
 			</data>
 		</dict>
+		<key>ArabicDictionary.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			XRbD8CK7heZIWYju5FYYf7GUC52vUbtIIwTz3WG3XjE=
+			</data>
+		</dict>
+		<key>ArabicText.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			64gT6ZcDQvju69pFm7OXcsyLzmk94r6hJkf5Z2Q8y3Q=
+			</data>
+		</dict>
 		<key>Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2p756aFRDT5dH5q9CqYvseSYBfEAvjDfYZBhIaVIRhc=
+			J5oQYM/1yBIwAIzIFlaa58Acbu/r3/xZPDEdaOGkiXQ=
+			</data>
+		</dict>
+		<key>Fonts/README.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			c8C9X7+TzppP7YAiXh8TfYS7qsp+vjELHaqjxxpJqdo=
 			</data>
 		</dict>
 		<key>Kurani.debug.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			l1/PnUF0BE3uEk4lR//GeqLj9r1P026yTXnV9RDPe7E=
+			PJqthYL7iN2T6TcXnIgIJTlIhF9lQhT1bZGMKC+Of5Y=
 			</data>
 		</dict>
 		<key>LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
@@ -155,14 +188,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			bAm4xBoQKeKBPySjHtg2xSZtmNX7FGlLrxIb+wAJjRo=
+			ZKN2Trl0kFHu/Qu3FJCKNcWx9RxJlOe0Y6jBult/lXE=
 			</data>
 		</dict>
 		<key>sq.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JNlxLHNqqwHKQQqtH5fXSr21cpoAlo+iZDk1yW9fQok=
+			+U8A2wWwOj1gxO99lbwXyUwNek1im9fu48A4h34T6E8=
 			</data>
 			<key>optional</key>
 			<true/>

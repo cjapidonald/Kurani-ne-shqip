@@ -7,31 +7,7 @@
         "key": "notes.title",
         "location": {
           "startingColumn": 49,
-          "startingLine": 84
-        }
-      },
-      {
-        "comment": "",
-        "key": "notes.title",
-        "location": {
-          "startingColumn": 47,
-          "startingLine": 23
-        }
-      },
-      {
-        "comment": "",
-        "key": "notes.signinRequired",
-        "location": {
-          "startingColumn": 72,
-          "startingLine": 23
-        }
-      },
-      {
-        "comment": "",
-        "key": "action.signin",
-        "location": {
-          "startingColumn": 53,
-          "startingLine": 27
+          "startingLine": 110
         }
       },
       {
@@ -39,7 +15,7 @@
         "key": "notes.loading",
         "location": {
           "startingColumn": 57,
-          "startingLine": 36
+          "startingLine": 43
         }
       },
       {
@@ -47,7 +23,7 @@
         "key": "notes.title",
         "location": {
           "startingColumn": 47,
-          "startingLine": 43
+          "startingLine": 50
         }
       },
       {
@@ -55,23 +31,207 @@
         "key": "notes.empty",
         "location": {
           "startingColumn": 72,
-          "startingLine": 43
+          "startingLine": 50
         }
       },
       {
         "comment": "",
         "key": "notes.title",
         "location": {
-          "startingColumn": 51,
-          "startingLine": 50
+          "startingColumn": 43,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.empty",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 60
         }
       },
       {
         "comment": "",
         "key": "notes.openReader",
         "location": {
-          "startingColumn": 76,
-          "startingLine": 50
+          "startingColumn": 98,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.export",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.add",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.export.error",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.ok",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.section.starred",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 292
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.remove",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 320
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.add.title",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 384
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.saveError",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 408
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.cancel",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.ok",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 397
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.ok",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.field.title",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 426
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.field.placeholder.title",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 430
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.field.content",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 443
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.field.placeholder.content",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 449
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.title",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 632
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.empty",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 524
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.section.starred",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 537
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.remove",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 565
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folder.empty",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 576
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.remove",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 616
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folder.delete",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 692
         }
       }
     ]

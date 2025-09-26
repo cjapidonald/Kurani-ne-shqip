@@ -7,7 +7,7 @@
         "key": "favorites.folderPicker.title",
         "location": {
           "startingColumn": 49,
-          "startingLine": 102
+          "startingLine": 111
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "favorites.folderPicker.existing",
         "location": {
           "startingColumn": 57,
-          "startingLine": 59
+          "startingLine": 60
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "favorites.folderPicker.new",
         "location": {
           "startingColumn": 57,
-          "startingLine": 90
+          "startingLine": 95
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "favorites.folderPicker.noFolders",
         "location": {
           "startingColumn": 49,
-          "startingLine": 61
+          "startingLine": 62
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "favorites.folderPicker.placeholder",
         "location": {
           "startingColumn": 50,
-          "startingLine": 91
+          "startingLine": 96
         }
       },
       {
@@ -79,7 +79,7 @@
         "key": "favorites.folderPicker.create",
         "location": {
           "startingColumn": 47,
-          "startingLine": 96
+          "startingLine": 101
         }
       },
       {
@@ -87,7 +87,7 @@
         "key": "action.cancel",
         "location": {
           "startingColumn": 47,
-          "startingLine": 106
+          "startingLine": 115
         }
       }
     ]
