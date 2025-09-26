@@ -55,12 +55,14 @@ struct FavoriteFolderPickerView: View {
                             .padding(.top, 6)
                     }
                 }
+                .listRowBackground(Color.kuraniPrimarySurface.opacity(0.65))
 
                 Section(header: Text(LocalizedStringKey("favorites.folderPicker.existing"))) {
                     if favoritesStore.folders.isEmpty {
                         Text(LocalizedStringKey("favorites.folderPicker.noFolders"))
                             .font(.system(.footnote, design: .rounded))
                             .foregroundColor(.kuraniTextSecondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     } else {
                         ForEach(favoritesStore.folders) { folder in
                             Button {
@@ -82,10 +84,13 @@ struct FavoriteFolderPickerView: View {
                                             .foregroundColor(.kuraniAccentLight)
                                     }
                                 }
+                                .padding(.vertical, 4)
                             }
+                            .listRowBackground(Color.kuraniPrimarySurface.opacity(0.45))
                         }
                     }
                 }
+                .listRowBackground(Color.kuraniPrimarySurface.opacity(0.45))
 
                 Section(header: Text(LocalizedStringKey("favorites.folderPicker.new"))) {
                     TextField(LocalizedStringKey("favorites.folderPicker.placeholder"), text: $newFolderName)
@@ -98,7 +103,11 @@ struct FavoriteFolderPickerView: View {
                     }
                     .disabled(newFolderName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
+                .listRowBackground(Color.kuraniPrimarySurface.opacity(0.65))
             }
+            .scrollContentBackground(.hidden)
+            .listRowSeparator(.hidden)
+            .background(KuraniTheme.background.ignoresSafeArea())
             .navigationTitle(LocalizedStringKey("favorites.folderPicker.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -110,8 +119,9 @@ struct FavoriteFolderPickerView: View {
                 }
             }
         }
+        .tint(.kuraniAccentLight)
+        .background(KuraniTheme.background.ignoresSafeArea())
     }
-
     private func folderDetail(for folder: FavoriteFolder) -> String {
         let count = folder.entries.count
         if count == 1 {
