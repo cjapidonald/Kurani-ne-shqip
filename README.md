@@ -69,7 +69,7 @@ Resources/
 
 ## Burimet e përfshira
 - `QuranMeta.json`: metadata për të 114 suret (numri, emri në shqip, numri i ajeteve).
-- `sample_translation.json`: tekst demonstrues për Suret 1 dhe 112. Përdoret për të demonstruar leximin dhe importin.
+- `sample_translation.json`: përkthimi i plotë në shqip (Sherif Ahmeti) për të gjitha 114 suret, i marrë nga projekti [fawazahmed0/quran-api](https://github.com/fawazahmed0/quran-api) (licencë publike). Përdoret si përkthim i parazgjedhur në aplikacion.
 
 Për të ngarkuar një përkthim të plotë, përdor `Importo përkthimin` në cilësime dhe zgjidh një skedar JSON me të njëjtën strukturë si shembulli i përfshirë.
 
@@ -84,4 +84,4 @@ Për të ngarkuar një përkthim të plotë, përdor `Importo përkthimin` në c
 - Shënimet duken në tab-in “Shënimet e mia” të grupuara sipas sures dhe mund të hapin lexuesin për përditësim.
 
 ## Licenca e përkthimit
-Aplikacioni vjen vetëm me përmbajtje demonstrative. Përkthimet e plota mund të jenë të mbrojtura nga të drejtat e autorit, ndaj përdoruesi duhet të importojë skedarët e vetë në përputhje me ligjin.
+Përkthimi i përfshirë (Sherif Ahmeti) është publikuar në projektin [quran-api](https://github.com/fawazahmed0/quran-api) nën licencë publike (Unlicense). Përkthimet e tjera të plota mund të jenë të mbrojtura nga të drejtat e autorit, ndaj përdoruesi duhet të importojë skedarët e vetë në përputhje me ligjin.
