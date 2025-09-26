@@ -21,6 +21,7 @@ struct NotesView: View {
                 if authManager.userId == nil {
                     VStack(spacing: 24) {
                         BrandHeader(titleKey: "notes.title", subtitle: "notes.signinRequired")
+                            .padding(.horizontal, 16)
                         Button {
                             showingSignInSheet = true
                         } label: {
@@ -35,12 +36,13 @@ struct NotesView: View {
                     VStack(spacing: 16) {
                         ProgressView(LocalizedStringKey("notes.loading"))
                             .progressViewStyle(.circular)
-                            .tint(.accentBrand)
+                            .tint(.kuraniAccentLight)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if viewModel.sortedSurahNumbers.isEmpty {
                     VStack(spacing: 16) {
                         BrandHeader(titleKey: "notes.title", subtitle: "notes.empty")
+                            .padding(.horizontal, 16)
                         Spacer()
                     }
                     .padding()
@@ -50,6 +52,7 @@ struct NotesView: View {
                             BrandHeader(titleKey: "notes.title", subtitle: "notes.openReader")
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.clear)
+                                .padding(.vertical, 8)
                         }
 
                         ForEach(viewModel.sortedSurahNumbers, id: \.self) { surahNumber in
@@ -67,20 +70,26 @@ struct NotesView: View {
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.kuraniTextSecondary)
                                         }
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .appleCard(cornerRadius: 20)
+                                        .padding(.horizontal, 20)
                                     }
-                                    .listRowBackground(Color.kuraniPrimarySurface)
+                                    .buttonStyle(.plain)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowBackground(Color.clear)
+                                    .padding(.vertical, 6)
                                 }
                             }
-                            .listRowBackground(Color.kuraniPrimarySurface)
+                            .listRowBackground(Color.clear)
                         }
                     }
                     .listStyle(.insetGrouped)
+                    .listSectionSpacing(20)
                     .scrollContentBackground(.hidden)
-                    .background(Color.kuraniDarkBackground)
+                    .listRowSeparator(.hidden)
+                    .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
                 }
             }
-            .background(Color.kuraniDarkBackground.ignoresSafeArea())
+            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
             .navigationTitle(LocalizedStringKey("notes.title"))
             .sheet(isPresented: $showingSignInSheet) {
                 SignInPromptView()
@@ -95,6 +104,7 @@ struct NotesView: View {
                 .environmentObject(authManager)
             }
         }
+        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
     }
 
     private func sectionTitle(for surah: Int) -> String {

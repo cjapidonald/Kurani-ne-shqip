@@ -11,21 +11,30 @@ struct NoteEditorView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 20) {
                 Text(String(format: NSLocalizedString("reader.title.compact", comment: "title"), ayah.number, ayah.text))
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(.kuraniTextSecondary)
 
                 TextEditor(text: $draft)
                     .focused($isFocused)
-                    .frame(minHeight: 160)
-                    .padding(8)
-                    .background(Color.kuraniPrimarySurface.opacity(0.4))
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .frame(minHeight: 220)
+                    .padding(.vertical, 18)
+                    .padding(.horizontal, 16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 26, style: .continuous)
+                            .fill(Color.kuraniPrimarySurface.opacity(0.58))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                                    .stroke(Color.white.opacity(0.12), lineWidth: 0.8)
+                            )
+                            .shadow(color: Color.black.opacity(0.32), radius: 20, y: 14)
+                    )
                     .foregroundColor(.kuraniTextPrimary)
             }
-            .padding()
-            .background(Color.kuraniDarkBackground.ignoresSafeArea())
+            .padding(.horizontal, 20)
+            .padding(.vertical, 24)
+            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
             .navigationTitle(draft.isEmpty ? LocalizedStringKey("reader.note.add") : LocalizedStringKey("reader.note.edit"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -45,6 +54,7 @@ struct NoteEditorView: View {
                     .disabled(draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSaving)
                 }
             }
+            .tint(.kuraniAccentLight)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     isFocused = true

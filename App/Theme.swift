@@ -7,14 +7,24 @@ enum KuraniTheme {
     static let accent = Color.kuraniAccentBrand
     static let accentLight = Color.kuraniAccentLight
 
+    static let backgroundGradient = LinearGradient(
+        colors: [
+            Color.kuraniDarkBackground,
+            Color.kuraniPrimarySurface.opacity(0.45),
+            Color.kuraniDarkBackground.opacity(0.92)
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
     static let headerGradient = LinearGradient(
-        colors: [Color.kuraniPrimaryBrand, Color.kuraniAccentBrand],
-        startPoint: .leading,
-        endPoint: .trailing
+        colors: [Color.kuraniPrimaryBrand, Color.kuraniAccentLight, Color.kuraniAccentBrand],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
     )
 
     static let accentGradient = LinearGradient(
-        colors: [Color.kuraniAccentBrand, Color.kuraniPrimaryBrand],
+        colors: [Color.kuraniAccentBrand, Color.kuraniAccentLight],
         startPoint: .top,
         endPoint: .bottom
     )
@@ -38,10 +48,10 @@ struct BrandHeader: View {
     var subtitle: LocalizedStringKey?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             Text(titleKey)
                 .font(.system(.largeTitle, design: .rounded))
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
                 .foregroundColor(.kuraniTextPrimary)
             if let subtitle {
                 Text(subtitle)
@@ -49,11 +59,19 @@ struct BrandHeader: View {
                     .foregroundColor(.kuraniTextSecondary)
             }
         }
-        .padding()
+        .padding(.vertical, 24)
+        .padding(.horizontal, 26)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(KuraniTheme.headerGradient)
-        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
-        .shadow(color: Color.black.opacity(0.3), radius: 8, y: 6)
+        .background(
+            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                .fill(KuraniTheme.headerGradient)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1.2)
+                )
+                .shadow(color: Color.black.opacity(0.45), radius: 24, y: 16)
+        )
+        .padding(.horizontal, 4)
     }
 }
 
@@ -62,31 +80,52 @@ struct Pill: View {
 
     var body: some View {
         Text("\(number)")
-            .font(.system(.caption, design: .rounded))
+            .font(.system(.subheadline, design: .rounded))
             .fontWeight(.semibold)
-            .padding(.vertical, 4)
-            .padding(.horizontal, 8)
-            .background(Color.kuraniPrimarySurface.opacity(0.8))
-            .clipShape(Capsule())
-            .foregroundColor(.kuraniAccentLight)
+            .padding(.vertical, 6)
+            .padding(.horizontal, 12)
+            .foregroundColor(.kuraniTextPrimary)
+            .background(
+                Capsule()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.kuraniAccentLight.opacity(0.9), Color.kuraniAccentBrand.opacity(0.9)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            )
+            .overlay(
+                Capsule()
+                    .stroke(Color.white.opacity(0.25), lineWidth: 0.8)
+            )
+            .shadow(color: Color.black.opacity(0.25), radius: 12, y: 6)
     }
 }
 
 struct GradientButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .padding(.horizontal, 20)
             .frame(maxWidth: .infinity)
             .background(
-                LinearGradient(
-                    colors: [Color.kuraniPrimaryBrand, Color.kuraniAccentBrand],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(KuraniTheme.accentGradient)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color.white.opacity(0.25), Color.white.opacity(0)],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                    )
             )
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .shadow(color: Color.black.opacity(configuration.isPressed ? 0.15 : 0.35), radius: 16, y: 12)
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .animation(.spring(response: 0.36, dampingFraction: 0.8), value: configuration.isPressed)
     }
 }
 
@@ -103,5 +142,31 @@ struct ToastView: View {
             .foregroundColor(.kuraniTextPrimary)
             .clipShape(Capsule())
             .shadow(radius: 12)
+    }
+}
+
+private struct AppleCardBackground: ViewModifier {
+    var cornerRadius: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.vertical, 18)
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .fill(Color.kuraniPrimarySurface.opacity(0.82))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                            .stroke(Color.white.opacity(0.08), lineWidth: 0.8)
+                    )
+                    .shadow(color: Color.black.opacity(0.35), radius: 20, y: 14)
+            )
+    }
+}
+
+extension View {
+    func appleCard(cornerRadius: CGFloat = 24) -> some View {
+        modifier(AppleCardBackground(cornerRadius: cornerRadius))
     }
 }

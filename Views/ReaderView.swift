@@ -25,7 +25,7 @@ struct ReaderView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 16) {
+                LazyVStack(alignment: .leading, spacing: 20) {
                     ForEach(viewModel.ayahs) { ayah in
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(alignment: .top, spacing: 12) {
@@ -60,35 +60,36 @@ struct ReaderView: View {
                             if let note = viewModel.note(for: ayah) {
                                 HStack {
                                     Image(systemName: "pencil.and.outline")
-                                        .foregroundColor(.accentBrand)
+                                        .foregroundStyle(Color.kuraniAccentLight)
                                     Text(String(format: NSLocalizedString("reader.noteBanner", comment: "banner"), noteFormatter.string(from: note.updatedAt)))
                                         .font(.system(.caption, design: .rounded))
                                         .foregroundColor(.kuraniTextSecondary)
                                 }
-                                .padding(10)
-                                .background(Color.kuraniPrimarySurface.opacity(0.6))
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                        .fill(Color.kuraniPrimarySurface.opacity(0.68))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                                .stroke(Color.white.opacity(0.12), lineWidth: 0.6)
+                                        )
+                                )
                             }
                         }
-                        .padding()
-                        .background(Color.kuraniPrimarySurface.opacity(0.5))
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.kuraniPrimarySurface.opacity(0.2), lineWidth: 1)
-                        )
+                        .appleCard(cornerRadius: 28)
+                        .padding(.horizontal, 16)
                         .id(ayah.number)
                         .onAppear {
                             viewModel.updateLastRead(ayah: ayah.number)
                         }
                     }
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 40)
+                .padding(.bottom, 56)
             }
-            .background(Color.kuraniDarkBackground.ignoresSafeArea())
+            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
             .navigationTitle(Text(viewModel.surahTitle))
-            .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
+            .toolbarBackground(Color.kuraniDarkBackground.opacity(0.35), for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -97,18 +98,21 @@ struct ReaderView: View {
                     } label: {
                         Image(systemName: "textformat.size.smaller")
                             .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
+                            .foregroundStyle(Color.kuraniAccentLight)
                     }
                     Button {
                         viewModel.increaseFont()
                     } label: {
                         Image(systemName: "textformat.size.larger")
                             .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
+                            .foregroundStyle(Color.kuraniAccentLight)
                     }
                     Menu {
                         Button(LocalizedStringKey("reader.lineSpacing.decrease")) { viewModel.decreaseLineSpacing() }
                         Button(LocalizedStringKey("reader.lineSpacing.increase")) { viewModel.increaseLineSpacing() }
                     } label: {
                         Image(systemName: "text.line.first.and.arrowtriangle.forward")
+                            .foregroundStyle(Color.kuraniAccentLight)
                     }
                     .accessibilityLabel(LocalizedStringKey("reader.lineSpacing"))
                     Button {
@@ -119,10 +123,12 @@ struct ReaderView: View {
                         }
                     } label: {
                         Image(systemName: "note.text")
+                            .foregroundStyle(Color.kuraniAccentLight)
                     }
                     .accessibilityLabel(LocalizedStringKey("reader.notesButton"))
                 }
             }
+            .tint(Color.kuraniAccentLight)
             .onAppear {
                 if let startingAyah, viewModel.ayahs.contains(where: { $0.number == startingAyah }) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -133,6 +139,7 @@ struct ReaderView: View {
                 }
             }
         }
+        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
         .sheet(isPresented: $viewModel.isNoteEditorPresented) {
             if let ayah = viewModel.selectedAyah {
                 NoteEditorView(

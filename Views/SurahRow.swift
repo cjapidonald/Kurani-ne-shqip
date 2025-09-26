@@ -16,9 +16,10 @@ struct SurahRow: View {
             }
             Spacer()
             Image(systemName: "chevron.right")
-                .foregroundColor(Color.accentBrand)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Color.kuraniAccentLight)
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 4)
         .contentShape(Rectangle())
     }
 }

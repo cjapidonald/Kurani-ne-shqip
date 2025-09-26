@@ -22,6 +22,7 @@ struct LibraryView: View {
                     BrandHeader(titleKey: "tabs.library", subtitle: "library.sampleOnly")
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
+                        .padding(.vertical, 8)
                 }
 
                 if let lastRead = viewModel.lastRead {
@@ -42,8 +43,13 @@ struct LibraryView: View {
                                 Image(systemName: "arrow.right")
                                     .foregroundColor(.accentBrand)
                             }
+                            .appleCard()
+                            .padding(.horizontal, 20)
                         }
-                        .listRowBackground(Color.kuraniPrimarySurface)
+                        .buttonStyle(.plain)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                        .padding(.vertical, 6)
                     }
                 }
 
@@ -51,20 +57,28 @@ struct LibraryView: View {
                     ForEach(viewModel.filteredSurahs) { surah in
                         NavigationLink(value: ReaderRoute(surah: surah.number, ayah: nil)) {
                             SurahRow(surah: surah)
+                                .appleCard()
+                                .padding(.horizontal, 20)
                         }
-                        .listRowBackground(Color.kuraniPrimarySurface)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                        .padding(.vertical, 6)
                     }
                 }
             }
             .listStyle(.insetGrouped)
+            .listSectionSpacing(20)
             .scrollContentBackground(.hidden)
-            .background(Color.kuraniDarkBackground)
+            .listRowSeparator(.hidden)
+            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: LocalizedStringKey("library.search.placeholder"))
             .navigationTitle(LocalizedStringKey("tabs.library"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: openNotesTab) {
                         Label(LocalizedStringKey("reader.notesButton"), systemImage: "note.text")
+                            .labelStyle(.titleAndIcon)
+                            .foregroundStyle(Color.kuraniAccentLight)
                     }
                 }
             }
@@ -80,5 +94,6 @@ struct LibraryView: View {
                 viewModel.refreshLastRead()
             }
         }
+        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
     }
 }
