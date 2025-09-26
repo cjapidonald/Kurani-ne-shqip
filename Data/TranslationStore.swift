@@ -87,8 +87,19 @@ final class TranslationStore: ObservableObject {
     }
 
     func importTranslation(from url: URL) async throws {
-        let data = try Data(contentsOf: url)
-        let translation = try decoder.decode(TranslationFile.self, from: data)
+        let decoder = self.decoder
+        let shouldStopAccess = url.startAccessingSecurityScopedResource()
+        defer {
+            if shouldStopAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
+        }
+
+        let translation = try await Task.detached(priority: .userInitiated) { () throws -> TranslationFile in
+            let data = try Data(contentsOf: url)
+            return try decoder.decode(TranslationFile.self, from: data)
+        }.value
+
         ayahsBySurah = translation.surahs.reduce(into: [:]) { result, entry in
             let sorted = entry.ayahs.sorted { $0.number < $1.number }
             result[entry.number] = applyArabicTextIfAvailable(to: sorted, surahNumber: entry.number)
