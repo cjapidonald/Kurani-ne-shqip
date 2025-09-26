@@ -45,7 +45,7 @@ struct BrandHeader: View {
                 .fill(Color.kuraniAccentLight.opacity(0.22))
                 .overlay(
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
-                        .stroke(Color.white.opacity(0.6), lineWidth: 1.2)
+                        .stroke(Color.black.opacity(0.08), lineWidth: 1.2)
                 )
                 .shadow(color: Color.kuraniPrimaryBrand.opacity(0.14), radius: 18, y: 12)
         )
@@ -69,7 +69,7 @@ struct Pill: View {
             )
             .overlay(
                 Capsule()
-                    .stroke(Color.white.opacity(0.6), lineWidth: 0.8)
+                    .stroke(Color.black.opacity(0.12), lineWidth: 0.8)
             )
             .shadow(color: Color.kuraniAccentBrand.opacity(0.18), radius: 8, y: 4)
     }
@@ -86,7 +86,7 @@ struct GradientButtonStyle: ButtonStyle {
                     .fill(KuraniTheme.accent)
                     .overlay(
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .stroke(Color.white.opacity(0.7), lineWidth: 1)
+                            .stroke(Color.black.opacity(0.15), lineWidth: 1)
                     )
             )
             .shadow(color: Color.kuraniAccentBrand.opacity(configuration.isPressed ? 0.12 : 0.22), radius: 12, y: 8)
@@ -124,7 +124,7 @@ private struct AppleCardBackground: ViewModifier {
                     .fill(Color.kuraniPrimarySurface)
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                            .stroke(Color.black.opacity(0.08), lineWidth: 1)
                     )
                     .shadow(color: Color.kuraniPrimaryBrand.opacity(0.08), radius: 10, y: 6)
             )

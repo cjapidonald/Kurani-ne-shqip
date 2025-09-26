@@ -92,7 +92,7 @@ main
                                         .fill(Color.kuraniPrimarySurface.opacity(0.68))
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                                .stroke(Color.white.opacity(0.12), lineWidth: 0.6)
+                                                .stroke(Color.black.opacity(0.12), lineWidth: 0.6)
                                         )
                                 )
                             }
