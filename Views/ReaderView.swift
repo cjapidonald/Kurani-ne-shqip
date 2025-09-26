@@ -49,7 +49,7 @@ struct ReaderView: View {
 codex/change-font-to-kg-primary-penmanship
                                     Text(ayah.text)
                                         .font(KuraniFont.size(18 * viewModel.fontScale, relativeTo: .body))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.kuraniTextPrimary)
                                         .lineSpacing(4 * viewModel.lineSpacingScale)
                                         .contextMenu {
                                             Button(LocalizedStringKey("action.edit")) {
@@ -61,7 +61,7 @@ codex/change-font-to-kg-primary-penmanship
                                     if showAlbanianText {
                                         Text(ayah.text)
                                             .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
-                                            .foregroundColor(.white)
+                                            .foregroundColor(.kuraniTextPrimary)
                                             .lineSpacing(4 * viewModel.lineSpacingScale)
                                             .contextMenu {
                                                 Button(LocalizedStringKey("action.edit")) {
@@ -137,7 +137,7 @@ codex/add-button-to-redirect-with-ayah-details
                                         .fill(Color.kuraniPrimarySurface.opacity(0.68))
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                                .stroke(Color.black.opacity(0.12), lineWidth: 0.6)
+                                                .stroke(Color.kuraniPrimaryBrand.opacity(0.12), lineWidth: 0.6)
                                         )
                                 )
                             }

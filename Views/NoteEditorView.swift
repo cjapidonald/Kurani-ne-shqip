@@ -26,11 +26,11 @@ struct NoteEditorView: View {
                             .fill(Color.kuraniPrimarySurface.opacity(0.58))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 26, style: .continuous)
-                                    .stroke(Color.black.opacity(0.12), lineWidth: 0.8)
+                                    .stroke(Color.kuraniPrimaryBrand.opacity(0.12), lineWidth: 0.8)
                             )
-                            .shadow(color: Color.black.opacity(0.32), radius: 20, y: 14)
+                            .shadow(color: Color.kuraniPrimaryBrand.opacity(0.32), radius: 20, y: 14)
                     )
-                    .foregroundColor(.black)
+                    .foregroundColor(.kuraniTextPrimary)
                     .font(KuraniFont.forTextStyle(.body))
             }
             .padding(.horizontal, 20)

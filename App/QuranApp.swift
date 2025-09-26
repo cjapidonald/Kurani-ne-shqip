@@ -17,8 +17,8 @@ codex/add-reading-progress-bar-and-reset-button
 
     init() {
         let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(Color.kuraniTextPrimary)]
+        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(Color.kuraniTextPrimary)]
     }
 
     var body: some Scene {

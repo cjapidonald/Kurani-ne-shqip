@@ -49,7 +49,7 @@ struct ArabicSelectableTextView: UIViewRepresentable {
             attributes: [
                 .paragraphStyle: paragraph,
                 .font: UIFont.systemFont(ofSize: fontPointSize, weight: .regular),
-                .foregroundColor: UIColor.white
+                .foregroundColor: UIColor(Color.kuraniTextPrimary)
             ]
         )
         textView.attributedText = attributed
