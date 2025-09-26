@@ -5,6 +5,7 @@ struct SettingsView: View {
 
     @State private var showingImporter = false
     @State private var toastVisible = false
+    @State private var showingResetConfirmation = false
 
     var body: some View {
         NavigationStack {
@@ -34,6 +35,25 @@ struct SettingsView: View {
 
                         Button(LocalizedStringKey("settings.import")) {
                             showingImporter = true
+                        }
+                        .buttonStyle(GradientButtonStyle())
+                    }
+                    .appleCard()
+                    .padding(.horizontal, 12)
+                }
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+
+                Section(header: Text(LocalizedStringKey("settings.progress.title"))) {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text(LocalizedStringKey("settings.progress.description"))
+                            .foregroundColor(.kuraniTextSecondary)
+
+                        Button(role: .destructive) {
+                            showingResetConfirmation = true
+                        } label: {
+                            Text(LocalizedStringKey("settings.progress.reset"))
+                                .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(GradientButtonStyle())
                     }
@@ -80,6 +100,12 @@ struct SettingsView: View {
                     ToastView(message: message)
                         .padding(.bottom, 32)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .confirmationDialog(LocalizedStringKey("settings.progress.resetConfirm"), isPresented: $showingResetConfirmation, titleVisibility: .visible) {
+                Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
+                Button(LocalizedStringKey("settings.progress.resetConfirmButton"), role: .destructive) {
+                    viewModel.resetReadingProgress()
                 }
             }
             .onChange(of: viewModel.toast) { _, newValue in

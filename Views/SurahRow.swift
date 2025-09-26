@@ -3,6 +3,12 @@ import Foundation
 
 struct SurahRow: View {
     let surah: Surah
+    let progress: Double
+
+    private var percentageString: String {
+        let clamped = max(0, min(progress, 1))
+        return "\(Int(round(clamped * 100)))%"
+    }
 
     var body: some View {
         HStack(spacing: 16) {
@@ -16,6 +22,7 @@ struct SurahRow: View {
                     .foregroundColor(.kuraniTextSecondary)
             }
             Spacer()
+            ProgressBadge(percentage: percentageString)
             Image(systemName: "chevron.right")
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundStyle(Color.kuraniAccentLight)

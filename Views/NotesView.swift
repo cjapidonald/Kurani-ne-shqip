@@ -10,6 +10,7 @@ struct NotesView: View {
     let translationStore: TranslationStore
 
     @EnvironmentObject private var notesStore: NotesStore
+    @EnvironmentObject private var progressStore: ReadingProgressStore
 
     @State private var path: [ReaderRoute] = []
 
@@ -77,7 +78,12 @@ struct NotesView: View {
             .navigationTitle(LocalizedStringKey("notes.title"))
             .navigationDestination(for: ReaderRoute.self) { route in
                 ReaderView(
-                    viewModel: ReaderViewModel(surahNumber: route.surah, translationStore: translationStore, notesStore: notesStore),
+                    viewModel: ReaderViewModel(
+                        surahNumber: route.surah,
+                        translationStore: translationStore,
+                        notesStore: notesStore,
+                        progressStore: progressStore
+                    ),
                     startingAyah: route.ayah,
                     openNotesTab: { path = [] }
                 )
