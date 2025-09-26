@@ -6,6 +6,22 @@ struct NotesView: View {
         let ayah: Int
     }
 
+    private struct NoteCreationConfiguration: Identifiable {
+        let id = UUID()
+        let surah: Int
+        let ayah: Int
+    }
+
+    private struct ShareItem: Identifiable {
+        let id = UUID()
+        let url: URL
+    }
+
+    private struct ExportError: Identifiable {
+        let id = UUID()
+        let message: LocalizedStringKey
+    }
+
     @ObservedObject var viewModel: NotesViewModel
     let translationStore: TranslationStore
 
@@ -15,6 +31,9 @@ struct NotesView: View {
     @EnvironmentObject private var favoritesStore: FavoritesStore
 
     @State private var path: [ReaderRoute] = []
+    @State private var creationConfiguration: NoteCreationConfiguration?
+    @State private var shareItem: ShareItem?
+    @State private var exportError: ExportError?
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -49,6 +68,10 @@ struct NotesView: View {
                                         path.append(ReaderRoute(surah: note.surah, ayah: note.ayah))
                                     } label: {
                                         VStack(alignment: .leading, spacing: 8) {
+                                            Text(displayTitle(for: note))
+                                                .font(KuraniFont.forTextStyle(.headline))
+                                                .foregroundColor(.kuraniTextPrimary)
+                                                .lineLimit(2)
                                             Text(note.text)
                                                 .font(KuraniFont.forTextStyle(.body))
                                                 .foregroundColor(.kuraniTextPrimary)
@@ -78,6 +101,24 @@ struct NotesView: View {
             }
             .background(KuraniTheme.background.ignoresSafeArea())
             .navigationTitle(LocalizedStringKey("notes.title"))
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
+                        exportNotes()
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                    .disabled(!hasNotes)
+                    .accessibilityLabel(LocalizedStringKey("notes.export"))
+
+                    Button {
+                        openCreationSheet()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .accessibilityLabel(LocalizedStringKey("action.add"))
+                }
+            }
             .navigationDestination(for: ReaderRoute.self) { route in
                 ReaderView(
                     viewModel: ReaderViewModel(
@@ -92,17 +133,374 @@ struct NotesView: View {
                 )
             }
         }
+        .sheet(item: $creationConfiguration) { configuration in
+            AddNoteSheet(
+                translationStore: translationStore,
+                initialSurah: configuration.surah,
+                initialAyah: configuration.ayah,
+                onSave: saveNewNote,
+                onDismiss: { creationConfiguration = nil }
+            )
+        }
+        .sheet(item: $shareItem) { item in
+            ShareSheet(items: [item.url])
+        }
+        .alert(item: $exportError) { error in
+            Alert(
+                title: Text(error.message),
+                dismissButton: .default(Text(LocalizedStringKey("action.ok"))) {
+                    exportError = nil
+                }
+            )
+        }
         .background(KuraniTheme.background.ignoresSafeArea())
     }
 
+    private var hasNotes: Bool {
+        !notesStore.notes.isEmpty
+    }
+
+    private func openCreationSheet() {
+        creationConfiguration = NoteCreationConfiguration(
+            surah: defaultSurahForCreation(),
+            ayah: 1
+        )
+    }
+
+    private func defaultSurahForCreation() -> Int {
+        if let firstSurah = translationStore.surahs.first?.number {
+            return firstSurah
+        }
+        if let firstNoteSurah = viewModel.sortedSurahNumbers.first {
+            return firstNoteSurah
+        }
+        return 1
+    }
+
+    private func saveNewNote(surah: Int, ayah: Int, title: String, text: String) async -> Bool {
+        do {
+            try await notesStore.upsertNote(surah: surah, ayah: ayah, title: title, text: text)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    private func exportNotes() {
+        let notes = notesStore.notes
+        guard !notes.isEmpty else { return }
+        do {
+            let csv = csvString(from: notes)
+            let url = try writeCSV(csv)
+            shareItem = ShareItem(url: url)
+        } catch {
+            exportError = ExportError(message: LocalizedStringKey("notes.export.error"))
+        }
+    }
+
+    private func writeCSV(_ csv: String) throws -> URL {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd-HHmmss"
+        let filename = "shenime-\(formatter.string(from: Date())).csv"
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+        let data = Data(csv.utf8)
+        try data.write(to: url, options: .atomic)
+        return url
+    }
+
+    private func csvString(from notes: [Note]) -> String {
+        var lines: [String] = []
+        lines.append(NSLocalizedString("notes.export.header", comment: "CSV header"))
+        let formatter = csvDateFormatter()
+        for note in notes {
+            let fields = [
+                csvEscape(displayTitle(for: note)),
+                csvEscape(surahDisplayName(for: note.surah)),
+                csvEscape(String(note.ayah)),
+                csvEscape(note.text),
+                csvEscape(formatter.string(from: note.updatedAt))
+            ]
+            let line = fields.map { "\"\($0)\"" }.joined(separator: ",")
+            lines.append(line)
+        }
+        return lines.joined(separator: "\n")
+    }
+
+    private func csvEscape(_ value: String) -> String {
+        value.replacingOccurrences(of: "\"", with: "\"\"")
+    }
+
+    private func csvDateFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }
+
     private func sectionTitle(for surah: Int) -> String {
-        String(format: NSLocalizedString("notes.section", comment: "section"), translationStore.title(for: surah))
+        String(format: NSLocalizedString("notes.section", comment: "section"), surahDisplayName(for: surah))
+    }
+
+    private func displayTitle(for note: Note) -> String {
+        if let title = note.title?.trimmingCharacters(in: .whitespacesAndNewlines), !title.isEmpty {
+            return title
+        }
+        return defaultTitle(for: note.surah, ayah: note.ayah)
+    }
+
+    private func defaultTitle(for surah: Int, ayah: Int) -> String {
+        let surahName = surahDisplayName(for: surah)
+        return String(
+            format: NSLocalizedString("notes.defaultTitle", comment: "default note title"),
+            surahName,
+            ayah
+        )
+    }
+
+    private func surahDisplayName(for surah: Int) -> String {
+        let name = translationStore.title(for: surah)
+        if name.isEmpty {
+            return String(format: NSLocalizedString("notes.surahNumber", comment: "surah number"), surah)
+        }
+        return name
     }
 
     private func formatted(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter.string(from: date)
+    }
+}
+
+private struct AddNoteSheet: View {
+    let translationStore: TranslationStore
+    let initialSurah: Int
+    let initialAyah: Int
+    let onSave: (Int, Int, String, String) async -> Bool
+    let onDismiss: () -> Void
+
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var title: String = ""
+    @State private var noteText: String = ""
+    @State private var selectedSurah: Int
+    @State private var selectedAyah: Int
+    @State private var isSaving = false
+    @State private var showError = false
+
+    @FocusState private var focusedField: Field?
+
+    private enum Field {
+        case title
+        case body
+    }
+
+    init(
+        translationStore: TranslationStore,
+        initialSurah: Int,
+        initialAyah: Int,
+        onSave: @escaping (Int, Int, String, String) async -> Bool,
+        onDismiss: @escaping () -> Void
+    ) {
+        self.translationStore = translationStore
+        self.initialSurah = initialSurah
+        self.initialAyah = initialAyah
+        self.onSave = onSave
+        self.onDismiss = onDismiss
+        _selectedSurah = State(initialValue: initialSurah)
+        _selectedAyah = State(initialValue: max(initialAyah, 1))
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    surahSelection
+                    titleSection
+                    noteSection
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 24)
+            }
+            .background(KuraniTheme.background.ignoresSafeArea())
+            .navigationTitle(LocalizedStringKey("notes.add.title"))
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(LocalizedStringKey("action.cancel")) {
+                        onDismiss()
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(action: save) {
+                        if isSaving {
+                            ProgressView()
+                        } else {
+                            Text(LocalizedStringKey("action.ok"))
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .disabled(!canSave || isSaving)
+                }
+            }
+            .tint(.kuraniAccentLight)
+            .onAppear {
+                let ayahCount = max(translationStore.ayahCount(for: selectedSurah), 1)
+                if selectedAyah > ayahCount {
+                    selectedAyah = ayahCount
+                }
+                focusedField = .title
+            }
+            .onChange(of: selectedSurah) { newValue in
+                let ayahCount = max(translationStore.ayahCount(for: newValue), 1)
+                if selectedAyah > ayahCount {
+                    selectedAyah = ayahCount
+                }
+            }
+            .alert(LocalizedStringKey("notes.saveError"), isPresented: $showError) {
+                Button(LocalizedStringKey("action.ok")) {
+                    showError = false
+                }
+            }
+            .onDisappear {
+                onDismiss()
+            }
+        }
+    }
+
+    private var canSave: Bool {
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            !noteText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    private var surahSelection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(LocalizedStringKey("notes.field.surahAyah"))
+                .font(KuraniFont.forTextStyle(.subheadline))
+                .foregroundColor(.kuraniTextSecondary)
+
+            HStack(alignment: .top, spacing: 16) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(LocalizedStringKey("notes.field.surah"))
+                        .font(KuraniFont.forTextStyle(.caption))
+                        .foregroundColor(.kuraniTextSecondary)
+                    Picker("", selection: $selectedSurah) {
+                        if translationStore.surahs.isEmpty {
+                            ForEach(1...114, id: \.self) { number in
+                                Text(String(format: NSLocalizedString("notes.surahNumber", comment: "surah number"), number))
+                                    .tag(number)
+                            }
+                        } else {
+                            ForEach(translationStore.surahs) { surah in
+                                let name = surah.name.isEmpty
+                                    ? String(format: NSLocalizedString("notes.surahNumber", comment: "surah number"), surah.number)
+                                    : surah.name
+                                Text(name)
+                                    .tag(surah.number)
+                            }
+                        }
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                    .tint(.kuraniAccentLight)
+                }
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(LocalizedStringKey("notes.field.ayah"))
+                        .font(KuraniFont.forTextStyle(.caption))
+                        .foregroundColor(.kuraniTextSecondary)
+                    Picker("", selection: $selectedAyah) {
+                        ForEach(ayahOptions, id: \.self) { ayah in
+                            Text("\(ayah)")
+                                .tag(ayah)
+                        }
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                    .tint(.kuraniAccentLight)
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 20)
+        .background(cardBackground())
+    }
+
+    private var titleSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(LocalizedStringKey("notes.field.title"))
+                .font(KuraniFont.forTextStyle(.subheadline))
+                .foregroundColor(.kuraniTextSecondary)
+
+            TextField(LocalizedStringKey("notes.field.placeholder.title"), text: $title)
+                .focused($focusedField, equals: .title)
+                .textFieldStyle(.plain)
+                .padding(.vertical, 14)
+                .padding(.horizontal, 16)
+                .background(cardBackground())
+                .foregroundColor(.kuraniTextPrimary)
+                .font(KuraniFont.forTextStyle(.body))
+        }
+    }
+
+    private var noteSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(LocalizedStringKey("notes.field.content"))
+                .font(KuraniFont.forTextStyle(.subheadline))
+                .foregroundColor(.kuraniTextSecondary)
+
+            ZStack(alignment: .topLeading) {
+                if noteText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text(LocalizedStringKey("notes.field.placeholder.content"))
+                        .font(KuraniFont.forTextStyle(.body))
+                        .foregroundColor(.kuraniTextSecondary)
+                        .padding(.vertical, 22)
+                        .padding(.horizontal, 22)
+                }
+
+                TextEditor(text: $noteText)
+                    .focused($focusedField, equals: .body)
+                    .frame(minHeight: 220)
+                    .padding(.vertical, 18)
+                    .padding(.horizontal, 16)
+                    .foregroundColor(.kuraniTextPrimary)
+                    .font(KuraniFont.forTextStyle(.body))
+                    .scrollContentBackground(.hidden)
+            }
+            .background(cardBackground())
+        }
+    }
+
+    private var ayahOptions: [Int] {
+        let count = max(translationStore.ayahCount(for: selectedSurah), 1)
+        return Array(1...count)
+    }
+
+    private func cardBackground() -> some View {
+        RoundedRectangle(cornerRadius: 26, style: .continuous)
+            .fill(Color.kuraniPrimarySurface.opacity(0.58))
+            .overlay(
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .stroke(Color.kuraniPrimaryBrand.opacity(0.12), lineWidth: 0.8)
+            )
+            .shadow(color: Color.kuraniPrimaryBrand.opacity(0.32), radius: 20, y: 14)
+    }
+
+    private func save() {
+        guard !isSaving else { return }
+        isSaving = true
+        Task {
+            let success = await onSave(selectedSurah, selectedAyah, title, noteText)
+            await MainActor.run {
+                isSaving = false
+                if success {
+                    onDismiss()
+                    dismiss()
+                } else {
+                    showError = true
+                }
+            }
+        }
     }
 }
 

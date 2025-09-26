@@ -99,6 +99,20 @@ final class TranslationStore: ObservableObject {
         surahs.first(where: { $0.number == surah })?.name ?? ""
     }
 
+    func randomAyahs(count: Int) -> [(surah: Int, ayah: Ayah)] {
+        guard count > 0 else { return [] }
+        let allAyahs: [(Int, Ayah)] = ayahsBySurah
+            .sorted { $0.key < $1.key }
+            .flatMap { (surah, ayahs) in ayahs.map { (surah, $0) } }
+        guard !allAyahs.isEmpty else { return [] }
+
+        let limit = min(count, allAyahs.count)
+        var indices = Array(allAyahs.indices)
+        indices.shuffle()
+
+        return indices.prefix(limit).map { allAyahs[$0] }
+    }
+
     private func applyArabicTextIfAvailable(to ayahs: [Ayah], surahNumber: Int) -> [Ayah] {
         guard let arabicMap = arabicAyahsBySurah[surahNumber] else { return ayahs }
         return ayahs.map { ayah in

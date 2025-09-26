@@ -8,7 +8,7 @@ struct ArabicSelectableTextView: UIViewRepresentable {
     let onSelection: (String) -> Void
 
     func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
+        let textView = IntrinsicTextView()
         textView.backgroundColor = .clear
         textView.textAlignment = .right
         textView.semanticContentAttribute = .forceRightToLeft
@@ -53,8 +53,6 @@ struct ArabicSelectableTextView: UIViewRepresentable {
             ]
         )
         textView.attributedText = attributed
-        textView.setNeedsLayout()
-        textView.layoutIfNeeded()
         textView.invalidateIntrinsicContentSize()
     }
 
@@ -83,6 +81,31 @@ struct ArabicSelectableTextView: UIViewRepresentable {
                 textView.selectedTextRange = nil
                 self.lastSelection = nil
             }
+        }
+    }
+}
+
+private final class IntrinsicTextView: UITextView {
+    private var previousBounds: CGSize = .zero
+
+    override var intrinsicContentSize: CGSize {
+        let targetWidth: CGFloat
+        if bounds.width > 0 {
+            targetWidth = bounds.width
+        } else {
+            targetWidth = UIScreen.main.bounds.width - layoutMargins.left - layoutMargins.right
+        }
+
+        let size = CGSize(width: targetWidth, height: CGFloat.greatestFiniteMagnitude)
+        let fitting = sizeThatFits(size)
+        return CGSize(width: UIView.noIntrinsicMetric, height: fitting.height)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if bounds.size != previousBounds {
+            previousBounds = bounds.size
+            invalidateIntrinsicContentSize()
         }
     }
 }
