@@ -3,12 +3,10 @@ import SwiftUI
 struct RootView: View {
     enum Tab { case library, favorites, notes, settings }
 
-    @ObservedObject var translationStore: TranslationStore
-    @ObservedObject var notesStore: NotesStore
-    @ObservedObject var progressStore: ReadingProgressStore
-    @ObservedObject var favoritesStore: FavoritesStore
-    @ObservedObject var progressStore: ReadingProgressStore
-    @ObservedObject var favoritesStore: FavoritesStore
+    let translationStore: TranslationStore
+    let notesStore: NotesStore
+    let progressStore: ReadingProgressStore
+    let favoritesStore: FavoritesStore
 
     @StateObject private var libraryViewModel: LibraryViewModel
     @StateObject private var notesViewModel: NotesViewModel
@@ -27,7 +25,9 @@ struct RootView: View {
         _libraryViewModel = StateObject(wrappedValue: LibraryViewModel(translationStore: translationStore))
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
         _favoritesViewModel = StateObject(wrappedValue: FavoritesViewModel(favoritesStore: favoritesStore))
-        _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(translationStore: translationStore, progressStore: progressStore))
+        _settingsViewModel = StateObject(
+            wrappedValue: SettingsViewModel(translationStore: translationStore, progressStore: progressStore)
+        )
     }
 
     var body: some View {
