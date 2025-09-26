@@ -34,17 +34,19 @@
 		D47AD4DA2A6B02A300000053 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000037 /* ContentView.swift */; };
 		D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */; };
 		D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000019 /* Assets.xcassets */; };
-		D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
-		D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
-		D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
+                D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
+                D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
+                D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
+                D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */; };
 		D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D47AD4DA2A6B02A30000005B /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D47AD4DA2A6B02A300000019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000001A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000001B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000001C /* Kurani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurani.app; sourceTree = BUILT_PRODUCTS_DIR; };
+                D47AD4DA2A6B02A300000019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+                D47AD4DA2A6B02A30000001A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+                D47AD4DA2A6B02A30000001B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+                D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+                D47AD4DA2A6B02A30000001C /* Kurani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurani.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D47AD4DA2A6B02A30000001D /* QuranApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranApp.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000001E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000001F /* TranslationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationStore.swift; sourceTree = "<group>"; };
@@ -190,13 +192,14 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		D47AD4DA2A6B02A300000015 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D47AD4DA2A6B02A300000019 /* Assets.xcassets */,
-				D47AD4DA2A6B02A300000039 /* Localizable.strings */,
-			);
-			path = Resources;
+                D47AD4DA2A6B02A300000015 /* Resources */ = {
+                        isa = PBXGroup;
+                        children = (
+                                D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */,
+                                D47AD4DA2A6B02A300000019 /* Assets.xcassets */,
+                                D47AD4DA2A6B02A300000039 /* Localizable.strings */,
+                        );
+                        path = Resources;
 			sourceTree = "<group>";
 		};
 		D47AD4DA2A6B02A300000016 /* Products */ = {
@@ -266,11 +269,12 @@
 		D47AD4DA2A6B02A30000000B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (
-				D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
-				D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
-				D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
-				D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
+                        files = (
+                                D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */,
+                                D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
+                                D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
+                                D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
+                                D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
