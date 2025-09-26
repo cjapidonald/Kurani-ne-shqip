@@ -6,7 +6,7 @@ import CoreHaptics
 
 enum Haptics {
     private static let supportsHaptics: Bool = {
-#if targetEnvironment(macCatalyst)
+#if targetEnvironment(macCatalyst) || targetEnvironment(simulator)
         return false
 #else
 #if canImport(CoreHaptics)
