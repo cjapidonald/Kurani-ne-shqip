@@ -86,6 +86,7 @@ final class ReaderViewModel: ObservableObject {
         defer { isSavingNote = false }
         do {
             try await notesStore.upsertNote(surah: surahNumber, ayah: selectedAyah.number, text: noteDraft)
+            favoritesStore.updateNoteSnapshot(for: surahNumber, ayah: selectedAyah.number, note: noteDraft)
             Haptics.success()
             toast = LocalizedStringKey("reader.note.saved")
             isNoteEditorPresented = false

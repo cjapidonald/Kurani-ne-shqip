@@ -8,6 +8,7 @@ struct ReaderView: View {
 
 
     @EnvironmentObject private var authManager: AuthManager
+    @EnvironmentObject private var favoritesStore: FavoritesStore
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
@@ -22,6 +23,7 @@ struct ReaderView: View {
     @State private var isChromeHidden = false
     @State private var selectedDictionaryEntry: ArabicDictionaryEntry?
     @State private var pendingDictionaryWord: String?
+    @State private var ayahForFolderSelection: Ayah?
 
     private let noteFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -41,7 +43,13 @@ struct ReaderView: View {
                                     selectedAyahForActions = ayah
                                     showingActions = true
                                 } label: {
-                                    Pill(number: ayah.number)
+                                    ZStack(alignment: .topTrailing) {
+                                        Pill(number: ayah.number)
+                                        if viewModel.note(for: ayah) != nil {
+                                            NoteMarker()
+                                                .offset(x: 8, y: -8)
+                                        }
+                                    }
                                 }
                                 .buttonStyle(.plain)
 
@@ -60,6 +68,9 @@ struct ReaderView: View {
                                                 }
                                                 Button(LocalizedStringKey("action.share")) {
                                                     shareAyah(ayah)
+                                                }
+                                                Button(LocalizedStringKey("reader.addToFolder")) {
+                                                    openFolderPicker(for: ayah)
                                                 }
                                                 Button("PYET CHATGPT") {
                                                     askChatGPT(about: ayah)
@@ -233,10 +244,21 @@ struct ReaderView: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
+        .sheet(item: $ayahForFolderSelection) { ayah in
+            FavoriteFolderPickerView(
+                ayah: ayah,
+                surahNumber: viewModel.surahNumber,
+                surahTitle: viewModel.surahTitle,
+                noteText: viewModel.note(for: ayah)?.text,
+                onComplete: handleFolderPickerResult
+            )
+            .environmentObject(favoritesStore)
+        }
         .confirmationDialog(LocalizedStringKey("action.edit"), isPresented: $showingActions, presenting: selectedAyahForActions) { ayah in
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
             Button(LocalizedStringKey("action.share")) { shareAyah(ayah) }
             Button(LocalizedStringKey("action.edit")) { openNoteEditor(for: ayah) }
+            Button(LocalizedStringKey("reader.addToFolder")) { openFolderPicker(for: ayah) }
             Button("PYET CHATGPT") { askChatGPT(about: ayah) }
             Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
         }
@@ -315,6 +337,28 @@ struct ReaderView: View {
         showingShareSheet = true
     }
 
+    private func openFolderPicker(for ayah: Ayah) {
+        ayahForFolderSelection = ayah
+    }
+
+    private func handleFolderPickerResult(_ result: FavoriteFolderPickerView.Result) {
+        switch result {
+        case let .inserted(folderName, isNewFolder):
+            Haptics.success()
+            let formatKey = isNewFolder ? "favorites.folderPicker.createdMessage" : "favorites.folderPicker.addedMessage"
+            let message = String(format: NSLocalizedString(formatKey, comment: "folder toast"), folderName)
+            viewModel.toast = LocalizedStringKey(message)
+        case let .updated(folderName):
+            Haptics.success()
+            let message = String(format: NSLocalizedString("favorites.folderPicker.updatedMessage", comment: "folder toast"), folderName)
+            viewModel.toast = LocalizedStringKey(message)
+        case .failed, .cancelled:
+            if case .failed = result {
+                viewModel.toast = LocalizedStringKey("toast.error")
+            }
+        }
+    }
+
     private func askChatGPT(about ayah: Ayah) {
         let prompt = "Më trego më shumë rreth sures \(viewModel.surahTitle), ajeti \(ayah.number). Teksti: \(ayah.text)"
         guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
@@ -361,6 +405,18 @@ struct ReaderView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             pendingDictionaryWord = nil
         }
+    }
+}
+
+private struct NoteMarker: View {
+    var body: some View {
+        Image(systemName: "note.text")
+            .font(.system(size: 10, weight: .bold))
+            .foregroundStyle(Color.kuraniDarkBackground)
+            .padding(4)
+            .background(Circle().fill(Color.kuraniAccentLight))
+            .shadow(color: Color.black.opacity(0.15), radius: 2, y: 1)
+            .accessibilityHidden(true)
     }
 }
 
