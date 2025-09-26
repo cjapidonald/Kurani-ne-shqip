@@ -11,6 +11,7 @@ struct LibraryView: View {
 
     @EnvironmentObject private var translationStore: TranslationStore
     @EnvironmentObject private var notesStore: NotesStore
+    @EnvironmentObject private var favoritesStore: FavoritesStore
 
     @State private var path: [ReaderRoute] = []
 
@@ -84,7 +85,12 @@ struct LibraryView: View {
             }
             .navigationDestination(for: ReaderRoute.self) { route in
                 ReaderView(
-                    viewModel: ReaderViewModel(surahNumber: route.surah, translationStore: translationStore, notesStore: notesStore),
+                    viewModel: ReaderViewModel(
+                        surahNumber: route.surah,
+                        translationStore: translationStore,
+                        notesStore: notesStore,
+                        favoritesStore: favoritesStore
+                    ),
                     startingAyah: route.ayah,
                     openNotesTab: openNotesTab
                 )
