@@ -8,6 +8,7 @@ struct ReaderView: View {
 
 codex/update-app-theme-for-reading
     @EnvironmentObject private var authManager: AuthManager
+    @Environment(\.dismiss) private var dismiss
     @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
 
 
@@ -17,6 +18,7 @@ main
     @State private var shareText: String = ""
     @State private var showingShareSheet = false
     @State private var showToast = false
+    @State private var isChromeHidden = false
 
     private let noteFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -114,12 +116,21 @@ main
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
-                        showArabicText.toggle()
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            isChromeHidden.toggle()
+                        }
                     } label: {
-                        Image(systemName: showArabicText ? "book.closed.fill" : "book.closed")
-                            .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
+                        Image(systemName: isChromeHidden ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
                             .foregroundStyle(Color.kuraniAccentLight)
                     }
+                    .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
+
+                    Button {
+                        showArabicText.toggle()
+                    } label: {
+                        ArabicToggleIcon(isActive: showArabicText)
+                    }
+                    .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
                     Button {
                         viewModel.decreaseFont()
                     } label: {
@@ -152,7 +163,10 @@ main
                 }
             }
             .tint(Color.kuraniAccentLight)
+            .toolbar(isChromeHidden ? .hidden : .visible, for: .navigationBar)
+            .toolbar(isChromeHidden ? .hidden : .visible, for: .tabBar)
             .onAppear {
+                isChromeHidden = false
                 if let startingAyah, viewModel.ayahs.contains(where: { $0.number == startingAyah }) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation {
@@ -163,6 +177,7 @@ main
             }
         }
         .background(KuraniTheme.background.ignoresSafeArea())
+        .statusBarHidden(isChromeHidden)
         .sheet(isPresented: $viewModel.isNoteEditorPresented) {
             if let ayah = viewModel.selectedAyah {
                 NoteEditorView(
@@ -187,11 +202,43 @@ main
             Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
         }
         .overlay(alignment: .top) {
-            if showToast, let toastMessage = viewModel.toast {
-                ToastView(message: toastMessage)
-                    .padding(.top, 40)
-                    .transition(.move(edge: .top).combined(with: .opacity))
+            VStack(spacing: 12) {
+                if showToast, let toastMessage = viewModel.toast {
+                    ToastView(message: toastMessage)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+
+                if isChromeHidden {
+                    HStack(spacing: 24) {
+                        Button {
+                            isChromeHidden = false
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                                .font(.system(size: 16, weight: .semibold))
+                        }
+                        .accessibilityLabel(LocalizedStringKey("action.back"))
+                        .buttonStyle(.plain)
+
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                isChromeHidden = false
+                            }
+                        } label: {
+                            Image(systemName: "arrow.down.right.and.arrow.up.left")
+                                .font(.system(size: 16, weight: .semibold))
+                        }
+                        .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(.ultraThinMaterial, in: Capsule())
+                    .foregroundStyle(Color.kuraniAccentLight)
+                }
             }
+            .padding(.top, 40)
+            .padding(.horizontal, 16)
         }
         .onChange(of: viewModel.toast) { _, newValue in
             guard newValue != nil else { return }
@@ -219,6 +266,27 @@ main
 
     private func formattedText(for ayah: Ayah) -> String {
         "\(viewModel.surahTitle) \(ayah.number): \(ayah.text)"
+    }
+}
+
+private struct ArabicToggleIcon: View {
+    let isActive: Bool
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(isActive ? Color.kuraniAccentLight : .clear)
+                .overlay(
+                    Circle()
+                        .stroke(Color.kuraniAccentLight, lineWidth: 1.4)
+                )
+
+            Text("ع")
+                .font(.system(size: 15, weight: .bold, design: .default))
+                .foregroundStyle(isActive ? Color.kuraniDarkBackground : Color.kuraniAccentLight)
+                .baselineOffset(1)
+        }
+        .frame(width: 30, height: 30)
     }
 }
 
