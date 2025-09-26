@@ -46,21 +46,9 @@ struct ReaderView: View {
                                 .buttonStyle(.plain)
 
                                 VStack(alignment: .leading, spacing: 6) {
-codex/change-font-to-kg-primary-penmanship
-                                    Text(ayah.text)
-                                        .font(KuraniFont.size(18 * viewModel.fontScale, relativeTo: .body))
-                                        .foregroundColor(.kuraniTextPrimary)
-                                        .lineSpacing(4 * viewModel.lineSpacingScale)
-                                        .contextMenu {
-                                            Button(LocalizedStringKey("action.edit")) {
-                                                openNoteEditor(for: ayah)
-                                            }
-                                            Button(LocalizedStringKey("action.copy")) {
-                                                copyAyah(ayah)
-
                                     if showAlbanianText {
                                         Text(ayah.text)
-                                            .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
+                                            .font(KuraniFont.size(18 * viewModel.fontScale, relativeTo: .body))
                                             .foregroundColor(.kuraniTextPrimary)
                                             .lineSpacing(4 * viewModel.lineSpacingScale)
                                             .contextMenu {
@@ -73,21 +61,14 @@ codex/change-font-to-kg-primary-penmanship
                                                 Button(LocalizedStringKey("action.share")) {
                                                     shareAyah(ayah)
                                                 }
-main
+                                                Button("PYET CHATGPT") {
+                                                    askChatGPT(about: ayah)
+                                                }
                                             }
                                             .onTapGesture {
                                                 openNoteEditor(for: ayah)
                                             }
-codex/add-button-to-redirect-with-ayah-details
-                                            Button("PYET CHATGPT") {
-                                                askChatGPT(about: ayah)
-                                            }
-                                        }
-                                        .onTapGesture {
-                                            openNoteEditor(for: ayah)
-
                                     }
- main
 
                                     if showArabicText, let arabic = ayah.arabicText {
                                         ArabicSelectableTextView(
@@ -334,12 +315,12 @@ codex/add-button-to-redirect-with-ayah-details
         showingShareSheet = true
     }
 
-codex/add-button-to-redirect-with-ayah-details
     private func askChatGPT(about ayah: Ayah) {
         let prompt = "Më trego më shumë rreth sures \(viewModel.surahTitle), ajeti \(ayah.number). Teksti: \(ayah.text)"
         guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         guard let url = URL(string: "https://chat.openai.com/?q=\(encodedPrompt)") else { return }
         openURL(url)
+    }
 
     private func toggleAlbanian() {
         if showAlbanianText {
@@ -361,7 +342,6 @@ codex/add-button-to-redirect-with-ayah-details
         } else {
             showArabicText = true
         }
-main
     }
 
     private func formattedText(for ayah: Ayah) -> String {

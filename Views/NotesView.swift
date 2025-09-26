@@ -118,6 +118,7 @@ struct FavoritesView: View {
     @EnvironmentObject private var translationStore: TranslationStore
     @EnvironmentObject private var notesStore: NotesStore
     @EnvironmentObject private var favoritesStore: FavoritesStore
+    @EnvironmentObject private var progressStore: ReadingProgressStore
 
     @State private var path: [ReaderRoute] = []
 
@@ -190,7 +191,8 @@ struct FavoritesView: View {
                         surahNumber: route.surah,
                         translationStore: translationStore,
                         notesStore: notesStore,
-                        favoritesStore: favoritesStore
+                        favoritesStore: favoritesStore,
+                        progressStore: progressStore
                     ),
                     startingAyah: route.ayah,
                     openNotesTab: {

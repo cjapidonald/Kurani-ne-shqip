@@ -22,6 +22,7 @@ final class ReaderViewModel: ObservableObject {
     private let notesStore: NotesStore
     private let progressStore: ReadingProgressStore
     private let favoritesStore: FavoritesStore
+    private let progressStore: ReadingProgressStore
     private var cancellables: Set<AnyCancellable> = []
 
     init(surahNumber: Int, translationStore: TranslationStore, notesStore: NotesStore, progressStore: ReadingProgressStore, favoritesStore: FavoritesStore) {
@@ -30,6 +31,7 @@ final class ReaderViewModel: ObservableObject {
         self.notesStore = notesStore
         self.progressStore = progressStore
         self.favoritesStore = favoritesStore
+        self.progressStore = progressStore
 
         let storedFont = UserDefaults.standard.double(forKey: AppStorageKeys.fontScale)
         fontScale = storedFont == 0 ? 1.0 : storedFont
@@ -117,6 +119,14 @@ final class ReaderViewModel: ObservableObject {
     func decreaseLineSpacing() {
         lineSpacingScale = max(lineSpacingScale - 0.1, 0.8)
         UserDefaults.standard.set(lineSpacingScale, forKey: AppStorageKeys.lineSpacingScale)
+    }
+
+    func toggleFavorite(for ayah: Ayah) {
+        favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
+    }
+
+    func isFavorite(_ ayah: Ayah) -> Bool {
+        favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
     }
 
     private func observeProgressChanges() {
