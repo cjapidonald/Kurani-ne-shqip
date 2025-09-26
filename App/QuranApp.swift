@@ -7,8 +7,9 @@ struct KuraniApp: App {
     @StateObject private var authManager = AuthManager(client: SupabaseClientProvider.shared.client)
 
     init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
     }
 
     var body: some Scene {
@@ -17,7 +18,7 @@ struct KuraniApp: App {
                 .environmentObject(translationStore)
                 .environmentObject(notesStore)
                 .environmentObject(authManager)
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(.light)
                 .task {
                     await translationStore.loadInitialData()
                     await notesStore.observeAuthChanges(authManager: authManager)

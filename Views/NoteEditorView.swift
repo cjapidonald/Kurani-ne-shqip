@@ -26,7 +26,7 @@ struct NoteEditorView: View {
                             .fill(Color.kuraniPrimarySurface.opacity(0.58))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 26, style: .continuous)
-                                    .stroke(Color.white.opacity(0.12), lineWidth: 0.8)
+                                    .stroke(Color.black.opacity(0.12), lineWidth: 0.8)
                             )
                             .shadow(color: Color.black.opacity(0.32), radius: 20, y: 14)
                     )
