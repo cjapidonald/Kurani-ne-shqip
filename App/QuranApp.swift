@@ -5,6 +5,7 @@ struct KuraniApp: App {
     @StateObject private var translationStore = TranslationStore()
     @StateObject private var notesStore = NotesStore(client: SupabaseClientProvider.shared.client)
     @StateObject private var authManager = AuthManager(client: SupabaseClientProvider.shared.client)
+    @StateObject private var favoritesStore = FavoritesStore()
 
     init() {
         let navigationBarAppearance = UINavigationBar.appearance()
@@ -14,9 +15,10 @@ struct KuraniApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView(translationStore: translationStore, notesStore: notesStore)
+            RootView(translationStore: translationStore, notesStore: notesStore, favoritesStore: favoritesStore)
                 .environmentObject(translationStore)
                 .environmentObject(notesStore)
+                .environmentObject(favoritesStore)
                 .environmentObject(authManager)
                 .preferredColorScheme(.light)
                 .task {
