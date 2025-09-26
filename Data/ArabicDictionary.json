@@ -1,0 +1,52 @@
+[
+  {
+    "id": "allah",
+    "word": "اللّٰهُ",
+    "transliteration": "Allahu",
+    "meanings": [
+      "Zoti", 
+      "I Vetmi që meriton adhurim" 
+    ],
+    "notes": "Forma e shquar e fjalës Allah, emri më i lartë i Zotit."
+  },
+  {
+    "id": "rahman",
+    "word": "الرَّحْمَٰنِ",
+    "transliteration": "Er-Rahmân",
+    "meanings": [
+      "Mëshiruesi", 
+      "Ai që tregon mëshirë të plotë për të gjitha krijesat" 
+    ],
+    "notes": "Një nga emrat e Zotit që tregon mëshirën gjithëpërfshirëse."
+  },
+  {
+    "id": "rahim",
+    "word": "الرَّحِيمِ",
+    "transliteration": "Er-Rahîm",
+    "meanings": [
+      "Mëshirëploti", 
+      "Ai që jep mëshirë të veçantë për besimtarët" 
+    ],
+    "notes": "Emër hyjnor që tregon mëshirën e vazhdueshme për besimtarët."
+  },
+  {
+    "id": "alhamdu",
+    "word": "ٱلْحَمْدُ",
+    "transliteration": "El-hamdu",
+    "meanings": [
+      "Lavdi", 
+      "Falënderim i plotë"
+    ],
+    "notes": "Përdoret për të shprehur lavdërim dhe falënderim të plotë ndaj Zotit."
+  },
+  {
+    "id": "rabb",
+    "word": "رَبِّ",
+    "transliteration": "Rabbi",
+    "meanings": [
+      "Zoti", 
+      "Krijuesi dhe mirëmbajtësi"
+    ],
+    "notes": "Term që tregon kujdesin dhe sundimin hyjnor mbi gjithçka."
+  }
+]
