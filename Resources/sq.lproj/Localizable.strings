@@ -39,6 +39,7 @@
 "settings.signin" = "Hyr në llogari";
 "settings.signout" = "Dil nga llogaria";
 "settings.account" = "Llogaria";
+"settings.account.offline" = "Hyrja është çaktivizuar përkohësisht. Shënimet do të ruhen vetëm në këtë pajisje.";
 "settings.translation" = "Përkthimi (shqip)";
 "settings.import" = "Importo përkthimin";
 "settings.import.success" = "Përkthimi u importua";

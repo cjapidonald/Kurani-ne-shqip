@@ -2,10 +2,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @ObservedObject var viewModel: SettingsViewModel
-    @EnvironmentObject private var authManager: AuthManager
 
     @State private var showingImporter = false
-    @State private var showingSignInSheet = false
     @State private var toastVisible = false
 
     var body: some View {
@@ -13,30 +11,8 @@ struct SettingsView: View {
             Form {
                 Section(header: Text(LocalizedStringKey("settings.account"))) {
                     VStack(alignment: .leading, spacing: 16) {
-                        if let user = authManager.user {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(user.email ?? "")
-                                    .foregroundColor(.kuraniTextPrimary)
-                                Text(user.id.uuidString)
-                                    .font(.system(.caption, design: .monospaced))
-                                    .foregroundColor(.kuraniTextSecondary)
-                            }
-                        } else {
-                            Text(LocalizedStringKey("notes.signinRequired"))
-                                .foregroundColor(.kuraniTextSecondary)
-                        }
-
-                        if authManager.userId == nil {
-                            Button(LocalizedStringKey("settings.signin")) {
-                                showingSignInSheet = true
-                            }
-                            .buttonStyle(GradientButtonStyle())
-                        } else {
-                            Button(LocalizedStringKey("settings.signout")) {
-                                Task { await viewModel.signOut() }
-                            }
-                            .buttonStyle(GradientButtonStyle())
-                        }
+                        Text(LocalizedStringKey("settings.account.offline"))
+                            .foregroundColor(.kuraniTextSecondary)
                     }
                     .appleCard()
                     .padding(.horizontal, 12)
@@ -97,10 +73,6 @@ struct SettingsView: View {
                 case .failure:
                     viewModel.toast = LocalizedStringKey("settings.import.invalid")
                 }
-            }
-            .sheet(isPresented: $showingSignInSheet) {
-                SignInPromptView()
-                    .environmentObject(authManager)
             }
             .overlay(alignment: .bottom) {
                 if toastVisible, let message = viewModel.toast {

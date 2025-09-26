@@ -5,7 +5,6 @@ struct RootView: View {
 
     @ObservedObject var translationStore: TranslationStore
     @ObservedObject var notesStore: NotesStore
-    @ObservedObject var authManager: AuthManager
 
     @StateObject private var libraryViewModel: LibraryViewModel
     @StateObject private var notesViewModel: NotesViewModel
@@ -13,13 +12,12 @@ struct RootView: View {
 
     @State private var selectedTab: Tab = .library
 
-    init(translationStore: TranslationStore, notesStore: NotesStore, authManager: AuthManager) {
+    init(translationStore: TranslationStore, notesStore: NotesStore) {
         self.translationStore = translationStore
         self.notesStore = notesStore
-        self.authManager = authManager
         _libraryViewModel = StateObject(wrappedValue: LibraryViewModel(translationStore: translationStore))
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
-        _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(translationStore: translationStore, authManager: authManager))
+        _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(translationStore: translationStore))
     }
 
     var body: some View {
@@ -41,7 +39,6 @@ struct RootView: View {
             .tag(Tab.notes)
 
             SettingsView(viewModel: settingsViewModel)
-                .environmentObject(authManager)
                 .background(Color.clear)
             .tabItem {
                 Label(LocalizedStringKey("tabs.settings"), systemImage: "gearshape")
