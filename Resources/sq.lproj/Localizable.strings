@@ -27,6 +27,7 @@
 "reader.textSize" = "Madhësia e tekstit";
 "reader.lineSpacing" = "Hapësira ndër rreshta";
 "reader.toggleArabic" = "Shfaq tekstin arab";
+"reader.toggleChrome" = "Fsheh panelet";
 "reader.progress" = "%ld / %ld";
 "reader.note.add" = "Shkruaj shënim";
 "reader.note.edit" = "Ndrysho shënimin";
