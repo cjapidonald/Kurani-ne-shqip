@@ -30,4 +30,7 @@ static NSString * const ACColorNameTextPrimary AC_SWIFT_PRIVATE = @"TextPrimary"
 /// The "TextSecondary" asset catalog color resource.
 static NSString * const ACColorNameTextSecondary AC_SWIFT_PRIVATE = @"TextSecondary";
 
+/// The "AppIcon" asset catalog image resource.
+static NSString * const ACImageNameAppIcon AC_SWIFT_PRIVATE = @"AppIcon";
+
 #undef AC_SWIFT_PRIVATE

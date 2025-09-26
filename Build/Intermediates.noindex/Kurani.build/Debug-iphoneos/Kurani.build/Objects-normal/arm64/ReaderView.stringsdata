@@ -1,0 +1,128 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/ReaderView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "action.edit",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.edit",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.copy",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.share",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.copy.confirmation",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 190
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.lineSpacing",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.notesButton",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.font.decrease",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.font.increase",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.lineSpacing.decrease",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.lineSpacing.increase",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.copy",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.share",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 159
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.edit",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.cancel",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 161
+        }
+      }
+    ]
+  },
+  "version": 1
+}

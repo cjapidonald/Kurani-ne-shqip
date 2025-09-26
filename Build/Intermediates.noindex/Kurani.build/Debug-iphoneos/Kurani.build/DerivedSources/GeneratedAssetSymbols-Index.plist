@@ -76,7 +76,18 @@
 		</dict>
 	</array>
 	<key>images</key>
-	<array/>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameAppIcon</string>
+			<key>relativePath</key>
+			<string>./AppIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>appIcon</string>
+		</dict>
+	</array>
 	<key>symbols</key>
 	<array/>
 </dict>

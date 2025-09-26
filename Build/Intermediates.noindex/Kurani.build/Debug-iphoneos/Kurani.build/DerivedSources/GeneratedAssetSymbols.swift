@@ -43,5 +43,8 @@ extension DeveloperToolsSupport.ColorResource {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension DeveloperToolsSupport.ImageResource {
 
+    /// The "AppIcon" asset catalog image resource.
+    static let appIcon = DeveloperToolsSupport.ImageResource(name: "AppIcon", bundle: resourceBundle)
+
 }
 

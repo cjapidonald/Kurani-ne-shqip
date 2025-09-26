@@ -1,0 +1,25 @@
+{
+  "surahs": [
+    {
+      "number": 1,
+      "ayahs": [
+        {"number": 1, "text": "Me emrin e Allahut, Mëshiruesit, Mëshirëplotit."},
+        {"number": 2, "text": "Lëvdatat i takojnë Allahut, Zotit të botëve."},
+        {"number": 3, "text": "Mëshiruesit, Mëshirëplotit."},
+        {"number": 4, "text": "Sunduesit të Ditës së Gjykimit."},
+        {"number": 5, "text": "Vetëm Ty të adhurojmë dhe vetëm prej Teje kërkojmë ndihmë."},
+        {"number": 6, "text": "Na udhëzo në rrugën e drejtë."},
+        {"number": 7, "text": "Në rrugën e atyre që i ke begatuar, jo të atyre që kanë merituar zemërimin, e as të atyre që janë lajthitur."}
+      ]
+    },
+    {
+      "number": 112,
+      "ayahs": [
+        {"number": 1, "text": "Thuaj: Ai është Allahu, Një i vetëm."},
+        {"number": 2, "text": "Allahu është Strumbullari i përhershëm."},
+        {"number": 3, "text": "Ai as nuk lind, as nuk është i lindur."},
+        {"number": 4, "text": "Dhe askush nuk është i barabartë me Të."}
+      ]
+    }
+  ]
+}
