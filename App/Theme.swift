@@ -28,12 +28,12 @@ struct BrandHeader: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(titleKey)
-                .font(.system(.largeTitle, design: .rounded))
+                .font(KuraniFont.forTextStyle(.largeTitle))
                 .fontWeight(.semibold)
                 .foregroundColor(.kuraniTextPrimary)
             if let subtitle {
                 Text(subtitle)
-                    .font(.system(.subheadline, design: .rounded))
+                    .font(KuraniFont.forTextStyle(.subheadline))
                     .foregroundColor(.kuraniTextSecondary)
             }
         }
@@ -58,7 +58,7 @@ struct Pill: View {
 
     var body: some View {
         Text("\(number)")
-            .font(.system(.subheadline, design: .rounded))
+            .font(KuraniFont.forTextStyle(.subheadline))
             .fontWeight(.semibold)
             .padding(.vertical, 6)
             .padding(.horizontal, 12)
@@ -100,7 +100,7 @@ struct ToastView: View {
 
     var body: some View {
         Text(message)
-            .font(.system(.callout, design: .rounded))
+            .font(KuraniFont.forTextStyle(.callout))
             .fontWeight(.medium)
             .padding(.horizontal, 24)
             .padding(.vertical, 12)

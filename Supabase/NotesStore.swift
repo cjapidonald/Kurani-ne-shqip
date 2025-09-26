@@ -113,6 +113,46 @@ final class NotesStore: ObservableObject {
     }
 }
 
+@MainActor
+final class FavoritesStore: ObservableObject {
+    @Published private(set) var favorites: [FavoriteAyah] = []
+
+    private let storage = LocalFavoritesStorage()
+
+    init() {
+        favorites = storage.load().sorted { $0.addedAt > $1.addedAt }
+    }
+
+    func toggleFavorite(surah: Int, ayah: Int) {
+        if isFavorite(surah: surah, ayah: ayah) {
+            removeFavorite(surah: surah, ayah: ayah)
+        } else {
+            addFavorite(surah: surah, ayah: ayah)
+        }
+    }
+
+    func addFavorite(surah: Int, ayah: Int) {
+        guard !isFavorite(surah: surah, ayah: ayah) else { return }
+        let favorite = FavoriteAyah(surah: surah, ayah: ayah, addedAt: Date())
+        favorites.insert(favorite, at: 0)
+        saveFavorites()
+    }
+
+    func removeFavorite(surah: Int, ayah: Int) {
+        favorites.removeAll { $0.surah == surah && $0.ayah == ayah }
+        saveFavorites()
+    }
+
+    func isFavorite(surah: Int, ayah: Int) -> Bool {
+        favorites.contains { $0.surah == surah && $0.ayah == ayah }
+    }
+
+    private func saveFavorites() {
+        favorites.sort { $0.addedAt > $1.addedAt }
+        storage.save(favorites)
+    }
+}
+
 private struct LocalNotesStorage {
     private let fileURL: URL = {
         let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -136,6 +176,34 @@ private struct LocalNotesStorage {
             try data.write(to: fileURL, options: .atomic)
         } catch {
             print("Failed to save local notes", error)
+        }
+    }
+}
+
+private struct LocalFavoritesStorage {
+    private let fileURL: URL = {
+        let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
+        return directory.appendingPathComponent("favorites.json")
+    }()
+
+    func load() -> [FavoriteAyah] {
+        guard let data = try? Data(contentsOf: fileURL) else { return [] }
+        do {
+            let favorites = try JSONDecoder().decode([FavoriteAyah].self, from: data)
+            return favorites.sorted { $0.addedAt > $1.addedAt }
+        } catch {
+            print("Failed to decode favorites", error)
+            return []
+        }
+    }
+
+    func save(_ favorites: [FavoriteAyah]) {
+        do {
+            let data = try JSONEncoder().encode(favorites)
+            try data.write(to: fileURL, options: .atomic)
+        } catch {
+            print("Failed to save favorites", error)
         }
     }
 }

@@ -32,7 +32,7 @@ struct SignInPromptView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         Text(LocalizedStringKey("signin.email"))
-                            .font(.system(.caption, design: .rounded))
+                            .font(KuraniFont.forTextStyle(.caption))
                             .foregroundColor(.kuraniTextSecondary)
                         TextField(LocalizedStringKey("signin.email.placeholder"), text: $email)
                             .textInputAutocapitalization(.never)
@@ -41,10 +41,12 @@ struct SignInPromptView: View {
                             .background(Color.kuraniPrimarySurface.opacity(0.45))
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .foregroundColor(.kuraniTextPrimary)
+                            .font(KuraniFont.forTextStyle(.body))
                         Button {
                             Task { await sendMagicLink() }
                         } label: {
                             Text(LocalizedStringKey("signin.email"))
+                                .font(KuraniFont.forTextStyle(.headline))
                                 .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(GradientButtonStyle())
