@@ -43,7 +43,7 @@ main
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(ayah.text)
                                         .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
-                                        .foregroundColor(.kuraniTextPrimary)
+                                        .foregroundColor(.white)
                                         .lineSpacing(4 * viewModel.lineSpacingScale)
                                         .contextMenu {
                                             Button(LocalizedStringKey("action.edit")) {
@@ -63,7 +63,7 @@ main
                                     if showArabicText, let arabic = ayah.arabicText {
                                         Text(arabic)
                                             .font(.system(size: 20 * viewModel.fontScale, weight: .regular))
-                                            .foregroundColor(.kuraniTextPrimary)
+                                            .foregroundColor(.white)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                             .lineSpacing(4 * viewModel.lineSpacingScale)
