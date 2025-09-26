@@ -1,0 +1,24 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/SurahRow.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "library.ayahs",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 13
+        }
+      }
+    ]
+  },
+  "version": 1
+}

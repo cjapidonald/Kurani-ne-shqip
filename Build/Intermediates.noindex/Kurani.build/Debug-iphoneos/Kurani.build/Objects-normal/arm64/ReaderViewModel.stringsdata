@@ -1,0 +1,24 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/ViewModels/ReaderViewModel.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "reader.note.saved",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "toast.error",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 58
+        }
+      }
+    ]
+  },
+  "version": 1
+}

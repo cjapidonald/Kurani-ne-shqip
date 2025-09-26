@@ -1,0 +1,80 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/NotesView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "notes.title",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.title",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.signinRequired",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.signin",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.loading",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.title",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.empty",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.title",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.openReader",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 50
+        }
+      }
+    ]
+  },
+  "version": 1
+}

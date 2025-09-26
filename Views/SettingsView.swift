@@ -16,7 +16,7 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(user.email ?? "")
                                 .foregroundColor(.textPrimary)
-                            Text(user.id)
+                            Text(user.id.uuidString)
                                 .font(.system(.caption, design: .monospaced))
                                 .foregroundColor(.textSecondary)
                         }

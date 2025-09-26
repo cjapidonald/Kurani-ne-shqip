@@ -1,0 +1,80 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/Components/SignInPromptView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "signin.email",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.signInPrompt",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.noAccess",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "signin.email",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "signin.email.placeholder",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "signin.email",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.cancel",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.ok",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "signin.email.sent",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 73
+        }
+      }
+    ]
+  },
+  "version": 1
+}
