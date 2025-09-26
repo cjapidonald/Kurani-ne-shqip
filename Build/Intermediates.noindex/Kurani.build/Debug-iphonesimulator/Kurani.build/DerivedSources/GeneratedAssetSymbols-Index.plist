@@ -18,6 +18,16 @@
 			<key>catalogPath</key>
 			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
 			<key>objcSymbol</key>
+			<string>ACColorNameAccentColor</string>
+			<key>relativePath</key>
+			<string>./AccentColor.colorset</string>
+			<key>swiftSymbol</key>
+			<string>accent</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
 			<string>ACColorNameAccentLight</string>
 			<key>relativePath</key>
 			<string>./AccentLight.colorset</string>
@@ -76,7 +86,18 @@
 		</dict>
 	</array>
 	<key>images</key>
-	<array/>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameAppIcon</string>
+			<key>relativePath</key>
+			<string>./AppIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>appIcon</string>
+		</dict>
+	</array>
 	<key>symbols</key>
 	<array/>
 </dict>

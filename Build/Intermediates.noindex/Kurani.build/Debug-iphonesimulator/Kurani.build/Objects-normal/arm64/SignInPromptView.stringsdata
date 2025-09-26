@@ -4,6 +4,14 @@
     "Localizable": [
       {
         "comment": "",
+        "key": "signin.email",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
         "key": "notes.signInPrompt",
         "location": {
           "startingColumn": 39,
@@ -52,26 +60,18 @@
       },
       {
         "comment": "",
-        "key": "signin.email",
+        "key": "action.ok",
         "location": {
-          "startingColumn": 52,
-          "startingLine": 72
+          "startingColumn": 43,
+          "startingLine": 71
         }
       },
       {
         "comment": "",
         "key": "signin.email.sent",
         "location": {
-          "startingColumn": 54,
+          "startingColumn": 41,
           "startingLine": 73
-        }
-      },
-      {
-        "comment": "",
-        "key": "action.ok",
-        "location": {
-          "startingColumn": 69,
-          "startingLine": 74
         }
       }
     ]

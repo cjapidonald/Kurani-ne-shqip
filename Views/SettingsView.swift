@@ -102,10 +102,6 @@ struct SettingsView: View {
     }
 
     private func importTranslation(url: URL) async {
-        do {
-            try await viewModel.importTranslation(from: url)
-        } catch {
-            viewModel.toast = LocalizedStringKey("settings.import.invalid")
-        }
+        await viewModel.importTranslation(from: url)
     }
 }

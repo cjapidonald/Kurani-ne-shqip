@@ -40,7 +40,7 @@ final class NotesStore: ObservableObject {
         isLoading = true
         defer { isLoading = false }
         do {
-            let response: PostgrestResponse<[NoteDTO]> = try await client.database.from("notes")
+            let response: PostgrestResponse<[NoteDTO]> = try await client.from("notes")
                 .select()
                 .eq("user_id", value: userId.uuidString)
                 .order("surah", ascending: true)
@@ -63,7 +63,7 @@ final class NotesStore: ObservableObject {
     func upsertNote(surah: Int, ayah: Int, text: String) async throws {
         guard let userId = currentUserId else { throw NotesError.unauthenticated }
         let payload = NoteInsert(user_id: userId.uuidString, surah: surah, ayah: ayah, text: text)
-        let response: PostgrestResponse<[NoteDTO]> = try await client.database.from("notes")
+        let response: PostgrestResponse<[NoteDTO]> = try await client.from("notes")
             .upsert([payload], onConflict: "user_id,surah,ayah")
             .select()
             .execute()

@@ -1,3 +1,4 @@
+#if false  // Disabled: Prevent duplicate symbol generation; rely on Xcode's DerivedSources only
 import Foundation
 #if canImport(DeveloperToolsSupport)
 import DeveloperToolsSupport
@@ -48,3 +49,4 @@ extension DeveloperToolsSupport.ImageResource {
 
 }
 
+#endif

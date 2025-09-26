@@ -1,0 +1,64 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/LibraryView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "library.search.placeholder",
+        "location": {
+          "startingColumn": 136,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "tabs.library",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "library.lastread",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "tabs.library",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "library.sampleOnly",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "library.continueReading",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.notesButton",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 67
+        }
+      }
+    ]
+  },
+  "version": 1
+}

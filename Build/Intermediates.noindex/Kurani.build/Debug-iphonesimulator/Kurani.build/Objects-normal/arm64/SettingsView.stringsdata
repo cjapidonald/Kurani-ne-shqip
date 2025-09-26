@@ -1,0 +1,112 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/SettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "settings.title",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.account",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.translation",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.about",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "notes.signinRequired",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.signin",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.signout",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.import",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.translation.sample",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.translation.loaded",
+        "location": {
+          "startingColumn": 138,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.about.disclaimer",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.version",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.import.invalid",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 79
+        }
+      }
+    ]
+  },
+  "version": 1
+}

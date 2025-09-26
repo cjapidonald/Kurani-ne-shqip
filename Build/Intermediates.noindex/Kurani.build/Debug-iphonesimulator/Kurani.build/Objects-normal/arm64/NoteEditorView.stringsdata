@@ -1,0 +1,40 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/NoteEditorView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "reader.note.add",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.note.edit",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.cancel",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.ok",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 41
+        }
+      }
+    ]
+  },
+  "version": 1
+}

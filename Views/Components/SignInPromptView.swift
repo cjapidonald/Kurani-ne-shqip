@@ -72,8 +72,8 @@ struct SignInPromptView: View {
             } message: {
                 Text(LocalizedStringKey("signin.email.sent"))
             }
-            .onChange(of: authManager.emailMagicLinkSent) { newValue in
-                if newValue {
+            .onChange(of: authManager.emailMagicLinkSent) { oldValue, newValue in
+                if newValue && !oldValue {
                     showEmailAlert = true
                 }
             }
