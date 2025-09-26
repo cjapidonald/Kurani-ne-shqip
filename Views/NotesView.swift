@@ -77,11 +77,11 @@ struct NotesView: View {
                                         VStack(alignment: .leading, spacing: 8) {
                                             Text(displayTitle(for: note))
                                                 .font(KuraniFont.forTextStyle(.headline))
-                                                .foregroundColor(.kuraniTextPrimary)
+                                                .foregroundColor(.black)
                                                 .lineLimit(2)
                                             Text(note.text)
                                                 .font(KuraniFont.forTextStyle(.body))
-                                                .foregroundColor(.kuraniTextPrimary)
+                                                .foregroundColor(.black)
                                                 .lineLimit(3)
                                             Text(String(format: NSLocalizedString("notes.lastUpdated", comment: "updated"), formatted(date: note.updatedAt)))
                                                 .font(KuraniFont.forTextStyle(.caption))
@@ -167,7 +167,7 @@ struct NotesView: View {
     }
 
     private var hasFavoriteContent: Bool {
-        !favoritesStore.favorites.isEmpty || !favoritesStore.folders.isEmpty
+        !favoritesStore.favorites.isEmpty
     }
 
     private func openCreationSheet() {
@@ -286,10 +286,6 @@ struct NotesView: View {
         if !favoritesStore.favorites.isEmpty {
             favoriteAyahsSection
         }
-
-        ForEach(favoritesStore.folders) { folder in
-            favoritesFolderSection(for: folder)
-        }
     }
 
     private var favoriteAyahsSection: some View {
@@ -329,84 +325,8 @@ struct NotesView: View {
         .listRowBackground(Color.clear)
     }
 
-    @ViewBuilder
-    private func favoritesFolderSection(for folder: FavoriteFolder) -> some View {
-        Section(header: favoritesFolderHeader(for: folder)) {
-            if folder.entries.isEmpty {
-                Text(LocalizedStringKey("favorites.folder.empty"))
-                    .font(.system(.footnote, design: .rounded))
-                    .foregroundColor(.kuraniTextSecondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .listRowBackground(Color.clear)
-            } else {
-                ForEach(folder.entries) { entry in
-                    Button {
-                        path.append(ReaderRoute(surah: entry.surah, ayah: entry.ayah))
-                    } label: {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(favoriteAyahText(for: entry))
-                                .font(.system(.body, design: .serif))
-                                .foregroundColor(.kuraniTextPrimary)
-                                .lineLimit(4)
-
-                            if let note = entry.note, !note.isEmpty {
-                                Text(note)
-                                    .font(KuraniFont.forTextStyle(.callout))
-                                    .foregroundColor(.kuraniAccentLight)
-                                    .lineLimit(3)
-                            }
-
-                            Text(favoriteFolderDetailText(for: entry))
-                                .font(.system(.caption, design: .rounded))
-                                .foregroundColor(.kuraniTextSecondary)
-                        }
-                        .appleCard(cornerRadius: 20)
-                        .padding(.horizontal, 20)
-                    }
-                    .buttonStyle(.plain)
-                    .listRowInsets(EdgeInsets())
-                    .listRowBackground(Color.clear)
-                    .padding(.vertical, 6)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            withAnimation {
-                                favoritesStore.removeEntry(entry, from: folder.id)
-                            }
-                        } label: {
-                            Label(LocalizedStringKey("favorites.remove"), systemImage: "trash")
-                        }
-                    }
-                }
-            }
-        }
-        .listRowBackground(Color.clear)
-    }
-
-    @ViewBuilder
-    private func favoritesFolderHeader(for folder: FavoriteFolder) -> some View {
-        HStack {
-            Text(folder.name)
-            Spacer()
-            Button {
-                withAnimation {
-                    favoritesStore.deleteFolder(folder.id)
-                }
-            } label: {
-                Image(systemName: "trash")
-                    .font(.system(size: 14, weight: .semibold))
-            }
-            .buttonStyle(.borderless)
-            .foregroundStyle(Color.kuraniAccentLight)
-            .accessibilityLabel(LocalizedStringKey("favorites.folder.delete"))
-        }
-    }
-
     private func favoriteAyahText(for favorite: FavoriteAyah) -> String {
         translationStore.ayahs(for: favorite.surah).first(where: { $0.number == favorite.ayah })?.text ?? ""
-    }
-
-    private func favoriteAyahText(for entry: FavoriteFolder.Entry) -> String {
-        translationStore.ayahs(for: entry.surah).first(where: { $0.number == entry.ayah })?.text ?? ""
     }
 
     private func favoriteDetailText(for favorite: FavoriteAyah) -> String {
@@ -414,14 +334,6 @@ struct NotesView: View {
             format: NSLocalizedString("favorites.detail", comment: "favorite metadata"),
             favorite.ayah,
             translationStore.title(for: favorite.surah)
-        )
-    }
-
-    private func favoriteFolderDetailText(for entry: FavoriteFolder.Entry) -> String {
-        String(
-            format: NSLocalizedString("favorites.detail", comment: "favorite metadata"),
-            entry.ayah,
-            translationStore.title(for: entry.surah)
         )
     }
 }
@@ -521,7 +433,7 @@ private struct AddNoteSheet: View {
                 .padding(.vertical, 14)
                 .padding(.horizontal, 16)
                 .background(cardBackground())
-                .foregroundColor(.kuraniTextPrimary)
+                .foregroundColor(.black)
                 .font(KuraniFont.forTextStyle(.body))
         }
     }
@@ -546,7 +458,7 @@ private struct AddNoteSheet: View {
                     .frame(minHeight: 220)
                     .padding(.vertical, 18)
                     .padding(.horizontal, 16)
-                    .foregroundColor(.kuraniTextPrimary)
+                    .foregroundColor(.black)
                     .font(KuraniFont.forTextStyle(.body))
                     .scrollContentBackground(.hidden)
             }
