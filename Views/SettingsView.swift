@@ -76,6 +76,25 @@ struct SettingsView: View {
                             }
                         }
                         .toggleStyle(SwitchToggleStyle(tint: Color.kuraniAccentLight))
+
+                        if viewModel.verseOfDayEnabled {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(LocalizedStringKey("settings.notifications.verseTimeLabel"))
+                                    .font(.footnote)
+                                    .foregroundColor(.kuraniTextSecondary)
+
+                                DatePicker(
+                                    "",
+                                    selection: Binding(
+                                        get: { viewModel.verseOfDayTime },
+                                        set: { viewModel.updateVerseOfDayTime($0) }
+                                    ),
+                                    displayedComponents: .hourAndMinute
+                                )
+                                .labelsHidden()
+                                .datePickerStyle(.compact)
+                            }
+                        }
                     }
                     .appleCard()
                     .padding(.horizontal, 12)

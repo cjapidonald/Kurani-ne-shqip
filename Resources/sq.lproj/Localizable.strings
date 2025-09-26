@@ -62,10 +62,12 @@
 "settings.notifications.permissionDenied" = "Lejet për njoftime janë të çaktivizuara.";
 "settings.notifications.error" = "S’u planifikuan dot njoftimet.";
 "settings.notifications.verseOfDay" = "Ajeti i ditës";
-"settings.notifications.verseOfDayDescription" = "Çdo ditë në orën 07:00 do të marrësh një ajet të rastësishëm.";
+"settings.notifications.verseOfDayDescription" = "Çdo ditë, në kohën që zgjedh, do të marrësh një ajet të rastësishëm.";
 "settings.notifications.verseEnabled" = "Ajeti i ditës u aktivizua.";
 "settings.notifications.verseDisabled" = "Ajeti i ditës u çaktivizua.";
 "settings.notifications.verseUnavailable" = "Teksti i ajeteve s’është i disponueshëm ende.";
+"settings.notifications.verseTimeLabel" = "Koha e ajetit të ditës";
+"settings.notifications.verseTimeUpdated" = "Koha e njoftimit u përditësua.";
 
 "notification.readingReminder.title" = "Koha për të lexuar";
 "notification.readingReminder.body" = "Hap Kurani për të vazhduar leximin tënd.";
