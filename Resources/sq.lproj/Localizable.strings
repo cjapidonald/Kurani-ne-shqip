@@ -80,13 +80,19 @@
 "settings.translation.loaded" = "Përkthimi i ngarkuar";
 "settings.translation.sample" = "Po shfaqet përkthimi i mostrës";
 "reader.jumpLastRead" = "Shko te leximi i fundit";
+codex/add-heart-button-for-favorites-tiy0r2
+
 codex/add-heart-button-for-favorites
+ main
 "favorites.title" = "Të preferuarat";
 "favorites.empty" = "S’ka ajete të preferuara ende.";
 "favorites.detail" = "Ajeti %d • Sure %@";
 "favorites.remove" = "Hiq nga të preferuarat";
+codex/add-heart-button-for-favorites-tiy0r2
+
 
 "dictionary.notFound" = "Kjo fjalë nuk gjendet ende në fjalor.";
 "dictionary.meanings" = "Kuptimet";
 "dictionary.notes" = "Shënime";
+ main
  main
