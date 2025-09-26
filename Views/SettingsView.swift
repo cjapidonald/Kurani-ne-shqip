@@ -20,6 +20,69 @@ struct SettingsView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
 
+                Section(header: Text(LocalizedStringKey("settings.notifications.title"))) {
+                    VStack(alignment: .leading, spacing: 16) {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle(
+                                isOn: Binding(
+                                    get: { viewModel.readingReminderEnabled },
+                                    set: { viewModel.setReadingReminderEnabled($0) }
+                                )
+                            ) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(LocalizedStringKey("settings.notifications.readingReminder"))
+                                        .foregroundColor(.kuraniTextPrimary)
+                                    Text(LocalizedStringKey("settings.notifications.readingReminderDescription"))
+                                        .font(.footnote)
+                                        .foregroundColor(.kuraniTextSecondary)
+                                }
+                            }
+                            .toggleStyle(SwitchToggleStyle(tint: Color.kuraniAccentLight))
+
+                            if viewModel.readingReminderEnabled {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(LocalizedStringKey("settings.notifications.timeLabel"))
+                                        .font(.footnote)
+                                        .foregroundColor(.kuraniTextSecondary)
+
+                                    DatePicker(
+                                        "",
+                                        selection: Binding(
+                                            get: { viewModel.readingReminderTime },
+                                            set: { viewModel.updateReadingReminderTime($0) }
+                                        ),
+                                        displayedComponents: .hourAndMinute
+                                    )
+                                    .labelsHidden()
+                                    .datePickerStyle(.compact)
+                                }
+                            }
+                        }
+
+                        Divider()
+
+                        Toggle(
+                            isOn: Binding(
+                                get: { viewModel.verseOfDayEnabled },
+                                set: { viewModel.setVerseOfDayEnabled($0) }
+                            )
+                        ) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(LocalizedStringKey("settings.notifications.verseOfDay"))
+                                    .foregroundColor(.kuraniTextPrimary)
+                                Text(LocalizedStringKey("settings.notifications.verseOfDayDescription"))
+                                    .font(.footnote)
+                                    .foregroundColor(.kuraniTextSecondary)
+                            }
+                        }
+                        .toggleStyle(SwitchToggleStyle(tint: Color.kuraniAccentLight))
+                    }
+                    .appleCard()
+                    .padding(.horizontal, 12)
+                }
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+
                 Section(header: Text(LocalizedStringKey("settings.progress.title"))) {
                     VStack(alignment: .leading, spacing: 16) {
                         Text(LocalizedStringKey("settings.progress.description"))

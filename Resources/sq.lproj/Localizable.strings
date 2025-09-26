@@ -52,6 +52,26 @@
 "settings.progress.resetSuccess" = "Leximet u rivendosën";
 "settings.about" = "Rreth aplikacionit";
 
+"settings.notifications.title" = "Njoftimet";
+"settings.notifications.readingReminder" = "Kujtues leximi";
+"settings.notifications.readingReminderDescription" = "Zgjidh kohën kur dëshiron të të kujtohet të lexosh.";
+"settings.notifications.timeLabel" = "Koha e kujtuesit";
+"settings.notifications.reminderEnabled" = "Kujtuesi i leximit u aktivizua.";
+"settings.notifications.reminderDisabled" = "Kujtuesi i leximit u çaktivizua.";
+"settings.notifications.reminderTimeUpdated" = "Koha e kujtuesit u përditësua.";
+"settings.notifications.permissionDenied" = "Lejet për njoftime janë të çaktivizuara.";
+"settings.notifications.error" = "S’u planifikuan dot njoftimet.";
+"settings.notifications.verseOfDay" = "Ajeti i ditës";
+"settings.notifications.verseOfDayDescription" = "Çdo ditë në orën 07:00 do të marrësh një ajet të rastësishëm.";
+"settings.notifications.verseEnabled" = "Ajeti i ditës u aktivizua.";
+"settings.notifications.verseDisabled" = "Ajeti i ditës u çaktivizua.";
+"settings.notifications.verseUnavailable" = "Teksti i ajeteve s’është i disponueshëm ende.";
+
+"notification.readingReminder.title" = "Koha për të lexuar";
+"notification.readingReminder.body" = "Hap Kurani për të vazhduar leximin tënd.";
+"notification.verseOfDay.title" = "Ajeti i ditës";
+"notification.verseOfDay.body" = "%@\nSure %@ • Ajeti %d";
+
 "notes.lastUpdated" = "Përditësuar: %@";
 "notes.section" = "Sure %@";
 "notes.openReader" = "Hap leximin";
