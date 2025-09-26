@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 
 struct SurahRow: View {
     let surah: Surah
@@ -10,7 +11,7 @@ struct SurahRow: View {
                 Text(surah.name)
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.kuraniTextPrimary)
-                Text("\(surah.ayahCount) \(LocalizedStringKey("library.ayahs"))")
+                Text("\(surah.ayahCount) \(NSLocalizedString("library.ayahs", comment: ""))")
                     .font(.system(.caption, design: .rounded))
                     .foregroundColor(.kuraniTextSecondary)
             }

@@ -49,6 +49,6 @@ struct RootView: View {
             .tag(Tab.settings)
         }
         .tint(Color.kuraniAccentBrand)
-        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+        .background(KuraniTheme.background.ignoresSafeArea())
     }
 }

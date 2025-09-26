@@ -35,10 +35,11 @@
 		D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */; };
 		D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000019 /* Assets.xcassets */; };
 		D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
-		D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
-		D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
-		D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D47AD4DA2A6B02A30000005B /* Supabase */; };
-		D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */; };
+D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
+D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
+D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D47AD4DA2A6B02A30000005B /* Supabase */; };
+D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */; };
+D4F6B6C22C9F000100000081 /* ArabicText.json in Resources */ = {isa = PBXBuildFile; fileRef = D4F6B6C12C9F000100000080 /* ArabicText.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,11 +50,12 @@
 		D47AD4DA2A6B02A30000001D /* QuranApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranApp.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000001E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000001F /* TranslationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationStore.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000020 /* QuranMeta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuranMeta.json; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000021 /* sample_translation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample_translation.json; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000022 /* Ayah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ayah.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000023 /* Surah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surah.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000024 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A300000020 /* QuranMeta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuranMeta.json; sourceTree = "<group>"; };
+D47AD4DA2A6B02A300000021 /* sample_translation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample_translation.json; sourceTree = "<group>"; };
+D47AD4DA2A6B02A300000022 /* Ayah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ayah.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A300000023 /* Surah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surah.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A300000024 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+D4F6B6C12C9F000100000080 /* ArabicText.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ArabicText.json; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000025 /* NotesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesStore.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000026 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
@@ -182,16 +184,17 @@
 			path = Supabase;
 			sourceTree = "<group>";
 		};
-		D47AD4DA2A6B02A300000014 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				D47AD4DA2A6B02A30000001F /* TranslationStore.swift */,
-				D47AD4DA2A6B02A300000020 /* QuranMeta.json */,
-				D47AD4DA2A6B02A300000021 /* sample_translation.json */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
+D47AD4DA2A6B02A300000014 /* Data */ = {
+isa = PBXGroup;
+children = (
+D47AD4DA2A6B02A30000001F /* TranslationStore.swift */,
+D47AD4DA2A6B02A300000020 /* QuranMeta.json */,
+D47AD4DA2A6B02A300000021 /* sample_translation.json */,
+D4F6B6C12C9F000100000080 /* ArabicText.json */,
+);
+path = Data;
+sourceTree = "<group>";
+};
 		D47AD4DA2A6B02A300000015 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,13 +272,14 @@
 		D47AD4DA2A6B02A30000000B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (
-				D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */,
-				D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
-				D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
-				D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
-				D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
-			);
+files = (
+D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */,
+D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
+D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
+D4F6B6C22C9F000100000081 /* ArabicText.json in Resources */,
+D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
+D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
+);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */

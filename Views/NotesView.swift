@@ -86,10 +86,10 @@ struct NotesView: View {
                     .listSectionSpacing(20)
                     .scrollContentBackground(.hidden)
                     .listRowSeparator(.hidden)
-                    .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+                    .background(KuraniTheme.background.ignoresSafeArea())
                 }
             }
-            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .background(KuraniTheme.background.ignoresSafeArea())
             .navigationTitle(LocalizedStringKey("notes.title"))
             .sheet(isPresented: $showingSignInSheet) {
                 SignInPromptView()
@@ -104,7 +104,7 @@ struct NotesView: View {
                 .environmentObject(authManager)
             }
         }
-        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+        .background(KuraniTheme.background.ignoresSafeArea())
     }
 
     private func sectionTitle(for surah: Int) -> String {

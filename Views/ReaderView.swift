@@ -7,6 +7,7 @@ struct ReaderView: View {
     let openNotesTab: () -> Void
 
     @EnvironmentObject private var authManager: AuthManager
+    @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
 
     @State private var selectedAyahForActions: Ayah?
     @State private var showingActions = false
@@ -25,9 +26,9 @@ struct ReaderView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 20) {
+                LazyVStack(alignment: .leading, spacing: 12) {
                     ForEach(viewModel.ayahs) { ayah in
-                        VStack(alignment: .leading, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 8) {
                             HStack(alignment: .top, spacing: 12) {
                                 Button {
                                     selectedAyahForActions = ayah
@@ -37,24 +38,35 @@ struct ReaderView: View {
                                 }
                                 .buttonStyle(.plain)
 
-                                Text(ayah.text)
-                                    .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
-                                    .foregroundColor(.kuraniTextPrimary)
-                                    .lineSpacing(6 * viewModel.lineSpacingScale)
-                                    .contextMenu {
-                                        Button(LocalizedStringKey("action.edit")) {
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(ayah.text)
+                                        .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
+                                        .foregroundColor(.kuraniTextPrimary)
+                                        .lineSpacing(4 * viewModel.lineSpacingScale)
+                                        .contextMenu {
+                                            Button(LocalizedStringKey("action.edit")) {
+                                                openNoteEditor(for: ayah)
+                                            }
+                                            Button(LocalizedStringKey("action.copy")) {
+                                                copyAyah(ayah)
+                                            }
+                                            Button(LocalizedStringKey("action.share")) {
+                                                shareAyah(ayah)
+                                            }
+                                        }
+                                        .onTapGesture {
                                             openNoteEditor(for: ayah)
                                         }
-                                        Button(LocalizedStringKey("action.copy")) {
-                                            copyAyah(ayah)
-                                        }
-                                        Button(LocalizedStringKey("action.share")) {
-                                            shareAyah(ayah)
-                                        }
+
+                                    if showArabicText, let arabic = ayah.arabicText {
+                                        Text(arabic)
+                                            .font(.system(size: 20 * viewModel.fontScale, weight: .regular))
+                                            .foregroundColor(.kuraniTextPrimary)
+                                            .multilineTextAlignment(.trailing)
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                            .lineSpacing(4 * viewModel.lineSpacingScale)
                                     }
-                                    .onTapGesture {
-                                        openNoteEditor(for: ayah)
-                                    }
+                                }
                             }
 
                             if let note = viewModel.note(for: ayah) {
@@ -83,7 +95,7 @@ struct ReaderView: View {
                                 )
                             }
                         }
-                        .appleCard(cornerRadius: 28)
+                        .appleCard(cornerRadius: 22)
                         .padding(.horizontal, 16)
                         .id(ayah.number)
                         .onAppear {
@@ -93,12 +105,19 @@ struct ReaderView: View {
                 }
                 .padding(.bottom, 56)
             }
-            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .background(KuraniTheme.background.ignoresSafeArea())
             .navigationTitle(Text(viewModel.surahTitle))
-            .toolbarBackground(Color.kuraniDarkBackground.opacity(0.35), for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
+            .toolbarColorScheme(.light, for: .navigationBar)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        showArabicText.toggle()
+                    } label: {
+                        Image(systemName: showArabicText ? "book.closed.fill" : "book.closed")
+                            .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
+                            .foregroundStyle(Color.kuraniAccentLight)
+                    }
                     Button {
                         viewModel.decreaseFont()
                     } label: {
@@ -145,7 +164,7 @@ struct ReaderView: View {
                 }
             }
         }
-        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+        .background(KuraniTheme.background.ignoresSafeArea())
         .sheet(isPresented: $viewModel.isNoteEditorPresented) {
             if let ayah = viewModel.selectedAyah {
                 NoteEditorView(

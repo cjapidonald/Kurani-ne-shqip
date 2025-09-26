@@ -5,4 +5,5 @@ enum AppStorageKeys {
     static let lastReadAyah = "last_read_ayah"
     static let fontScale = "reader_font_scale"
     static let lineSpacingScale = "reader_line_spacing"
+    static let showArabicText = "reader_show_arabic"
 }

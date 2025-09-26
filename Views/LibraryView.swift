@@ -70,7 +70,7 @@ struct LibraryView: View {
             .listSectionSpacing(20)
             .scrollContentBackground(.hidden)
             .listRowSeparator(.hidden)
-            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .background(KuraniTheme.background.ignoresSafeArea())
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: LocalizedStringKey("library.search.placeholder"))
             .navigationTitle(LocalizedStringKey("tabs.library"))
             .toolbar {
@@ -94,6 +94,6 @@ struct LibraryView: View {
                 viewModel.refreshLastRead()
             }
         }
-        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+        .background(KuraniTheme.background.ignoresSafeArea())
     }
 }
