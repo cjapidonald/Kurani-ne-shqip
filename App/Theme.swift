@@ -28,6 +28,9 @@ extension Color {
     static let kuraniAccentLight = Color("AccentLight")
     static let kuraniTextPrimary = Color("TextPrimary")
     static let kuraniTextSecondary = Color("TextSecondary")
+
+    // Backwards compatibility alias for older usages in the codebase
+    static let accentBrand = Color.kuraniAccentBrand
 }
 
 struct BrandHeader: View {
