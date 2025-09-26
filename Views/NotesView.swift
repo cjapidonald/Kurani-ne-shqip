@@ -124,7 +124,7 @@ struct FavoritesView: View {
     var body: some View {
         NavigationStack(path: $path) {
             Group {
-                if viewModel.favorites.isEmpty {
+                if viewModel.favorites.isEmpty && viewModel.folders.isEmpty {
                     ScrollView {
                         VStack(spacing: 16) {
                             Image(systemName: "heart")
@@ -144,36 +144,93 @@ struct FavoritesView: View {
                     .background(KuraniTheme.background.ignoresSafeArea())
                 } else {
                     List {
-                        ForEach(viewModel.favorites) { favorite in
-                            Button {
-                                path.append(ReaderRoute(surah: favorite.surah, ayah: favorite.ayah))
-                            } label: {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text(ayahText(for: favorite))
-                                        .font(.system(.body, design: .serif))
-                                        .foregroundColor(.kuraniTextPrimary)
-                                        .lineLimit(4)
+                        if !viewModel.favorites.isEmpty {
+                            Section(header: Text(LocalizedStringKey("favorites.section.starred"))) {
+                                ForEach(viewModel.favorites) { favorite in
+                                    Button {
+                                        path.append(ReaderRoute(surah: favorite.surah, ayah: favorite.ayah))
+                                    } label: {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text(ayahText(for: favorite))
+                                                .font(.system(.body, design: .serif))
+                                                .foregroundColor(.kuraniTextPrimary)
+                                                .lineLimit(4)
 
-                                    Text(detailText(for: favorite))
-                                        .font(.system(.caption, design: .rounded))
-                                        .foregroundColor(.kuraniTextSecondary)
-                                }
-                                .appleCard(cornerRadius: 20)
-                                .padding(.horizontal, 20)
-                            }
-                            .buttonStyle(.plain)
-                            .listRowInsets(EdgeInsets())
-                            .listRowBackground(Color.clear)
-                            .padding(.vertical, 6)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    withAnimation {
-                                        viewModel.remove(favorite)
+                                            Text(detailText(for: favorite))
+                                                .font(.system(.caption, design: .rounded))
+                                                .foregroundColor(.kuraniTextSecondary)
+                                        }
+                                        .appleCard(cornerRadius: 20)
+                                        .padding(.horizontal, 20)
                                     }
-                                } label: {
-                                    Label(LocalizedStringKey("favorites.remove"), systemImage: "trash")
+                                    .buttonStyle(.plain)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowBackground(Color.clear)
+                                    .padding(.vertical, 6)
+                                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                        Button(role: .destructive) {
+                                            withAnimation {
+                                                viewModel.remove(favorite)
+                                            }
+                                        } label: {
+                                            Label(LocalizedStringKey("favorites.remove"), systemImage: "trash")
+                                        }
+                                    }
                                 }
                             }
+                            .listRowBackground(Color.clear)
+                        }
+
+                        ForEach(viewModel.folders) { folder in
+                            Section(header: folderHeader(for: folder)) {
+                                if folder.entries.isEmpty {
+                                    Text(LocalizedStringKey("favorites.folder.empty"))
+                                        .font(.system(.footnote, design: .rounded))
+                                        .foregroundColor(.kuraniTextSecondary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .listRowBackground(Color.clear)
+                                } else {
+                                    ForEach(folder.entries) { entry in
+                                        Button {
+                                            path.append(ReaderRoute(surah: entry.surah, ayah: entry.ayah))
+                                        } label: {
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                Text(ayahText(for: entry))
+                                                    .font(.system(.body, design: .serif))
+                                                    .foregroundColor(.kuraniTextPrimary)
+                                                    .lineLimit(4)
+
+                                                if let note = entry.note, !note.isEmpty {
+                                                    Text(note)
+                                                        .font(KuraniFont.forTextStyle(.callout))
+                                                        .foregroundColor(.kuraniAccentLight)
+                                                        .lineLimit(3)
+                                                }
+
+                                                Text(folderDetailText(for: entry))
+                                                    .font(.system(.caption, design: .rounded))
+                                                    .foregroundColor(.kuraniTextSecondary)
+                                            }
+                                            .appleCard(cornerRadius: 20)
+                                            .padding(.horizontal, 20)
+                                        }
+                                        .buttonStyle(.plain)
+                                        .listRowInsets(EdgeInsets())
+                                        .listRowBackground(Color.clear)
+                                        .padding(.vertical, 6)
+                                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                            Button(role: .destructive) {
+                                                withAnimation {
+                                                    viewModel.remove(entry, from: folder)
+                                                }
+                                            } label: {
+                                                Label(LocalizedStringKey("favorites.remove"), systemImage: "trash")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .listRowBackground(Color.clear)
                         }
                     }
                     .listStyle(.insetGrouped)
@@ -214,5 +271,36 @@ struct FavoritesView: View {
             favorite.ayah,
             translationStore.title(for: favorite.surah)
         )
+    }
+
+    private func ayahText(for entry: FavoriteFolder.Entry) -> String {
+        translationStore.ayahs(for: entry.surah).first(where: { $0.number == entry.ayah })?.text ?? ""
+    }
+
+    private func folderDetailText(for entry: FavoriteFolder.Entry) -> String {
+        String(
+            format: NSLocalizedString("favorites.detail", comment: "favorite metadata"),
+            entry.ayah,
+            translationStore.title(for: entry.surah)
+        )
+    }
+
+    @ViewBuilder
+    private func folderHeader(for folder: FavoriteFolder) -> some View {
+        HStack {
+            Text(folder.name)
+            Spacer()
+            Button {
+                withAnimation {
+                    viewModel.delete(folder)
+                }
+            } label: {
+                Image(systemName: "trash")
+                    .font(.system(size: 14, weight: .semibold))
+            }
+            .buttonStyle(.borderless)
+            .foregroundStyle(Color.kuraniAccentLight)
+            .accessibilityLabel(LocalizedStringKey("favorites.folder.delete"))
+        }
     }
 }

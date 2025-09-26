@@ -29,6 +29,7 @@ final class NotesViewModel: ObservableObject {
 @MainActor
 final class FavoritesViewModel: ObservableObject {
     @Published private(set) var favorites: [FavoriteAyah] = []
+    @Published private(set) var folders: [FavoriteFolder] = []
 
     private let favoritesStore: FavoritesStore
     private var cancellables: Set<AnyCancellable> = []
@@ -41,10 +42,25 @@ final class FavoritesViewModel: ObservableObject {
                 self?.favorites = favorites
             }
             .store(in: &cancellables)
+        favoritesStore.$folders
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] folders in
+                self?.folders = folders
+            }
+            .store(in: &cancellables)
         favorites = favoritesStore.favorites
+        folders = favoritesStore.folders
     }
 
     func remove(_ favorite: FavoriteAyah) {
         favoritesStore.removeFavorite(surah: favorite.surah, ayah: favorite.ayah)
+    }
+
+    func remove(_ entry: FavoriteFolder.Entry, from folder: FavoriteFolder) {
+        favoritesStore.removeEntry(entry, from: folder.id)
+    }
+
+    func delete(_ folder: FavoriteFolder) {
+        favoritesStore.deleteFolder(folder.id)
     }
 }
