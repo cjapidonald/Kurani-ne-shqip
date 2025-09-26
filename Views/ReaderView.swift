@@ -10,6 +10,7 @@ codex/update-app-theme-for-reading
     @EnvironmentObject private var authManager: AuthManager
     @Environment(\.dismiss) private var dismiss
     @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
+    @AppStorage(AppStorageKeys.showAlbanianText) private var showAlbanianText = true
 
 
 main
@@ -43,24 +44,26 @@ main
                                 .buttonStyle(.plain)
 
                                 VStack(alignment: .leading, spacing: 6) {
-                                    Text(ayah.text)
-                                        .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
-                                        .foregroundColor(.white)
-                                        .lineSpacing(4 * viewModel.lineSpacingScale)
-                                        .contextMenu {
-                                            Button(LocalizedStringKey("action.edit")) {
+                                    if showAlbanianText {
+                                        Text(ayah.text)
+                                            .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
+                                            .foregroundColor(.white)
+                                            .lineSpacing(4 * viewModel.lineSpacingScale)
+                                            .contextMenu {
+                                                Button(LocalizedStringKey("action.edit")) {
+                                                    openNoteEditor(for: ayah)
+                                                }
+                                                Button(LocalizedStringKey("action.copy")) {
+                                                    copyAyah(ayah)
+                                                }
+                                                Button(LocalizedStringKey("action.share")) {
+                                                    shareAyah(ayah)
+                                                }
+                                            }
+                                            .onTapGesture {
                                                 openNoteEditor(for: ayah)
                                             }
-                                            Button(LocalizedStringKey("action.copy")) {
-                                                copyAyah(ayah)
-                                            }
-                                            Button(LocalizedStringKey("action.share")) {
-                                                shareAyah(ayah)
-                                            }
-                                        }
-                                        .onTapGesture {
-                                            openNoteEditor(for: ayah)
-                                        }
+                                    }
 
                                     if showArabicText, let arabic = ayah.arabicText {
                                         Text(arabic)
@@ -126,9 +129,16 @@ main
                     .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
 
                     Button {
-                        showArabicText.toggle()
+                        toggleAlbanian()
                     } label: {
-                        ArabicToggleIcon(isActive: showArabicText)
+                        LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
+                    }
+                    .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
+
+                    Button {
+                        toggleArabic()
+                    } label: {
+                        LanguageToggleIcon(label: "AR", isActive: showArabicText)
                     }
                     .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
                     Button {
@@ -264,12 +274,35 @@ main
         showingShareSheet = true
     }
 
+    private func toggleAlbanian() {
+        if showAlbanianText {
+            if !showArabicText {
+                showArabicText = true
+            }
+            showAlbanianText = false
+        } else {
+            showAlbanianText = true
+        }
+    }
+
+    private func toggleArabic() {
+        if showArabicText {
+            if !showAlbanianText {
+                showAlbanianText = true
+            }
+            showArabicText = false
+        } else {
+            showArabicText = true
+        }
+    }
+
     private func formattedText(for ayah: Ayah) -> String {
         "\(viewModel.surahTitle) \(ayah.number): \(ayah.text)"
     }
 }
 
-private struct ArabicToggleIcon: View {
+private struct LanguageToggleIcon: View {
+    let label: String
     let isActive: Bool
 
     var body: some View {
@@ -281,10 +314,9 @@ private struct ArabicToggleIcon: View {
                         .stroke(Color.kuraniAccentLight, lineWidth: 1.4)
                 )
 
-            Text("ع")
-                .font(.system(size: 15, weight: .bold, design: .default))
+            Text(label)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(isActive ? Color.kuraniDarkBackground : Color.kuraniAccentLight)
-                .baselineOffset(1)
         }
         .frame(width: 30, height: 30)
     }
