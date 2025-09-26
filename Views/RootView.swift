@@ -24,7 +24,7 @@ struct RootView: View {
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
         _favoritesViewModel = StateObject(wrappedValue: FavoritesViewModel(favoritesStore: favoritesStore))
         _settingsViewModel = StateObject(
-            wrappedValue: SettingsViewModel(translationStore: translationStore, progressStore: progressStore)
+            wrappedValue: SettingsViewModel(progressStore: progressStore)
         )
     }
 

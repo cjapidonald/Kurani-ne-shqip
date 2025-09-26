@@ -44,10 +44,6 @@
 "settings.signout" = "Dil nga llogaria";
 "settings.account" = "Llogaria";
 "settings.account.offline" = "Hyrja është çaktivizuar përkohësisht. Shënimet do të ruhen vetëm në këtë pajisje.";
-"settings.translation" = "Përkthimi (shqip)";
-"settings.import" = "Importo përkthimin";
-"settings.import.success" = "Përkthimi u importua";
-"settings.import.invalid" = "Skedari i pavlefshëm";
 "settings.progress.title" = "Hatmja ime";
 "settings.progress.description" = "Rivendos leximet dhe përqindjen e çdo sureje.";
 "settings.progress.reset" = "Rivendos hatmen";
@@ -65,7 +61,6 @@
 "signin.email.placeholder" = "Adresa juaj e emailit";
 "signin.email.sent" = "Kontrolloni emailin për lidhjen e hyrjes.";
 "signin.required" = "Kjo veçori kërkon hyrje.";
-"toast.importing" = "Po importohet…";
 "toast.error" = "Ndodhi një gabim";
 "toast.success" = "U ruajt me sukses";
 "reader.notesButton" = "Shënimet e mia";
@@ -74,7 +69,7 @@
 "reader.lineSpacing.increase" = "Rrite hapësirën";
 "reader.lineSpacing.decrease" = "Zvogëlo hapësirën";
 "reader.noteBanner" = "Shënim i ruajtur • %@";
-"settings.about.disclaimer" = "Përkthimet e plota mund të jenë të mbrojtura nga të drejtat e autorit. Importoni një skedar JSON të ligjshëm për lexim të plotë.";
+"settings.about.disclaimer" = "Ky aplikacion përfshin një përkthim demonstrues të kufizuar dhe nuk zëvendëson botimet e licencuara.";
 "settings.version" = "Versioni";
 "library.sampleOnly" = "Shembull demonstrues (Sure 1 dhe 112).";
 "notes.loading" = "Po ngarkohet…";
@@ -83,8 +78,6 @@
 "reader.copy.confirmation" = "Teksti u kopjua";
 "reader.favorite.add" = "Shto te të preferuarat";
 "reader.favorite.remove" = "Hiq nga të preferuarat";
-"settings.translation.loaded" = "Përkthimi i ngarkuar";
-"settings.translation.sample" = "Po shfaqet përkthimi i mostrës";
 "reader.jumpLastRead" = "Shko te leximi i fundit";
 "favorites.title" = "Të preferuarat";
 "favorites.empty" = "S’ka ajete të preferuara ende.";
