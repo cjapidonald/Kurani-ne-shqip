@@ -6,20 +6,21 @@ struct ReaderView: View {
     let startingAyah: Int?
     let openNotesTab: () -> Void
 
-codex/update-app-theme-for-reading
+
     @EnvironmentObject private var authManager: AuthManager
     @Environment(\.dismiss) private var dismiss
     @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
     @AppStorage(AppStorageKeys.showAlbanianText) private var showAlbanianText = true
 
 
-main
     @State private var selectedAyahForActions: Ayah?
     @State private var showingActions = false
     @State private var shareText: String = ""
     @State private var showingShareSheet = false
     @State private var showToast = false
     @State private var isChromeHidden = false
+    @State private var selectedDictionaryEntry: ArabicDictionaryEntry?
+    @State private var pendingDictionaryWord: String?
 
     private let noteFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -66,12 +67,14 @@ main
                                     }
 
                                     if showArabicText, let arabic = ayah.arabicText {
-                                        Text(arabic)
-                                            .font(.system(size: 20 * viewModel.fontScale, weight: .regular))
-                                            .foregroundColor(.white)
-                                            .multilineTextAlignment(.trailing)
-                                            .frame(maxWidth: .infinity, alignment: .trailing)
-                                            .lineSpacing(4 * viewModel.lineSpacingScale)
+                                        ArabicSelectableTextView(
+                                            text: arabic,
+                                            fontScale: viewModel.fontScale,
+                                            lineSpacingScale: viewModel.lineSpacingScale,
+                                            onSelection: handleDictionarySelection
+                                        )
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
                             }
@@ -205,6 +208,11 @@ main
         .sheet(isPresented: $showingShareSheet) {
             ShareSheet(items: [shareText])
         }
+        .sheet(item: $selectedDictionaryEntry) { entry in
+            ArabicDictionaryDetailView(entry: entry)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
         .confirmationDialog(LocalizedStringKey("action.edit"), isPresented: $showingActions, presenting: selectedAyahForActions) { ayah in
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
             Button(LocalizedStringKey("action.share")) { shareAyah(ayah) }
@@ -298,6 +306,21 @@ main
 
     private func formattedText(for ayah: Ayah) -> String {
         "\(viewModel.surahTitle) \(ayah.number): \(ayah.text)"
+    }
+
+    private func handleDictionarySelection(_ word: String) {
+        guard pendingDictionaryWord != word else { return }
+        pendingDictionaryWord = word
+
+        if let entry = ArabicDictionary.shared.lookup(word: word) {
+            selectedDictionaryEntry = entry
+        } else {
+            viewModel.toast = LocalizedStringKey("dictionary.notFound")
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            pendingDictionaryWord = nil
+        }
     }
 }
 

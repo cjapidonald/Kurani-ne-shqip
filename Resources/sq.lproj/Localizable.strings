@@ -77,3 +77,6 @@
 "settings.translation.loaded" = "Përkthimi i ngarkuar";
 "settings.translation.sample" = "Po shfaqet përkthimi i mostrës";
 "reader.jumpLastRead" = "Shko te leximi i fundit";
+"dictionary.notFound" = "Kjo fjalë nuk gjendet ende në fjalor.";
+"dictionary.meanings" = "Kuptimet";
+"dictionary.notes" = "Shënime";
