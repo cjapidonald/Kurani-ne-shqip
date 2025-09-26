@@ -34,6 +34,9 @@ struct ReaderView: View {
         return formatter
     }()
 
+    private let fullscreenTapZoneHeightTop: CGFloat = 60
+    private let fullscreenTapZoneHeightBottom: CGFloat = 96
+
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -268,7 +271,7 @@ struct ReaderView: View {
             ZStack(alignment: .top) {
                 if isChromeHidden {
                     Color.clear
-                        .frame(height: 120)
+                        .frame(height: fullscreenTapZoneHeightTop)
                         .contentShape(Rectangle())
                         .onTapGesture { revealFullscreenChrome() }
                 }
@@ -316,7 +319,7 @@ struct ReaderView: View {
             ZStack(alignment: .bottom) {
                 if isChromeHidden {
                     Color.clear
-                        .frame(height: 140)
+                        .frame(height: fullscreenTapZoneHeightBottom)
                         .contentShape(Rectangle())
                         .onTapGesture { revealFullscreenChrome() }
                 }
