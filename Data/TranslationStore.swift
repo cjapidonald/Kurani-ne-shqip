@@ -34,7 +34,6 @@ private struct MetaEntry: Codable {
 final class TranslationStore: ObservableObject {
     @Published private(set) var surahs: [Surah] = []
     @Published private(set) var ayahsBySurah: [Int: [Ayah]] = [:]
-    @Published private(set) var isUsingSample: Bool = true
 
     private let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -80,31 +79,9 @@ final class TranslationStore: ObservableObject {
                 let sorted = entry.ayahs.sorted { $0.number < $1.number }
                 result[entry.number] = applyArabicTextIfAvailable(to: sorted, surahNumber: entry.number)
             }
-            isUsingSample = true
         } catch {
             print("Failed to load translation", error)
         }
-    }
-
-    func importTranslation(from url: URL) async throws {
-        let decoder = self.decoder
-        let shouldStopAccess = url.startAccessingSecurityScopedResource()
-        defer {
-            if shouldStopAccess {
-                url.stopAccessingSecurityScopedResource()
-            }
-        }
-
-        let translation = try await Task.detached(priority: .userInitiated) { () throws -> TranslationFile in
-            let data = try Data(contentsOf: url)
-            return try decoder.decode(TranslationFile.self, from: data)
-        }.value
-
-        ayahsBySurah = translation.surahs.reduce(into: [:]) { result, entry in
-            let sorted = entry.ayahs.sorted { $0.number < $1.number }
-            result[entry.number] = applyArabicTextIfAvailable(to: sorted, surahNumber: entry.number)
-        }
-        isUsingSample = false
     }
 
     func ayahs(for surah: Int) -> [Ayah] {

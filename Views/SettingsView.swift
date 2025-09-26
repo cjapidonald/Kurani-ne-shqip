@@ -3,7 +3,6 @@ import SwiftUI
 struct SettingsView: View {
     @ObservedObject var viewModel: SettingsViewModel
 
-    @State private var showingImporter = false
     @State private var toastVisible = false
     @State private var showingResetConfirmation = false
 
@@ -14,29 +13,6 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         Text(LocalizedStringKey("settings.account.offline"))
                             .foregroundColor(.kuraniTextSecondary)
-                    }
-                    .appleCard()
-                    .padding(.horizontal, 12)
-                }
-                .listRowInsets(EdgeInsets())
-                .listRowBackground(Color.clear)
-
-                Section(header: Text(LocalizedStringKey("settings.translation"))) {
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            Text(viewModel.isUsingSampleTranslation ? LocalizedStringKey("settings.translation.sample") : LocalizedStringKey("settings.translation.loaded"))
-                                .foregroundColor(.kuraniTextSecondary)
-                            Spacer()
-                            if viewModel.isImporting {
-                                ProgressView()
-                                    .tint(.kuraniAccentLight)
-                            }
-                        }
-
-                        Button(LocalizedStringKey("settings.import")) {
-                            showingImporter = true
-                        }
-                        .buttonStyle(GradientButtonStyle())
                     }
                     .appleCard()
                     .padding(.horizontal, 12)
@@ -87,14 +63,6 @@ struct SettingsView: View {
             .navigationTitle(LocalizedStringKey("settings.title"))
             .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
             .toolbarColorScheme(.light, for: .navigationBar)
-            .fileImporter(isPresented: $showingImporter, allowedContentTypes: [.json]) { result in
-                switch result {
-                case .success(let url):
-                    Task { await importTranslation(url: url) }
-                case .failure:
-                    viewModel.toast = LocalizedStringKey("settings.import.invalid")
-                }
-            }
             .overlay(alignment: .bottom) {
                 if toastVisible, let message = viewModel.toast {
                     ToastView(message: message)
@@ -118,9 +86,5 @@ struct SettingsView: View {
             }
         }
         .background(KuraniTheme.background.ignoresSafeArea())
-    }
-
-    private func importTranslation(url: URL) async {
-        await viewModel.importTranslation(from: url)
     }
 }
