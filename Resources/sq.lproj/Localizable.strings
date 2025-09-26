@@ -1,5 +1,6 @@
 "app_name" = "Kurani";
 "tabs.library" = "Suret";
+"tabs.favorites" = "Të preferuarat";
 "tabs.notes" = "Shënimet e mia";
 "tabs.settings" = "Cilësimet";
 
@@ -27,6 +28,7 @@
 "reader.textSize" = "Madhësia e tekstit";
 "reader.lineSpacing" = "Hapësira ndër rreshta";
 "reader.toggleArabic" = "Shfaq tekstin arab";
+"reader.toggleAlbanian" = "Shfaq tekstin shqip";
 "reader.toggleChrome" = "Fsheh panelet";
 "reader.progress" = "%ld / %ld";
 "reader.note.add" = "Shkruaj shënim";
@@ -73,6 +75,18 @@
 "notes.noAccess" = "Hyr për të parë shënimet e tua.";
 "reader.share.subject" = "Ajet nga Kurani";
 "reader.copy.confirmation" = "Teksti u kopjua";
+"reader.favorite.add" = "Shto te të preferuarat";
+"reader.favorite.remove" = "Hiq nga të preferuarat";
 "settings.translation.loaded" = "Përkthimi i ngarkuar";
 "settings.translation.sample" = "Po shfaqet përkthimi i mostrës";
 "reader.jumpLastRead" = "Shko te leximi i fundit";
+codex/add-heart-button-for-favorites
+"favorites.title" = "Të preferuarat";
+"favorites.empty" = "S’ka ajete të preferuara ende.";
+"favorites.detail" = "Ajeti %d • Sure %@";
+"favorites.remove" = "Hiq nga të preferuarat";
+
+"dictionary.notFound" = "Kjo fjalë nuk gjendet ende në fjalor.";
+"dictionary.meanings" = "Kuptimet";
+"dictionary.notes" = "Shënime";
+ main
