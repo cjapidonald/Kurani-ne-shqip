@@ -327,6 +327,13 @@
     "moduleName" : "CoreGraphics"
   },
   {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneSimulator.platform\/Developer\/SDKs\/iPhoneSimulator.sdk\/System\/Library\/Frameworks\/CoreHaptics.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/donaldcjapi\/Library\/Developer\/Xcode\/DerivedData\/ModuleCache.noindex\/CoreHaptics-8FVX7COB0FCHMZP2Z7DK1Q8OR.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreHaptics"
+  },
+  {
     "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneSimulator.platform\/Developer\/SDKs\/iPhoneSimulator.sdk\/System\/Library\/Frameworks\/CoreImage.framework\/Modules\/module.modulemap",
     "clangModulePath" : "\/Users\/donaldcjapi\/Library\/Developer\/Xcode\/DerivedData\/ModuleCache.noindex\/CoreImage-CTJASPT267LKEIS095CIR85G8.pcm",
     "isBridgingHeaderDependency" : false,

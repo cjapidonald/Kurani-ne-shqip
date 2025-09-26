@@ -11,15 +11,8 @@ struct LibraryView: View {
 
     @EnvironmentObject private var translationStore: TranslationStore
     @EnvironmentObject private var notesStore: NotesStore
- codex/add-reading-progress-bar-and-reset-button-rfxbyq
     @EnvironmentObject private var progressStore: ReadingProgressStore
-
-codex/add-reading-progress-bar-and-reset-button
-    @EnvironmentObject private var progressStore: ReadingProgressStore
-
     @EnvironmentObject private var favoritesStore: FavoritesStore
- main
- main
 
     @State private var path: [ReaderRoute] = []
 
@@ -100,15 +93,8 @@ codex/add-reading-progress-bar-and-reset-button
                         surahNumber: route.surah,
                         translationStore: translationStore,
                         notesStore: notesStore,
- codex/add-reading-progress-bar-and-reset-button-rfxbyq
-                        progressStore: progressStore
-
-codex/add-reading-progress-bar-and-reset-button
-                        progressStore: progressStore
-
+                        progressStore: progressStore,
                         favoritesStore: favoritesStore
- main
- main
                     ),
                     startingAyah: route.ayah,
                     openNotesTab: openNotesTab
