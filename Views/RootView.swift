@@ -20,8 +20,6 @@ struct RootView: View {
         self.notesStore = notesStore
         self.progressStore = progressStore
         self.favoritesStore = favoritesStore
-        self.progressStore = progressStore
-        self.favoritesStore = favoritesStore
         _libraryViewModel = StateObject(wrappedValue: LibraryViewModel(translationStore: translationStore))
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
         _favoritesViewModel = StateObject(wrappedValue: FavoritesViewModel(favoritesStore: favoritesStore))
@@ -66,3 +64,4 @@ struct RootView: View {
         .background(KuraniTheme.background.ignoresSafeArea())
     }
 }
+

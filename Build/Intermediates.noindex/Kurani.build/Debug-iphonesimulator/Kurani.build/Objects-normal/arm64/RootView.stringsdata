@@ -7,23 +7,31 @@
         "key": "tabs.library",
         "location": {
           "startingColumn": 42,
-          "startingLine": 32
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "tabs.favorites",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 47
         }
       },
       {
         "comment": "",
         "key": "tabs.notes",
         "location": {
-          "startingColumn": 42,
-          "startingLine": 39
+          "startingColumn": 46,
+          "startingLine": 54
         }
       },
       {
         "comment": "",
         "key": "tabs.settings",
         "location": {
-          "startingColumn": 42,
-          "startingLine": 47
+          "startingColumn": 46,
+          "startingLine": 61
         }
       }
     ]
