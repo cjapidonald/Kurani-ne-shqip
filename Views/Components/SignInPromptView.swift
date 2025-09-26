@@ -26,19 +26,19 @@ struct SignInPromptView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
 
                     Divider()
-                        .background(Color.accentLight.opacity(0.4))
+                        .background(Color.kuraniAccentLight.opacity(0.4))
 
                     VStack(alignment: .leading, spacing: 8) {
                         Text(LocalizedStringKey("signin.email"))
                             .font(.system(.caption, design: .rounded))
-                            .foregroundColor(.textSecondary)
+                            .foregroundColor(.kuraniTextSecondary)
                         TextField(LocalizedStringKey("signin.email.placeholder"), text: $email)
                             .textInputAutocapitalization(.never)
                             .keyboardType(.emailAddress)
                             .padding(12)
-                            .background(Color.primarySurface.opacity(0.4))
+                            .background(Color.kuraniPrimarySurface.opacity(0.4))
                             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                            .foregroundColor(.textPrimary)
+                            .foregroundColor(.kuraniTextPrimary)
                         Button {
                             Task { await sendMagicLink() }
                         } label: {
@@ -50,13 +50,13 @@ struct SignInPromptView: View {
                     }
                 }
                 .padding()
-                .background(Color.primarySurface.opacity(0.3))
+                .background(Color.kuraniPrimarySurface.opacity(0.3))
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
 
                 Spacer()
             }
             .padding()
-            .background(Color.darkBackground.ignoresSafeArea())
+            .background(Color.kuraniDarkBackground.ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(LocalizedStringKey("action.cancel")) { dismiss() }

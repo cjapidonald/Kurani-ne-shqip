@@ -27,14 +27,14 @@ struct RootView: View {
             LibraryView(viewModel: libraryViewModel) {
                 selectedTab = .notes
             }
-            .background(Color.darkBackground.ignoresSafeArea())
+            .background(Color.kuraniDarkBackground.ignoresSafeArea())
             .tabItem {
                 Label(LocalizedStringKey("tabs.library"), systemImage: "book")
             }
             .tag(Tab.library)
 
             NotesView(viewModel: notesViewModel, translationStore: translationStore)
-            .background(Color.darkBackground.ignoresSafeArea())
+            .background(Color.kuraniDarkBackground.ignoresSafeArea())
             .tabItem {
                 Label(LocalizedStringKey("tabs.notes"), systemImage: "note.text")
             }
@@ -42,12 +42,12 @@ struct RootView: View {
 
             SettingsView(viewModel: settingsViewModel)
                 .environmentObject(authManager)
-                .background(Color.darkBackground.ignoresSafeArea())
+                .background(Color.kuraniDarkBackground.ignoresSafeArea())
             .tabItem {
                 Label(LocalizedStringKey("tabs.settings"), systemImage: "gearshape")
             }
             .tag(Tab.settings)
         }
-        .tint(Color.accentBrand)
+        .tint(Color.kuraniAccentBrand)
     }
 }

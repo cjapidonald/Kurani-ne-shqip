@@ -15,14 +15,14 @@ struct SettingsView: View {
                     if let user = authManager.user {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(user.email ?? "")
-                                .foregroundColor(.textPrimary)
+                                .foregroundColor(.kuraniTextPrimary)
                             Text(user.id.uuidString)
                                 .font(.system(.caption, design: .monospaced))
-                                .foregroundColor(.textSecondary)
+                                .foregroundColor(.kuraniTextSecondary)
                         }
                     } else {
                         Text(LocalizedStringKey("notes.signinRequired"))
-                            .foregroundColor(.textSecondary)
+                            .foregroundColor(.kuraniTextSecondary)
                     }
 
                     if authManager.userId == nil {
@@ -36,12 +36,12 @@ struct SettingsView: View {
                         .foregroundColor(.red)
                     }
                 }
-                .listRowBackground(Color.primarySurface)
+                .listRowBackground(Color.kuraniPrimarySurface)
 
                 Section(header: Text(LocalizedStringKey("settings.translation"))) {
                     HStack {
                         Text(viewModel.isUsingSampleTranslation ? LocalizedStringKey("settings.translation.sample") : LocalizedStringKey("settings.translation.loaded"))
-                            .foregroundColor(.textSecondary)
+                            .foregroundColor(.kuraniTextSecondary)
                         Spacer()
                         if viewModel.isImporting {
                             ProgressView()
@@ -52,25 +52,25 @@ struct SettingsView: View {
                         showingImporter = true
                     }
                 }
-                .listRowBackground(Color.primarySurface)
+                .listRowBackground(Color.kuraniPrimarySurface)
 
                 Section(header: Text(LocalizedStringKey("settings.about"))) {
                     Text(LocalizedStringKey("settings.about.disclaimer"))
-                        .foregroundColor(.textSecondary)
+                        .foregroundColor(.kuraniTextSecondary)
                     HStack {
                         Text(LocalizedStringKey("settings.version"))
                         Spacer()
                         Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
-                            .foregroundColor(.textSecondary)
+                            .foregroundColor(.kuraniTextSecondary)
                     }
                 }
-                .listRowBackground(Color.primarySurface)
+                .listRowBackground(Color.kuraniPrimarySurface)
             }
             .scrollContentBackground(.hidden)
-            .background(Color.darkBackground)
-            .tint(Color.accentBrand)
+            .background(Color.kuraniDarkBackground)
+            .tint(Color.kuraniAccentBrand)
             .navigationTitle(LocalizedStringKey("settings.title"))
-            .toolbarBackground(Color.darkBackground, for: .navigationBar)
+            .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
             .fileImporter(isPresented: $showingImporter, allowedContentTypes: [.json]) { result in
                 switch result {
                 case .success(let url):

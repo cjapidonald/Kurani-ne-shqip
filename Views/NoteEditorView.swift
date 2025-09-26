@@ -14,18 +14,18 @@ struct NoteEditorView: View {
             VStack(alignment: .leading, spacing: 16) {
                 Text(String(format: NSLocalizedString("reader.title.compact", comment: "title"), ayah.number, ayah.text))
                     .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(.textSecondary)
+                    .foregroundColor(.kuraniTextSecondary)
 
                 TextEditor(text: $draft)
                     .focused($isFocused)
                     .frame(minHeight: 160)
                     .padding(8)
-                    .background(Color.primarySurface.opacity(0.4))
+                    .background(Color.kuraniPrimarySurface.opacity(0.4))
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                    .foregroundColor(.textPrimary)
+                    .foregroundColor(.kuraniTextPrimary)
             }
             .padding()
-            .background(Color.darkBackground.ignoresSafeArea())
+            .background(Color.kuraniDarkBackground.ignoresSafeArea())
             .navigationTitle(draft.isEmpty ? LocalizedStringKey("reader.note.add") : LocalizedStringKey("reader.note.edit"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
