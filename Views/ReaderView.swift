@@ -6,13 +6,10 @@ struct ReaderView: View {
     let startingAyah: Int?
     let openNotesTab: () -> Void
 
-    @EnvironmentObject private var authManager: AuthManager
-
     @State private var selectedAyahForActions: Ayah?
     @State private var showingActions = false
     @State private var shareText: String = ""
     @State private var showingShareSheet = false
-    @State private var showingSignInSheet = false
     @State private var showToast = false
 
     private let noteFormatter: DateFormatter = {
@@ -122,11 +119,7 @@ struct ReaderView: View {
                     }
                     .accessibilityLabel(LocalizedStringKey("reader.lineSpacing"))
                     Button {
-                        if authManager.userId == nil {
-                            showingSignInSheet = true
-                        } else {
-                            openNotesTab()
-                        }
+                        openNotesTab()
                     } label: {
                         Image(systemName: "note.text")
                             .foregroundStyle(Color.kuraniAccentLight)
@@ -163,10 +156,6 @@ struct ReaderView: View {
         .sheet(isPresented: $showingShareSheet) {
             ShareSheet(items: [shareText])
         }
-        .sheet(isPresented: $showingSignInSheet) {
-            SignInPromptView()
-                .environmentObject(authManager)
-        }
         .confirmationDialog(LocalizedStringKey("action.edit"), isPresented: $showingActions, presenting: selectedAyahForActions) { ayah in
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
             Button(LocalizedStringKey("action.share")) { shareAyah(ayah) }
@@ -191,10 +180,6 @@ struct ReaderView: View {
     }
 
     private func openNoteEditor(for ayah: Ayah) {
-        guard authManager.userId != nil else {
-            showingSignInSheet = true
-            return
-        }
         viewModel.openNoteEditor(for: ayah)
     }
 

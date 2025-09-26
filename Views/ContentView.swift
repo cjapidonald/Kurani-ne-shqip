@@ -6,7 +6,7 @@ struct ContentView: View {
     @StateObject private var authManager = AuthManager(client: SupabaseClientProvider.shared.client)
 
     var body: some View {
-        RootView(translationStore: translationStore, notesStore: notesStore, authManager: authManager)
+        RootView(translationStore: translationStore, notesStore: notesStore)
             .environmentObject(translationStore)
             .environmentObject(notesStore)
             .environmentObject(authManager)

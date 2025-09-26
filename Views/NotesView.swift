@@ -10,29 +10,13 @@ struct NotesView: View {
     let translationStore: TranslationStore
 
     @EnvironmentObject private var notesStore: NotesStore
-    @EnvironmentObject private var authManager: AuthManager
 
     @State private var path: [ReaderRoute] = []
-    @State private var showingSignInSheet = false
 
     var body: some View {
         NavigationStack(path: $path) {
             Group {
-                if authManager.userId == nil {
-                    VStack(spacing: 24) {
-                        BrandHeader(titleKey: "notes.title", subtitle: "notes.signinRequired")
-                            .padding(.horizontal, 16)
-                        Button {
-                            showingSignInSheet = true
-                        } label: {
-                            Text(LocalizedStringKey("action.signin"))
-                                .frame(maxWidth: 200)
-                        }
-                        .buttonStyle(GradientButtonStyle())
-                        Spacer()
-                    }
-                    .padding()
-                } else if notesStore.isLoading {
+                if notesStore.isLoading {
                     VStack(spacing: 16) {
                         ProgressView(LocalizedStringKey("notes.loading"))
                             .progressViewStyle(.circular)
@@ -91,17 +75,12 @@ struct NotesView: View {
             }
             .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
             .navigationTitle(LocalizedStringKey("notes.title"))
-            .sheet(isPresented: $showingSignInSheet) {
-                SignInPromptView()
-                    .environmentObject(authManager)
-            }
             .navigationDestination(for: ReaderRoute.self) { route in
                 ReaderView(
                     viewModel: ReaderViewModel(surahNumber: route.surah, translationStore: translationStore, notesStore: notesStore),
                     startingAyah: route.ayah,
                     openNotesTab: { path = [] }
                 )
-                .environmentObject(authManager)
             }
         }
         .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
