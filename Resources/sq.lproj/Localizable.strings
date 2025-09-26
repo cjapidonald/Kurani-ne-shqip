@@ -1,7 +1,7 @@
 "app_name" = "Kurani";
 "tabs.library" = "Suret";
 "tabs.favorites" = "Të preferuarat";
-"tabs.notes" = "Shënimet e mia";
+"tabs.notes" = "Shënime & të preferuara";
 "tabs.settings" = "Cilësimet";
 
 "action.ok" = "U krye";
@@ -139,4 +139,4 @@
 "dictionary.notFound" = "Kjo fjalë nuk gjendet ende në fjalor.";
 "dictionary.meanings" = "Kuptimet";
 "dictionary.notes" = "Shënime";
-"reader.addToFolder" = "Shto në dosje";
+"reader.addToNotes" = "Shto te shënimet";

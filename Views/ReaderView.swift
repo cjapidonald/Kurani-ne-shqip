@@ -23,7 +23,6 @@ struct ReaderView: View {
     @State private var isChromeHidden = false
     @State private var selectedDictionaryEntry: ArabicDictionaryEntry?
     @State private var pendingDictionaryWord: String?
-    @State private var ayahForFolderSelection: Ayah?
     @State private var fullscreenControlsVisible = false
     @State private var fullscreenHideWorkItem: DispatchWorkItem?
 
@@ -62,7 +61,7 @@ struct ReaderView: View {
                                             .foregroundColor(.kuraniTextPrimary)
                                             .lineSpacing(4 * viewModel.lineSpacingScale)
                                             .contextMenu {
-                                                Button(LocalizedStringKey("action.edit")) {
+                                                Button(LocalizedStringKey("reader.addToNotes")) {
                                                     openNoteEditor(for: ayah)
                                                 }
                                                 Button(LocalizedStringKey("action.copy")) {
@@ -70,9 +69,6 @@ struct ReaderView: View {
                                                 }
                                                 Button(LocalizedStringKey("action.share")) {
                                                     shareAyah(ayah)
-                                                }
-                                                Button(LocalizedStringKey("reader.addToFolder")) {
-                                                    openFolderPicker(for: ayah)
                                                 }
                                                 Button("PYET CHATGPT") {
                                                     askChatGPT(about: ayah)
@@ -246,21 +242,10 @@ struct ReaderView: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
-        .sheet(item: $ayahForFolderSelection) { ayah in
-            FavoriteFolderPickerView(
-                ayah: ayah,
-                surahNumber: viewModel.surahNumber,
-                surahTitle: viewModel.surahTitle,
-                noteText: viewModel.note(for: ayah)?.text,
-                onComplete: handleFolderPickerResult
-            )
-            .environmentObject(favoritesStore)
-        }
         .confirmationDialog(LocalizedStringKey("action.edit"), isPresented: $showingActions, presenting: selectedAyahForActions) { ayah in
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
             Button(LocalizedStringKey("action.share")) { shareAyah(ayah) }
-            Button(LocalizedStringKey("action.edit")) { openNoteEditor(for: ayah) }
-            Button(LocalizedStringKey("reader.addToFolder")) { openFolderPicker(for: ayah) }
+            Button(LocalizedStringKey("reader.addToNotes")) { openNoteEditor(for: ayah) }
             Button("PYET CHATGPT") { askChatGPT(about: ayah) }
             Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
         }
@@ -360,28 +345,6 @@ struct ReaderView: View {
     private func shareAyah(_ ayah: Ayah) {
         shareText = formattedText(for: ayah)
         showingShareSheet = true
-    }
-
-    private func openFolderPicker(for ayah: Ayah) {
-        ayahForFolderSelection = ayah
-    }
-
-    private func handleFolderPickerResult(_ result: FavoriteFolderPickerView.Result) {
-        switch result {
-        case let .inserted(folderName, isNewFolder):
-            Haptics.success()
-            let formatKey = isNewFolder ? "favorites.folderPicker.createdMessage" : "favorites.folderPicker.addedMessage"
-            let message = String(format: NSLocalizedString(formatKey, comment: "folder toast"), folderName)
-            viewModel.toast = LocalizedStringKey(message)
-        case let .updated(folderName):
-            Haptics.success()
-            let message = String(format: NSLocalizedString("favorites.folderPicker.updatedMessage", comment: "folder toast"), folderName)
-            viewModel.toast = LocalizedStringKey(message)
-        case .failed, .cancelled:
-            if case .failed = result {
-                viewModel.toast = LocalizedStringKey("toast.error")
-            }
-        }
     }
 
     private func askChatGPT(about ayah: Ayah) {
