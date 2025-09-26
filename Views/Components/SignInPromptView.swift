@@ -57,7 +57,7 @@ struct SignInPromptView: View {
                 Spacer()
             }
             .padding()
-            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .background(KuraniTheme.background.ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(LocalizedStringKey("action.cancel")) { dismiss() }
@@ -80,7 +80,7 @@ struct SignInPromptView: View {
                 }
             }
         }
-        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+        .background(KuraniTheme.background.ignoresSafeArea())
     }
 
     @MainActor

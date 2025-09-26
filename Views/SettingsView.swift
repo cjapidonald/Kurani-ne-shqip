@@ -62,10 +62,11 @@ struct SettingsView: View {
             }
             .scrollContentBackground(.hidden)
             .listRowSeparator(.hidden)
-            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .background(KuraniTheme.background.ignoresSafeArea())
             .tint(Color.kuraniAccentLight)
             .navigationTitle(LocalizedStringKey("settings.title"))
-            .toolbarBackground(Color.kuraniDarkBackground.opacity(0.4), for: .navigationBar)
+            .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
+            .toolbarColorScheme(.light, for: .navigationBar)
             .fileImporter(isPresented: $showingImporter, allowedContentTypes: [.json]) { result in
                 switch result {
                 case .success(let url):
@@ -90,7 +91,7 @@ struct SettingsView: View {
                 }
             }
         }
-        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+        .background(KuraniTheme.background.ignoresSafeArea())
     }
 
     private func importTranslation(url: URL) async {

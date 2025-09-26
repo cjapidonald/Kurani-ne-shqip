@@ -10,6 +10,20 @@ struct TranslationFile: Codable {
     let surahs: [SurahTranslation]
 }
 
+private struct ArabicTextFile: Codable {
+    struct SurahText: Codable {
+        let number: Int
+        let ayahs: [AyahText]
+    }
+
+    struct AyahText: Codable {
+        let number: Int
+        let text: String
+    }
+
+    let surahs: [SurahText]
+}
+
 private struct MetaEntry: Codable {
     let number: Int
     let name: String
@@ -28,8 +42,11 @@ final class TranslationStore: ObservableObject {
         return decoder
     }()
 
+    private var arabicAyahsBySurah: [Int: [Int: String]] = [:]
+
     func loadInitialData() async {
         await loadSurahMeta()
+        await loadArabicText()
         await loadSampleTranslation()
     }
 
@@ -43,11 +60,25 @@ final class TranslationStore: ObservableObject {
         }
     }
 
+    private func loadArabicText() async {
+        do {
+            let file = try FileIO.loadBundleJSON("ArabicText", as: ArabicTextFile.self)
+            arabicAyahsBySurah = file.surahs.reduce(into: [:]) { result, entry in
+                result[entry.number] = entry.ayahs.reduce(into: [:]) { ayahMap, ayah in
+                    ayahMap[ayah.number] = ayah.text
+                }
+            }
+        } catch {
+            print("Failed to load Arabic text", error)
+        }
+    }
+
     private func loadSampleTranslation() async {
         do {
             let translation = try FileIO.loadBundleJSON("sample_translation", as: TranslationFile.self)
             ayahsBySurah = translation.surahs.reduce(into: [:]) { result, entry in
-                result[entry.number] = entry.ayahs.sorted { $0.number < $1.number }
+                let sorted = entry.ayahs.sorted { $0.number < $1.number }
+                result[entry.number] = applyArabicTextIfAvailable(to: sorted, surahNumber: entry.number)
             }
             isUsingSample = true
         } catch {
@@ -59,7 +90,8 @@ final class TranslationStore: ObservableObject {
         let data = try Data(contentsOf: url)
         let translation = try decoder.decode(TranslationFile.self, from: data)
         ayahsBySurah = translation.surahs.reduce(into: [:]) { result, entry in
-            result[entry.number] = entry.ayahs.sorted { $0.number < $1.number }
+            let sorted = entry.ayahs.sorted { $0.number < $1.number }
+            result[entry.number] = applyArabicTextIfAvailable(to: sorted, surahNumber: entry.number)
         }
         isUsingSample = false
     }
@@ -70,5 +102,16 @@ final class TranslationStore: ObservableObject {
 
     func title(for surah: Int) -> String {
         surahs.first(where: { $0.number == surah })?.name ?? ""
+    }
+
+    private func applyArabicTextIfAvailable(to ayahs: [Ayah], surahNumber: Int) -> [Ayah] {
+        guard let arabicMap = arabicAyahsBySurah[surahNumber] else { return ayahs }
+        return ayahs.map { ayah in
+            var enriched = ayah
+            if enriched.arabicText == nil {
+                enriched.arabicText = arabicMap[ayah.number]
+            }
+            return enriched
+        }
     }
 }

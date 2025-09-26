@@ -70,10 +70,10 @@ struct NotesView: View {
                     .listSectionSpacing(20)
                     .scrollContentBackground(.hidden)
                     .listRowSeparator(.hidden)
-                    .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+                    .background(KuraniTheme.background.ignoresSafeArea())
                 }
             }
-            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .background(KuraniTheme.background.ignoresSafeArea())
             .navigationTitle(LocalizedStringKey("notes.title"))
             .navigationDestination(for: ReaderRoute.self) { route in
                 ReaderView(
@@ -83,7 +83,7 @@ struct NotesView: View {
                 )
             }
         }
-        .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+        .background(KuraniTheme.background.ignoresSafeArea())
     }
 
     private func sectionTitle(for surah: Int) -> String {

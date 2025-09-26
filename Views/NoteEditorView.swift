@@ -34,7 +34,7 @@ struct NoteEditorView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 24)
-            .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
+            .background(KuraniTheme.background.ignoresSafeArea())
             .navigationTitle(draft.isEmpty ? LocalizedStringKey("reader.note.add") : LocalizedStringKey("reader.note.edit"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

@@ -6,28 +6,6 @@ enum KuraniTheme {
     static let primary = Color.kuraniPrimaryBrand
     static let accent = Color.kuraniAccentBrand
     static let accentLight = Color.kuraniAccentLight
-
-    static let backgroundGradient = LinearGradient(
-        colors: [
-            Color.kuraniDarkBackground,
-            Color.kuraniPrimarySurface.opacity(0.45),
-            Color.kuraniDarkBackground.opacity(0.92)
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    static let headerGradient = LinearGradient(
-        colors: [Color.kuraniPrimaryBrand, Color.kuraniAccentLight, Color.kuraniAccentBrand],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    static let accentGradient = LinearGradient(
-        colors: [Color.kuraniAccentBrand, Color.kuraniAccentLight],
-        startPoint: .top,
-        endPoint: .bottom
-    )
 }
 
 extension Color {
@@ -64,12 +42,12 @@ struct BrandHeader: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .fill(KuraniTheme.headerGradient)
+                .fill(Color.kuraniAccentLight.opacity(0.22))
                 .overlay(
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1.2)
+                        .stroke(Color.kuraniAccentBrand.opacity(0.28), lineWidth: 1.2)
                 )
-                .shadow(color: Color.black.opacity(0.45), radius: 24, y: 16)
+                .shadow(color: Color.kuraniPrimaryBrand.opacity(0.14), radius: 18, y: 12)
         )
         .padding(.horizontal, 4)
     }
@@ -87,19 +65,13 @@ struct Pill: View {
             .foregroundColor(.kuraniTextPrimary)
             .background(
                 Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [Color.kuraniAccentLight.opacity(0.9), Color.kuraniAccentBrand.opacity(0.9)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .fill(Color.kuraniAccentLight.opacity(0.9))
             )
             .overlay(
                 Capsule()
-                    .stroke(Color.white.opacity(0.25), lineWidth: 0.8)
+                    .stroke(Color.kuraniAccentBrand.opacity(0.25), lineWidth: 0.8)
             )
-            .shadow(color: Color.black.opacity(0.25), radius: 12, y: 6)
+            .shadow(color: Color.kuraniAccentBrand.opacity(0.18), radius: 8, y: 4)
     }
 }
 
@@ -111,19 +83,13 @@ struct GradientButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(KuraniTheme.accentGradient)
+                    .fill(KuraniTheme.accent)
                     .overlay(
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .fill(
-                                LinearGradient(
-                                    colors: [Color.white.opacity(0.25), Color.white.opacity(0)],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            )
+                            .stroke(Color.kuraniAccentLight.opacity(0.4), lineWidth: 1)
                     )
             )
-            .shadow(color: Color.black.opacity(configuration.isPressed ? 0.15 : 0.35), radius: 16, y: 12)
+            .shadow(color: Color.kuraniAccentBrand.opacity(configuration.isPressed ? 0.12 : 0.22), radius: 12, y: 8)
             .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
             .animation(.spring(response: 0.36, dampingFraction: 0.8), value: configuration.isPressed)
     }
@@ -150,17 +116,17 @@ private struct AppleCardBackground: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .padding(.vertical, 18)
-            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(Color.kuraniPrimarySurface.opacity(0.82))
+                    .fill(Color.kuraniPrimarySurface)
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                            .stroke(Color.white.opacity(0.08), lineWidth: 0.8)
+                            .stroke(Color.kuraniPrimaryBrand.opacity(0.08), lineWidth: 1)
                     )
-                    .shadow(color: Color.black.opacity(0.35), radius: 20, y: 14)
+                    .shadow(color: Color.kuraniPrimaryBrand.opacity(0.08), radius: 10, y: 6)
             )
     }
 }
