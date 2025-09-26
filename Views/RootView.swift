@@ -5,10 +5,14 @@ struct RootView: View {
 
     @ObservedObject var translationStore: TranslationStore
     @ObservedObject var notesStore: NotesStore
+ codex/add-reading-progress-bar-and-reset-button-rfxbyq
+    @ObservedObject var progressStore: ReadingProgressStore
+
  codex/add-reading-progress-bar-and-reset-button
     @ObservedObject var progressStore: ReadingProgressStore
 
     @ObservedObject var favoritesStore: FavoritesStore
+ main
  main
 
     @StateObject private var libraryViewModel: LibraryViewModel
@@ -18,7 +22,10 @@ struct RootView: View {
 
     @State private var selectedTab: Tab = .library
 
+ codex/add-reading-progress-bar-and-reset-button-rfxbyq
+
  codex/add-reading-progress-bar-and-reset-button
+ main
     init(translationStore: TranslationStore, notesStore: NotesStore, progressStore: ReadingProgressStore) {
         self.translationStore = translationStore
         self.notesStore = notesStore
@@ -26,6 +33,8 @@ struct RootView: View {
         _libraryViewModel = StateObject(wrappedValue: LibraryViewModel(translationStore: translationStore))
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
         _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(translationStore: translationStore, progressStore: progressStore))
+codex/add-reading-progress-bar-and-reset-button-rfxbyq
+
 
     init(translationStore: TranslationStore, notesStore: NotesStore, favoritesStore: FavoritesStore) {
         self.translationStore = translationStore
@@ -35,6 +44,7 @@ struct RootView: View {
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
         _favoritesViewModel = StateObject(wrappedValue: FavoritesViewModel(favoritesStore: favoritesStore))
         _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(translationStore: translationStore))
+ main
  main
     }
 
