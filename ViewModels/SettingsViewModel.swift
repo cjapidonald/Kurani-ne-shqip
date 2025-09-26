@@ -7,9 +7,11 @@ final class SettingsViewModel: ObservableObject {
     @Published var isImporting: Bool = false
 
     private let translationStore: TranslationStore
+    private let progressStore: ReadingProgressStore
 
-    init(translationStore: TranslationStore) {
+    init(translationStore: TranslationStore, progressStore: ReadingProgressStore) {
         self.translationStore = translationStore
+        self.progressStore = progressStore
     }
 
     var isUsingSampleTranslation: Bool {
@@ -25,5 +27,10 @@ final class SettingsViewModel: ObservableObject {
             toast = LocalizedStringKey("settings.import.invalid")
         }
         isImporting = false
+    }
+
+    func resetReadingProgress() {
+        progressStore.reset()
+        toast = LocalizedStringKey("settings.progress.resetSuccess")
     }
 }

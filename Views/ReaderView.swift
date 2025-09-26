@@ -153,10 +153,12 @@ codex/add-button-to-redirect-with-ayah-details
                 .padding(.bottom, 56)
             }
             .background(KuraniTheme.background.ignoresSafeArea())
-            .navigationTitle(Text(viewModel.surahTitle))
             .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
             .toolbarColorScheme(.light, for: .navigationBar)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    ReaderProgressTitle(title: viewModel.surahTitle, percentage: viewModel.progressPercentageString)
+                }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         withAnimation(.easeInOut(duration: 0.2)) {
@@ -296,6 +298,18 @@ codex/add-button-to-redirect-with-ayah-details
             .padding(.top, 40)
             .padding(.horizontal, 16)
         }
+        .overlay(alignment: .bottom) {
+            if viewModel.totalAyahs > 0 {
+                ReaderProgressBar(
+                    progress: viewModel.readingProgress,
+                    percentage: viewModel.progressPercentageString,
+                    detail: viewModel.progressDescription,
+                    isChromeHidden: isChromeHidden
+                )
+                .padding(.horizontal, 20)
+                .padding(.bottom, 24)
+            }
+        }
         .onChange(of: viewModel.toast) { _, newValue in
             guard newValue != nil else { return }
             withAnimation { showToast = true }
@@ -388,6 +402,56 @@ private struct LanguageToggleIcon: View {
                 .foregroundStyle(isActive ? Color.kuraniDarkBackground : Color.kuraniAccentLight)
         }
         .frame(width: 30, height: 30)
+    }
+}
+
+private struct ReaderProgressTitle: View {
+    let title: String
+    let percentage: String
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text(title)
+                .font(.system(.headline, design: .rounded))
+                .foregroundColor(.white)
+
+            ProgressBadge(percentage: percentage)
+        }
+    }
+}
+
+private struct ReaderProgressBar: View {
+    let progress: Double
+    let percentage: String
+    let detail: String
+    let isChromeHidden: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text(percentage)
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(.kuraniTextPrimary)
+                Spacer()
+                Text(detail)
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundColor(.kuraniTextSecondary)
+            }
+
+            ProgressView(value: progress)
+                .progressViewStyle(.linear)
+                .tint(.kuraniAccentLight)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color.kuraniPrimarySurface.opacity(isChromeHidden ? 0.72 : 0.9))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(Color.black.opacity(0.12), lineWidth: 0.6)
+                )
+        )
     }
 }
 

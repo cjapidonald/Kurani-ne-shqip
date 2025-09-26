@@ -111,6 +111,13 @@ final class TranslationStore: ObservableObject {
         ayahsBySurah[surah] ?? []
     }
 
+    func ayahCount(for surah: Int) -> Int {
+        if let count = ayahsBySurah[surah]?.count, count > 0 {
+            return count
+        }
+        return surahs.first(where: { $0.number == surah })?.ayahCount ?? 0
+    }
+
     func title(for surah: Int) -> String {
         surahs.first(where: { $0.number == surah })?.name ?? ""
     }

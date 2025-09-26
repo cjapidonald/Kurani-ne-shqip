@@ -11,7 +11,11 @@ struct LibraryView: View {
 
     @EnvironmentObject private var translationStore: TranslationStore
     @EnvironmentObject private var notesStore: NotesStore
+codex/add-reading-progress-bar-and-reset-button
+    @EnvironmentObject private var progressStore: ReadingProgressStore
+
     @EnvironmentObject private var favoritesStore: FavoritesStore
+ main
 
     @State private var path: [ReaderRoute] = []
 
@@ -56,7 +60,10 @@ struct LibraryView: View {
                 Section {
                     ForEach(viewModel.filteredSurahs) { surah in
                         NavigationLink(value: ReaderRoute(surah: surah.number, ayah: nil)) {
-                            SurahRow(surah: surah)
+                            SurahRow(
+                                surah: surah,
+                                progress: progressStore.progress(for: surah.number, totalAyahs: surah.ayahCount)
+                            )
                                 .appleCard()
                                 .padding(.horizontal, 20)
                         }
@@ -89,7 +96,11 @@ struct LibraryView: View {
                         surahNumber: route.surah,
                         translationStore: translationStore,
                         notesStore: notesStore,
+codex/add-reading-progress-bar-and-reset-button
+                        progressStore: progressStore
+
                         favoritesStore: favoritesStore
+ main
                     ),
                     startingAyah: route.ayah,
                     openNotesTab: openNotesTab

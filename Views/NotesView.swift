@@ -10,7 +10,11 @@ struct NotesView: View {
     let translationStore: TranslationStore
 
     @EnvironmentObject private var notesStore: NotesStore
+codex/add-reading-progress-bar-and-reset-button
+    @EnvironmentObject private var progressStore: ReadingProgressStore
+
     @EnvironmentObject private var favoritesStore: FavoritesStore
+ main
 
     @State private var path: [ReaderRoute] = []
 
@@ -82,7 +86,11 @@ struct NotesView: View {
                         surahNumber: route.surah,
                         translationStore: translationStore,
                         notesStore: notesStore,
+ codex/add-reading-progress-bar-and-reset-button
+                        progressStore: progressStore
+
                         favoritesStore: favoritesStore
+ main
                     ),
                     startingAyah: route.ayah,
                     openNotesTab: { path = [] }

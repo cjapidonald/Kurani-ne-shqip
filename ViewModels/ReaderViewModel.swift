@@ -6,6 +6,9 @@ import Combine
 final class ReaderViewModel: ObservableObject {
     @Published private(set) var surahNumber: Int
     @Published private(set) var ayahs: [Ayah] = []
+    @Published private(set) var totalAyahs: Int = 0
+    @Published private(set) var highestAyahRead: Int = 0
+    @Published private(set) var readingProgress: Double = 0
     @Published var selectedAyah: Ayah?
     @Published var noteDraft: String = ""
     @Published var isNoteEditorPresented = false
@@ -17,6 +20,16 @@ final class ReaderViewModel: ObservableObject {
 
     private let translationStore: TranslationStore
     private let notesStore: NotesStore
+ codex/add-reading-progress-bar-and-reset-button
+    private let progressStore: ReadingProgressStore
+    private var cancellables: Set<AnyCancellable> = []
+
+    init(surahNumber: Int, translationStore: TranslationStore, notesStore: NotesStore, progressStore: ReadingProgressStore) {
+        self.surahNumber = surahNumber
+        self.translationStore = translationStore
+        self.notesStore = notesStore
+        self.progressStore = progressStore
+
     private let favoritesStore: FavoritesStore
     private var cancellables: Set<AnyCancellable> = []
 
@@ -25,11 +38,16 @@ final class ReaderViewModel: ObservableObject {
         self.translationStore = translationStore
         self.notesStore = notesStore
         self.favoritesStore = favoritesStore
+ main
         let storedFont = UserDefaults.standard.double(forKey: AppStorageKeys.fontScale)
         fontScale = storedFont == 0 ? 1.0 : storedFont
         let storedSpacing = UserDefaults.standard.double(forKey: AppStorageKeys.lineSpacingScale)
         lineSpacingScale = storedSpacing == 0 ? 1.0 : storedSpacing
         loadAyahs()
+ codex/add-reading-progress-bar-and-reset-button
+        observeProgressChanges()
+        refreshProgress()
+
         favoriteAyahIds = Set(favoritesStore.favorites.map { $0.id })
         favoritesStore.$favorites
             .receive(on: DispatchQueue.main)
@@ -37,14 +55,26 @@ final class ReaderViewModel: ObservableObject {
                 self?.favoriteAyahIds = Set(favorites.map { $0.id })
             }
             .store(in: &cancellables)
+ main
     }
 
     var surahTitle: String {
         translationStore.title(for: surahNumber)
     }
 
+    var progressDescription: String {
+        String(format: NSLocalizedString("reader.progress", comment: "progress"), highestAyahRead, totalAyahs)
+    }
+
+    var progressPercentageString: String {
+        let percentage = Int(round(readingProgress * 100))
+        return "\(percentage)%"
+    }
+
     func loadAyahs() {
         ayahs = translationStore.ayahs(for: surahNumber)
+        totalAyahs = translationStore.ayahCount(for: surahNumber)
+        refreshProgress()
     }
 
     func note(for ayah: Ayah) -> Note? {
@@ -74,6 +104,8 @@ final class ReaderViewModel: ObservableObject {
     func updateLastRead(ayah: Int) {
         UserDefaults.standard.set(surahNumber, forKey: AppStorageKeys.lastReadSurah)
         UserDefaults.standard.set(ayah, forKey: AppStorageKeys.lastReadAyah)
+        progressStore.updateHighestAyah(ayah, for: surahNumber, totalAyahs: totalAyahs)
+        refreshProgress()
     }
 
     func increaseFont() {
@@ -96,11 +128,29 @@ final class ReaderViewModel: ObservableObject {
         UserDefaults.standard.set(lineSpacingScale, forKey: AppStorageKeys.lineSpacingScale)
     }
 
+ codex/add-reading-progress-bar-and-reset-button
+    private func observeProgressChanges() {
+        progressStore.$highestReadAyahBySurah
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.refreshProgress()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func refreshProgress() {
+        highestAyahRead = progressStore.highestAyahRead(for: surahNumber)
+        if totalAyahs == 0 {
+            totalAyahs = translationStore.ayahCount(for: surahNumber)
+        }
+        readingProgress = progressStore.progress(for: surahNumber, totalAyahs: totalAyahs)
+
     func toggleFavorite(for ayah: Ayah) {
         favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
     }
 
     func isFavorite(_ ayah: Ayah) -> Bool {
         favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
+ main
     }
 }

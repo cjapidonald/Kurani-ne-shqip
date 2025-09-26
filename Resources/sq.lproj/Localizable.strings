@@ -48,6 +48,12 @@
 "settings.import" = "Importo përkthimin";
 "settings.import.success" = "Përkthimi u importua";
 "settings.import.invalid" = "Skedari i pavlefshëm";
+"settings.progress.title" = "Hatmja ime";
+"settings.progress.description" = "Rivendos leximet dhe përqindjen e çdo sureje.";
+"settings.progress.reset" = "Rivendos hatmen";
+"settings.progress.resetConfirm" = "Jeni i sigurt që doni t’i ktheni në zero të gjitha përqindjet e leximit?";
+"settings.progress.resetConfirmButton" = "Po, rivendos";
+"settings.progress.resetSuccess" = "Leximet u rivendosën";
 "settings.about" = "Rreth aplikacionit";
 
 "notes.lastUpdated" = "Përditësuar: %@";

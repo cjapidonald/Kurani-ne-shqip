@@ -18,6 +18,13 @@ final class LibraryViewModel: ObservableObject {
                 self?.surahs = surahs
             }
             .store(in: &cancellables)
+
+        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.refreshLastRead()
+            }
+            .store(in: &cancellables)
         refreshLastRead()
     }
 
