@@ -25,7 +25,7 @@ struct SignInPromptView: View {
                     .signInWithAppleButtonStyle(.white)
                     .frame(height: 54)
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .shadow(color: Color.black.opacity(0.25), radius: 18, y: 12)
+                    .shadow(color: Color.kuraniPrimaryBrand.opacity(0.25), radius: 18, y: 12)
 
                     Divider()
                         .background(Color.kuraniAccentLight.opacity(0.4))

@@ -24,7 +24,7 @@ struct ArabicDictionaryDetailView: View {
                     ForEach(entry.meanings, id: \.self) { meaning in
                         Text("• \(meaning)")
                             .font(.system(size: 16, design: .rounded))
-                            .foregroundColor(.white)
+                            .foregroundColor(.kuraniTextPrimary)
                     }
                 }
 
