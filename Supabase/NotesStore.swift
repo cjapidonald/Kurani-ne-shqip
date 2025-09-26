@@ -40,14 +40,13 @@ final class NotesStore: ObservableObject {
         isLoading = true
         defer { isLoading = false }
         do {
-            let response: [NoteDTO] = try await client.database.from("notes")
+            let response: PostgrestResponse<[NoteDTO]> = try await client.database.from("notes")
                 .select()
                 .eq("user_id", value: userId.uuidString)
                 .order("surah", ascending: true)
                 .order("ayah", ascending: true)
                 .execute()
-                .decoded()
-            self.notes = response.compactMap { $0.note }
+            self.notes = response.value.compactMap { $0.note }
         } catch {
             print("Failed to fetch notes", error)
         }
@@ -64,12 +63,11 @@ final class NotesStore: ObservableObject {
     func upsertNote(surah: Int, ayah: Int, text: String) async throws {
         guard let userId = currentUserId else { throw NotesError.unauthenticated }
         let payload = NoteInsert(user_id: userId.uuidString, surah: surah, ayah: ayah, text: text)
-        let result: [NoteDTO] = try await client.database.from("notes")
-            .upsert(values: [payload], onConflict: "user_id,surah,ayah")
+        let response: PostgrestResponse<[NoteDTO]> = try await client.database.from("notes")
+            .upsert([payload], onConflict: "user_id,surah,ayah")
             .select()
             .execute()
-            .decoded()
-        if let dto = result.first?.note {
+        if let dto = response.value.first?.note {
             if let index = notes.firstIndex(where: { $0.surah == dto.surah && $0.ayah == dto.ayah }) {
                 notes[index] = dto
             } else {
