@@ -61,26 +61,26 @@ struct NotesView: View {
                                         VStack(alignment: .leading, spacing: 8) {
                                             Text(note.text)
                                                 .font(.system(.body, design: .rounded))
-                                                .foregroundColor(.textPrimary)
+                                                .foregroundColor(.kuraniTextPrimary)
                                                 .lineLimit(3)
                                             Text(String(format: NSLocalizedString("notes.lastUpdated", comment: "updated"), formatted(date: note.updatedAt)))
                                                 .font(.system(.caption, design: .rounded))
-                                                .foregroundColor(.textSecondary)
+                                                .foregroundColor(.kuraniTextSecondary)
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     }
-                                    .listRowBackground(Color.primarySurface)
+                                    .listRowBackground(Color.kuraniPrimarySurface)
                                 }
                             }
-                            .listRowBackground(Color.primarySurface)
+                            .listRowBackground(Color.kuraniPrimarySurface)
                         }
                     }
                     .listStyle(.insetGrouped)
                     .scrollContentBackground(.hidden)
-                    .background(Color.darkBackground)
+                    .background(Color.kuraniDarkBackground)
                 }
             }
-            .background(Color.darkBackground.ignoresSafeArea())
+            .background(Color.kuraniDarkBackground.ignoresSafeArea())
             .navigationTitle(LocalizedStringKey("notes.title"))
             .sheet(isPresented: $showingSignInSheet) {
                 SignInPromptView()

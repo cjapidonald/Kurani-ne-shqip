@@ -9,10 +9,10 @@ struct SurahRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(surah.name)
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.textPrimary)
+                    .foregroundColor(.kuraniTextPrimary)
                 Text("\(surah.ayahCount) \(LocalizedStringKey("library.ayahs"))")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundColor(.textSecondary)
+                    .foregroundColor(.kuraniTextSecondary)
             }
             Spacer()
             Image(systemName: "chevron.right")

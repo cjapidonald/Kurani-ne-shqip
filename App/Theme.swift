@@ -1,33 +1,33 @@
 import SwiftUI
 
 enum KuraniTheme {
-    static let background = Color.darkBackground
-    static let surface = Color.primarySurface
-    static let primary = Color.primaryBrand
-    static let accent = Color.accentBrand
-    static let accentLight = Color.accentLight
+    static let background = Color.kuraniDarkBackground
+    static let surface = Color.kuraniPrimarySurface
+    static let primary = Color.kuraniPrimaryBrand
+    static let accent = Color.kuraniAccentBrand
+    static let accentLight = Color.kuraniAccentLight
 
     static let headerGradient = LinearGradient(
-        colors: [Color.primaryBrand, Color.accentBrand],
+        colors: [Color.kuraniPrimaryBrand, Color.kuraniAccentBrand],
         startPoint: .leading,
         endPoint: .trailing
     )
 
     static let accentGradient = LinearGradient(
-        colors: [Color.accentBrand, Color.primaryBrand],
+        colors: [Color.kuraniAccentBrand, Color.kuraniPrimaryBrand],
         startPoint: .top,
         endPoint: .bottom
     )
 }
 
 extension Color {
-    static let darkBackground = Color("DarkBackground")
-    static let primarySurface = Color("PrimarySurface")
-    static let primaryBrand = Color("Primary")
-    static let accentBrand = Color("Accent")
-    static let accentLight = Color("AccentLight")
-    static let textPrimary = Color("TextPrimary")
-    static let textSecondary = Color("TextSecondary")
+    static let kuraniDarkBackground = Color("DarkBackground")
+    static let kuraniPrimarySurface = Color("PrimarySurface")
+    static let kuraniPrimaryBrand = Color("Primary")
+    static let kuraniAccentBrand = Color("Accent")
+    static let kuraniAccentLight = Color("AccentLight")
+    static let kuraniTextPrimary = Color("TextPrimary")
+    static let kuraniTextSecondary = Color("TextSecondary")
 }
 
 struct BrandHeader: View {
@@ -39,11 +39,11 @@ struct BrandHeader: View {
             Text(titleKey)
                 .font(.system(.largeTitle, design: .rounded))
                 .fontWeight(.bold)
-                .foregroundColor(.textPrimary)
+                .foregroundColor(.kuraniTextPrimary)
             if let subtitle {
                 Text(subtitle)
                     .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(.textSecondary)
+                    .foregroundColor(.kuraniTextSecondary)
             }
         }
         .padding()
@@ -63,9 +63,9 @@ struct Pill: View {
             .fontWeight(.semibold)
             .padding(.vertical, 4)
             .padding(.horizontal, 8)
-            .background(Color.primarySurface.opacity(0.8))
+            .background(Color.kuraniPrimarySurface.opacity(0.8))
             .clipShape(Capsule())
-            .foregroundColor(.accentLight)
+            .foregroundColor(.kuraniAccentLight)
     }
 }
 
@@ -77,7 +77,7 @@ struct GradientButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .background(
                 LinearGradient(
-                    colors: [Color.primaryBrand, Color.accentBrand],
+                    colors: [Color.kuraniPrimaryBrand, Color.kuraniAccentBrand],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
@@ -96,8 +96,8 @@ struct ToastView: View {
             .fontWeight(.medium)
             .padding(.horizontal, 24)
             .padding(.vertical, 12)
-            .background(Color.primarySurface.opacity(0.95))
-            .foregroundColor(.textPrimary)
+            .background(Color.kuraniPrimarySurface.opacity(0.95))
+            .foregroundColor(.kuraniTextPrimary)
             .clipShape(Capsule())
             .shadow(radius: 12)
     }

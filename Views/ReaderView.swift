@@ -39,7 +39,7 @@ struct ReaderView: View {
 
                                 Text(ayah.text)
                                     .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
-                                    .foregroundColor(.textPrimary)
+                                    .foregroundColor(.kuraniTextPrimary)
                                     .lineSpacing(6 * viewModel.lineSpacingScale)
                                     .contextMenu {
                                         Button(LocalizedStringKey("action.edit")) {
@@ -63,19 +63,19 @@ struct ReaderView: View {
                                         .foregroundColor(.accentBrand)
                                     Text(String(format: NSLocalizedString("reader.noteBanner", comment: "banner"), noteFormatter.string(from: note.updatedAt)))
                                         .font(.system(.caption, design: .rounded))
-                                        .foregroundColor(.textSecondary)
+                                        .foregroundColor(.kuraniTextSecondary)
                                 }
                                 .padding(10)
-                                .background(Color.primarySurface.opacity(0.6))
+                                .background(Color.kuraniPrimarySurface.opacity(0.6))
                                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             }
                         }
                         .padding()
-                        .background(Color.primarySurface.opacity(0.5))
+                        .background(Color.kuraniPrimarySurface.opacity(0.5))
                         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.primarySurface.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.kuraniPrimarySurface.opacity(0.2), lineWidth: 1)
                         )
                         .id(ayah.number)
                         .onAppear {
@@ -86,9 +86,9 @@ struct ReaderView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 40)
             }
-            .background(Color.darkBackground.ignoresSafeArea())
+            .background(Color.kuraniDarkBackground.ignoresSafeArea())
             .navigationTitle(Text(viewModel.surahTitle))
-            .toolbarBackground(Color.darkBackground, for: .navigationBar)
+            .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {

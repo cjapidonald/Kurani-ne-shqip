@@ -33,17 +33,17 @@ struct LibraryView: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(String(format: NSLocalizedString("reader.title.compact", comment: "title"), lastRead.surah, translationStore.title(for: lastRead.surah)))
                                         .font(.system(.headline, design: .rounded))
-                                        .foregroundColor(.textPrimary)
+                                        .foregroundColor(.kuraniTextPrimary)
                                     Text(LocalizedStringKey("library.continueReading"))
                                         .font(.system(.subheadline, design: .rounded))
-                                        .foregroundColor(.textSecondary)
+                                        .foregroundColor(.kuraniTextSecondary)
                                 }
                                 Spacer()
                                 Image(systemName: "arrow.right")
                                     .foregroundColor(.accentBrand)
                             }
                         }
-                        .listRowBackground(Color.primarySurface)
+                        .listRowBackground(Color.kuraniPrimarySurface)
                     }
                 }
 
@@ -52,13 +52,13 @@ struct LibraryView: View {
                         NavigationLink(value: ReaderRoute(surah: surah.number, ayah: nil)) {
                             SurahRow(surah: surah)
                         }
-                        .listRowBackground(Color.primarySurface)
+                        .listRowBackground(Color.kuraniPrimarySurface)
                     }
                 }
             }
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
-            .background(Color.darkBackground)
+            .background(Color.kuraniDarkBackground)
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: LocalizedStringKey("library.search.placeholder"))
             .navigationTitle(LocalizedStringKey("tabs.library"))
             .toolbar {
