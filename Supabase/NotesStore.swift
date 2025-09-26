@@ -68,9 +68,11 @@ final class NotesStore: ObservableObject {
         notes.first { $0.surah == surah && $0.ayah == ayah }
     }
 
-    func upsertNote(surah: Int, ayah: Int, text: String) async throws {
+    func upsertNote(surah: Int, ayah: Int, title: String?, text: String) async throws {
+        let sanitizedTitle = title?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let finalTitle = sanitizedTitle?.isEmpty == false ? sanitizedTitle : nil
         if let userId = currentUserId {
-            let payload = NoteInsert(user_id: userId.uuidString, surah: surah, ayah: ayah, text: text)
+            let payload = NoteInsert(user_id: userId.uuidString, surah: surah, ayah: ayah, title: finalTitle, text: text)
             let response: PostgrestResponse<[NoteDTO]> = try await client.from("notes")
                 .upsert([payload], onConflict: "user_id,surah,ayah")
                 .select()
@@ -94,11 +96,12 @@ final class NotesStore: ObservableObject {
         let now = Date()
         if let index = notes.firstIndex(where: { $0.surah == surah && $0.ayah == ayah }) {
             var updatedNote = notes[index]
+            updatedNote.title = finalTitle
             updatedNote.text = text
             updatedNote.updatedAt = now
             notes[index] = updatedNote
         } else {
-            let note = Note(userId: localUserId, surah: surah, ayah: ayah, text: text, updatedAt: now)
+            let note = Note(userId: localUserId, surah: surah, ayah: ayah, title: finalTitle, text: text, updatedAt: now)
             notes.append(note)
         }
 
@@ -324,6 +327,7 @@ private struct NoteInsert: Encodable {
     let user_id: String
     let surah: Int
     let ayah: Int
+    let title: String?
     let text: String
 }
 
@@ -332,11 +336,12 @@ private struct NoteDTO: Codable {
     let user_id: String
     let surah: Int
     let ayah: Int
+    let title: String?
     let text: String
     let updated_at: Date
 
     var note: Note? {
         guard let id = id, let userId = UUID(uuidString: user_id) else { return nil }
-        return Note(id: id, userId: userId, surah: surah, ayah: ayah, text: text, updatedAt: updated_at)
+        return Note(id: id, userId: userId, surah: surah, ayah: ayah, title: title, text: text, updatedAt: updated_at)
     }
 }

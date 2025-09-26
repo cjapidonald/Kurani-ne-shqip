@@ -89,7 +89,8 @@ final class ReaderViewModel: ObservableObject {
         isSavingNote = true
         defer { isSavingNote = false }
         do {
-            try await notesStore.upsertNote(surah: surahNumber, ayah: selectedAyah.number, text: noteDraft)
+            let title = resolvedTitle(for: selectedAyah)
+            try await notesStore.upsertNote(surah: surahNumber, ayah: selectedAyah.number, title: title, text: noteDraft)
             favoritesStore.updateNoteSnapshot(for: surahNumber, ayah: selectedAyah.number, note: noteDraft)
             Haptics.success()
             toast = LocalizedStringKey("reader.note.saved")
@@ -132,6 +133,25 @@ final class ReaderViewModel: ObservableObject {
 
     func isFavoriteAyah(_ ayah: Ayah) -> Bool {
         favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
+    }
+
+    private func resolvedTitle(for ayah: Ayah) -> String {
+        if let existing = note(for: ayah)?.title?.trimmingCharacters(in: .whitespacesAndNewlines), !existing.isEmpty {
+            return existing
+        }
+        return defaultTitle(for: ayah)
+    }
+
+    private func defaultTitle(for ayah: Ayah) -> String {
+        let surahName = translationStore.title(for: surahNumber)
+        let localizedSurah = surahName.isEmpty
+            ? String(format: NSLocalizedString("notes.surahNumber", comment: "surah number"), surahNumber)
+            : surahName
+        return String(
+            format: NSLocalizedString("notes.defaultTitle", comment: "default note title"),
+            localizedSurah,
+            ayah.number
+        )
     }
 
     private func observeProgressChanges() {
