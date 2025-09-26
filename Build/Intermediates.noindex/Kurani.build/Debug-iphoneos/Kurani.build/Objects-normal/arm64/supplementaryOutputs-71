@@ -1,0 +1,23 @@
+{
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/NoteEditorView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NoteEditorView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NoteEditorView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NoteEditorView.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NoteEditorView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NoteEditorView.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/NotesView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NotesView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NotesView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NotesView.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NotesView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/NotesView.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/RootView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/RootView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/RootView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/RootView.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/RootView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphoneos/Kurani.build/Objects-normal/arm64/RootView.swiftdeps"
+  }
+}

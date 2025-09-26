@@ -1,0 +1,23 @@
+{
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/supabase-swift/Sources/Auth/AuthAdmin.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthAdmin.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthAdmin.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthAdmin.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthAdmin.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthAdmin.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/supabase-swift/Sources/Auth/AuthClient.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClient.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClient.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClient.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClient.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClient.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/supabase-swift/Sources/Auth/AuthClientConfiguration.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClientConfiguration.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClientConfiguration.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClientConfiguration.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClientConfiguration.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Auth.build/Objects-normal/arm64/AuthClientConfiguration.swiftdeps"
+  }
+}

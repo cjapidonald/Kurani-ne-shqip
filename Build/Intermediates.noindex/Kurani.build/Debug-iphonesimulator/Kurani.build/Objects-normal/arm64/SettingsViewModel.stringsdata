@@ -1,0 +1,32 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/ViewModels/SettingsViewModel.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "settings.import.success",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "settings.import.invalid",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "signin.email.sent",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 42
+        }
+      }
+    ]
+  },
+  "version": 1
+}

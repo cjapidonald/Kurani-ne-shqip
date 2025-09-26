@@ -67,12 +67,10 @@ struct SignInPromptView: View {
                     dismiss()
                 }
             }
-            .alert(isPresented: $showEmailAlert) {
-                Alert(
-                    title: Text(LocalizedStringKey("signin.email")),
-                    message: Text(LocalizedStringKey("signin.email.sent")),
-                    dismissButton: .default(Text(LocalizedStringKey("action.ok")))
-                )
+            .alert(LocalizedStringKey("signin.email"), isPresented: $showEmailAlert) {
+                Button(LocalizedStringKey("action.ok"), role: .cancel) {}
+            } message: {
+                Text(LocalizedStringKey("signin.email.sent"))
             }
             .onChange(of: authManager.emailMagicLinkSent) { newValue in
                 if newValue {
@@ -82,6 +80,7 @@ struct SignInPromptView: View {
         }
     }
 
+    @MainActor
     private func sendMagicLink() async {
         guard !email.isEmpty else { return }
         isSendingEmail = true

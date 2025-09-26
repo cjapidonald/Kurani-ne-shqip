@@ -1,0 +1,16 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/App/Theme.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 61
+        }
+      }
+    ]
+  },
+  "version": 1
+}

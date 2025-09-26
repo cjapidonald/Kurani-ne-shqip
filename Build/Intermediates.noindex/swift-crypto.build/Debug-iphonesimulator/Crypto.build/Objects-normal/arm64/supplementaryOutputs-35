@@ -1,0 +1,51 @@
+{
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/swift-crypto/Sources/Crypto/HPKE/HPKE.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/swift-crypto/Sources/Crypto/HPKE/Key Schedule/HPKE-Context.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Context.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Context.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Context.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Context.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Context.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/swift-crypto/Sources/Crypto/HPKE/Key Schedule/HPKE-KeySchedule.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-KeySchedule.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-KeySchedule.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-KeySchedule.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-KeySchedule.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-KeySchedule.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/swift-crypto/Sources/Crypto/HPKE/Modes/HPKE-Modes.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Modes.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Modes.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Modes.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Modes.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/HPKE-Modes.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/swift-crypto/Sources/Crypto/Insecure/Insecure.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/swift-crypto/Sources/Crypto/Insecure/Insecure_HashFunctions.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure_HashFunctions.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure_HashFunctions.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure_HashFunctions.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure_HashFunctions.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/Insecure_HashFunctions.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/swift-crypto/Sources/Crypto/KEM/KEM.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/KEM.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/KEM.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/KEM.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/KEM.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/swift-crypto.build/Debug-iphonesimulator/Crypto.build/Objects-normal/arm64/KEM.swiftdeps"
+  }
+}
