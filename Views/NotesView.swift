@@ -47,11 +47,11 @@ struct NotesView: View {
                                     } label: {
                                         VStack(alignment: .leading, spacing: 8) {
                                             Text(note.text)
-                                                .font(.system(.body, design: .rounded))
+                                                .font(KuraniFont.forTextStyle(.body))
                                                 .foregroundColor(.kuraniTextPrimary)
                                                 .lineLimit(3)
                                             Text(String(format: NSLocalizedString("notes.lastUpdated", comment: "updated"), formatted(date: note.updatedAt)))
-                                                .font(.system(.caption, design: .rounded))
+                                                .font(KuraniFont.forTextStyle(.caption))
                                                 .foregroundColor(.kuraniTextSecondary)
                                         }
                                         .appleCard(cornerRadius: 20)

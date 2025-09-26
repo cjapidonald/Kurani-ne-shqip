@@ -44,7 +44,7 @@ main
 
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(ayah.text)
-                                        .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
+                                        .font(KuraniFont.size(18 * viewModel.fontScale, relativeTo: .body))
                                         .foregroundColor(.white)
                                         .lineSpacing(4 * viewModel.lineSpacingScale)
                                         .contextMenu {
@@ -84,7 +84,7 @@ main
                                     Image(systemName: "pencil.and.outline")
                                         .foregroundStyle(Color.kuraniAccentLight)
                                     Text(bannerText)
-                                        .font(.system(.caption, design: .rounded))
+                                        .font(KuraniFont.forTextStyle(.caption))
                                         .foregroundColor(.kuraniTextSecondary)
                                 }
                                 .padding(.vertical, 10)

@@ -13,7 +13,7 @@ struct NoteEditorView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
                 Text(String(format: NSLocalizedString("reader.title.compact", comment: "title"), ayah.number, ayah.text))
-                    .font(.system(.subheadline, design: .rounded))
+                    .font(KuraniFont.forTextStyle(.subheadline))
                     .foregroundColor(.kuraniTextSecondary)
 
                 TextEditor(text: $draft)
@@ -31,6 +31,7 @@ struct NoteEditorView: View {
                             .shadow(color: Color.black.opacity(0.32), radius: 20, y: 14)
                     )
                     .foregroundColor(.black)
+                    .font(KuraniFont.forTextStyle(.body))
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 24)
@@ -40,6 +41,7 @@ struct NoteEditorView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: onCancel) {
                         Text(LocalizedStringKey("action.cancel"))
+                            .font(KuraniFont.forTextStyle(.body))
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
@@ -48,6 +50,7 @@ struct NoteEditorView: View {
                             ProgressView()
                         } else {
                             Text(LocalizedStringKey("action.ok"))
+                                .font(KuraniFont.forTextStyle(.body))
                                 .fontWeight(.semibold)
                         }
                     }

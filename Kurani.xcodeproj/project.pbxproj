@@ -18,11 +18,12 @@
 		D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */; };
 		D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000028 /* ShareSheet.swift */; };
 		D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000029 /* FileIO.swift */; };
-		D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002A /* Haptics.swift */; };
-		D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */; };
-		D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */; };
-		D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */; };
-		D47AD4DA2A6B02A30000004A /* ReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */; };
+D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002A /* Haptics.swift */; };
+D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */; };
+D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */; };
+D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */; };
+D47AD4DA2A6B02A30000004A /* ReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */; };
+D4FF6AAA2D00000100000093 /* KuraniFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF6AAA2D00000100000092 /* KuraniFont.swift */; };
 		D47AD4DA2A6B02A30000004B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */; };
 		D47AD4DA2A6B02A30000004C /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000030 /* ReaderView.swift */; };
 		D47AD4DA2A6B02A30000004D /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000031 /* LibraryView.swift */; };
@@ -33,11 +34,12 @@
 		D47AD4DA2A6B02A300000052 /* SurahRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000036 /* SurahRow.swift */; };
 		D47AD4DA2A6B02A300000053 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000037 /* ContentView.swift */; };
 		D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */; };
-		D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000019 /* Assets.xcassets */; };
-		D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
+D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000019 /* Assets.xcassets */; };
+D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
 D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
 D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
 D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D47AD4DA2A6B02A30000005B /* Supabase */; };
+D4FF6AAA2D00000100000091 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D4FF6AAA2D00000100000090 /* Fonts */; };
 D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */; };
 D4F6B6C22C9F000100000081 /* ArabicText.json in Resources */ = {isa = PBXBuildFile; fileRef = D4F6B6C12C9F000100000080 /* ArabicText.json */; };
 /* End PBXBuildFile section */
@@ -61,11 +63,12 @@ D4F6B6C12C9F000100000080 /* ArabicText.json */ = {isa = PBXFileReference; lastKn
 		D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000028 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000029 /* FileIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIO.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000002A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKeys.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewModel.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A30000002A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKeys.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A30000002D /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
+D47AD4DA2A6B02A30000002E /* ReaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewModel.swift; sourceTree = "<group>"; };
+D4FF6AAA2D00000100000092 /* KuraniFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KuraniFont.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000002F /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000030 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000031 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
@@ -77,7 +80,8 @@ D4F6B6C12C9F000100000080 /* ArabicText.json */ = {isa = PBXFileReference; lastKn
 		D47AD4DA2A6B02A300000037 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPromptView.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000003A /* sq */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sq; path = sq.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,17 +167,18 @@ D4F6B6C12C9F000100000080 /* ArabicText.json */ = {isa = PBXFileReference; lastKn
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		D47AD4DA2A6B02A300000012 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				D47AD4DA2A6B02A300000028 /* ShareSheet.swift */,
-				D47AD4DA2A6B02A300000029 /* FileIO.swift */,
-				D47AD4DA2A6B02A30000002A /* Haptics.swift */,
-				D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
+                D47AD4DA2A6B02A300000012 /* Utils */ = {
+                        isa = PBXGroup;
+                        children = (
+                                D47AD4DA2A6B02A300000028 /* ShareSheet.swift */,
+                                D47AD4DA2A6B02A300000029 /* FileIO.swift */,
+                                D47AD4DA2A6B02A30000002A /* Haptics.swift */,
+                                D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */,
+                                D4FF6AAA2D00000100000092 /* KuraniFont.swift */,
+                        );
+                        path = Utils;
+                        sourceTree = "<group>";
+                };
 		D47AD4DA2A6B02A300000013 /* Supabase */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,12 +200,13 @@ D4F6B6C12C9F000100000080 /* ArabicText.json */,
 path = Data;
 sourceTree = "<group>";
 };
-		D47AD4DA2A6B02A300000015 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */,
-				D47AD4DA2A6B02A300000019 /* Assets.xcassets */,
-				D47AD4DA2A6B02A300000039 /* Localizable.strings */,
+                D47AD4DA2A6B02A300000015 /* Resources */ = {
+                        isa = PBXGroup;
+                        children = (
+                                D4FF6AAA2D00000100000090 /* Fonts */,
+                                D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */,
+                                D47AD4DA2A6B02A300000019 /* Assets.xcassets */,
+                                D47AD4DA2A6B02A300000039 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -269,13 +275,14 @@ sourceTree = "<group>";
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D47AD4DA2A6B02A30000000B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-files = (
-D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */,
-D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
-D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
+                D47AD4DA2A6B02A30000000B /* Resources */ = {
+                        isa = PBXResourcesBuildPhase;
+                        buildActionMask = 2147483647;
+                        files = (
+                                D4FF6AAA2D00000100000091 /* Fonts in Resources */,
+                                D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */,
+                                D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
+                                D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
 D4F6B6C22C9F000100000081 /* ArabicText.json in Resources */,
 D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
 D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
@@ -303,8 +310,9 @@ D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
 				D47AD4DA2A6B02A300000049 /* NotesViewModel.swift in Sources */,
 				D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */,
 				D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */,
-				D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
-				D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */,
+                                D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
+                                D4FF6AAA2D00000100000093 /* KuraniFont.swift in Sources */,
+                                D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */,
 				D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */,
 				D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */,
 				D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */,
