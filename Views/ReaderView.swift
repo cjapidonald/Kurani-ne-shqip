@@ -85,16 +85,16 @@ struct ReaderView: View {
                                 Spacer(minLength: 12)
 
                                 Button {
-                                    viewModel.toggleFavorite(for: ayah)
+                                    viewModel.toggleFavoriteStatus(for: ayah)
                                 } label: {
-                                    let isFavorite = viewModel.isFavorite(ayah)
+                                    let isFavorite = viewModel.isFavoriteAyah(ayah)
                                     Image(systemName: isFavorite ? "heart.fill" : "heart")
                                         .font(.system(size: 18, weight: .semibold))
                                         .foregroundStyle(isFavorite ? Color.kuraniAccentBrand : Color.kuraniAccentLight.opacity(0.8))
                                         .accessibilityHidden(true)
                                 }
                                 .buttonStyle(.plain)
-                                .accessibilityLabel(viewModel.isFavorite(ayah) ? LocalizedStringKey("reader.favorite.remove") : LocalizedStringKey("reader.favorite.add"))
+                                .accessibilityLabel(viewModel.isFavoriteAyah(ayah) ? LocalizedStringKey("reader.favorite.remove") : LocalizedStringKey("reader.favorite.add"))
                             }
 
                             if let note = viewModel.note(for: ayah) {
