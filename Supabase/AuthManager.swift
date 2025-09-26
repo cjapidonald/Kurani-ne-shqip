@@ -78,11 +78,10 @@ final class AuthManager: NSObject, ObservableObject {
 
     private func refreshSession() async {
         do {
-            if let session = try await client.auth.session {
-                self.session = session
-                self.user = session.user
-                self.userId = UUID(uuidString: session.user.id)
-            }
+            let session = try await client.auth.session
+            self.session = session
+            self.user = session.user
+            self.userId = session.user.id
         } catch {
             lastError = error
         }
@@ -95,7 +94,7 @@ final class AuthManager: NSObject, ObservableObject {
                 if let session = change.session {
                     self.session = session
                     self.user = session.user
-                    self.userId = UUID(uuidString: session.user.id)
+                    self.userId = session.user.id
                 }
             case .signedOut:
                 self.session = nil
