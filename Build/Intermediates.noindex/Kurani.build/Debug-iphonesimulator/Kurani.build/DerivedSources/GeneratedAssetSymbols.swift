@@ -1,4 +1,3 @@
-#if false  // Disabled: Use Xcode's DerivedSources-generated asset symbols instead
 import Foundation
 #if canImport(AppKit)
 import AppKit
@@ -28,7 +27,7 @@ extension DeveloperToolsSupport.ColorResource {
     /// The "Accent" asset catalog color resource.
     static let accent = DeveloperToolsSupport.ColorResource(name: "Accent", bundle: resourceBundle)
 
-    #warning("The \"AccentColor\" color asset name resolves to the symbol \"accent\" which already exists. Try renaming the asset.")
+    #warning("The \"Accent Color\" color asset name resolves to the symbol \"accent\" which already exists. Try renaming the asset.")
 
     /// The "AccentLight" asset catalog color resource.
     static let accentLight = DeveloperToolsSupport.ColorResource(name: "AccentLight", bundle: resourceBundle)
@@ -448,4 +447,3 @@ extension UIKit.UIImage {
 }
 #endif
 
-#endif

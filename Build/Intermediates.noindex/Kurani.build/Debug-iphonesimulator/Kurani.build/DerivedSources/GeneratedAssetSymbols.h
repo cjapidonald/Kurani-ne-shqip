@@ -12,8 +12,8 @@ static NSString * const ACBundleID AC_SWIFT_PRIVATE = @"com.example.Kurani";
 /// The "Accent" asset catalog color resource.
 static NSString * const ACColorNameAccent AC_SWIFT_PRIVATE = @"Accent";
 
-/// The "AccentColor" asset catalog color resource.
-static NSString * const ACColorNameAccentColor AC_SWIFT_PRIVATE = @"AccentColor";
+/// The "Accent Color" asset catalog color resource.
+static NSString * const ACColorNameAccentColor AC_SWIFT_PRIVATE = @"Accent Color";
 
 /// The "AccentLight" asset catalog color resource.
 static NSString * const ACColorNameAccentLight AC_SWIFT_PRIVATE = @"AccentLight";
