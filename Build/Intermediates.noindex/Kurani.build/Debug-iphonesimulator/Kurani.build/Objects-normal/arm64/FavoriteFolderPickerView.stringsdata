@@ -1,0 +1,96 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/Components/FavoriteFolderPickerView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.title",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.ayah",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.existing",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.new",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.noNote",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.noteLabel",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.noFolders",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.placeholder",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "favorites.folderPicker.create",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "action.cancel",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 106
+        }
+      }
+    ]
+  },
+  "version": 1
+}

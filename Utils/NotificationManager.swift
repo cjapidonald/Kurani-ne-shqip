@@ -92,7 +92,7 @@ final class NotificationManager {
     }
 
     private func add(_ request: UNNotificationRequest) async throws {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             center.add(request) { error in
                 if let error {
                     continuation.resume(throwing: error)
@@ -106,3 +106,4 @@ final class NotificationManager {
     private static let readingReminderIdentifier = "com.kurani.notifications.readingReminder"
     private static let verseOfDayIdentifierPrefix = "com.kurani.notifications.verseOfDay"
 }
+

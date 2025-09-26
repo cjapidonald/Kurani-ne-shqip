@@ -7,7 +7,7 @@
         "key": "reader.note.add",
         "location": {
           "startingColumn": 65,
-          "startingLine": 29
+          "startingLine": 39
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "reader.note.edit",
         "location": {
           "startingColumn": 105,
-          "startingLine": 29
+          "startingLine": 39
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "action.cancel",
         "location": {
           "startingColumn": 49,
-          "startingLine": 33
+          "startingLine": 43
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "action.ok",
         "location": {
           "startingColumn": 53,
-          "startingLine": 41
+          "startingLine": 52
         }
       }
     ]
