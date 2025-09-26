@@ -33,10 +33,10 @@ struct LibraryView: View {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(String(format: NSLocalizedString("reader.title.compact", comment: "title"), lastRead.surah, translationStore.title(for: lastRead.surah)))
-                                        .font(.system(.headline, design: .rounded))
+                                        .font(KuraniFont.forTextStyle(.headline))
                                         .foregroundColor(.kuraniTextPrimary)
                                     Text(LocalizedStringKey("library.continueReading"))
-                                        .font(.system(.subheadline, design: .rounded))
+                                        .font(KuraniFont.forTextStyle(.subheadline))
                                         .foregroundColor(.kuraniTextSecondary)
                                 }
                                 Spacer()
@@ -78,6 +78,7 @@ struct LibraryView: View {
                     Button(action: openNotesTab) {
                         Label(LocalizedStringKey("reader.notesButton"), systemImage: "note.text")
                             .labelStyle(.titleAndIcon)
+                            .font(KuraniFont.forTextStyle(.body))
                             .foregroundStyle(Color.kuraniAccentLight)
                     }
                 }

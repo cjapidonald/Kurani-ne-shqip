@@ -45,6 +45,18 @@ struct ReaderView: View {
                                 .buttonStyle(.plain)
 
                                 VStack(alignment: .leading, spacing: 6) {
+codex/change-font-to-kg-primary-penmanship
+                                    Text(ayah.text)
+                                        .font(KuraniFont.size(18 * viewModel.fontScale, relativeTo: .body))
+                                        .foregroundColor(.white)
+                                        .lineSpacing(4 * viewModel.lineSpacingScale)
+                                        .contextMenu {
+                                            Button(LocalizedStringKey("action.edit")) {
+                                                openNoteEditor(for: ayah)
+                                            }
+                                            Button(LocalizedStringKey("action.copy")) {
+                                                copyAyah(ayah)
+
                                     if showAlbanianText {
                                         Text(ayah.text)
                                             .font(.system(size: 18 * viewModel.fontScale, weight: .regular, design: .serif))
@@ -60,6 +72,7 @@ struct ReaderView: View {
                                                 Button(LocalizedStringKey("action.share")) {
                                                     shareAyah(ayah)
                                                 }
+main
                                             }
                                             .onTapGesture {
                                                 openNoteEditor(for: ayah)
@@ -104,7 +117,7 @@ struct ReaderView: View {
                                     Image(systemName: "pencil.and.outline")
                                         .foregroundStyle(Color.kuraniAccentLight)
                                     Text(bannerText)
-                                        .font(.system(.caption, design: .rounded))
+                                        .font(KuraniFont.forTextStyle(.caption))
                                         .foregroundColor(.kuraniTextSecondary)
                                 }
                                 .padding(.vertical, 10)
