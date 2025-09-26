@@ -5,6 +5,7 @@ struct RootView: View {
 
     @ObservedObject var translationStore: TranslationStore
     @ObservedObject var notesStore: NotesStore
+    @ObservedObject var progressStore: ReadingProgressStore
 
     @StateObject private var libraryViewModel: LibraryViewModel
     @StateObject private var notesViewModel: NotesViewModel
@@ -12,12 +13,13 @@ struct RootView: View {
 
     @State private var selectedTab: Tab = .library
 
-    init(translationStore: TranslationStore, notesStore: NotesStore) {
+    init(translationStore: TranslationStore, notesStore: NotesStore, progressStore: ReadingProgressStore) {
         self.translationStore = translationStore
         self.notesStore = notesStore
+        self.progressStore = progressStore
         _libraryViewModel = StateObject(wrappedValue: LibraryViewModel(translationStore: translationStore))
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
-        _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(translationStore: translationStore))
+        _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(translationStore: translationStore, progressStore: progressStore))
     }
 
     var body: some View {
