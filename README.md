@@ -78,6 +78,14 @@ Për të ngarkuar një përkthim të plotë, përdor `Importo përkthimin` në c
 2. Sigurohu që skedarët `QuranMeta.json`, `sample_translation.json`, `Assets.xcassets` dhe `Config.xcconfig` janë pjesë e target-it.
 3. Ndërto dhe ekzekuto aplikacionin në simulator ose pajisje me iOS 17.
 
+## Zgjidhja e problemeve
+
+### Gabim: `hapticpatternlibrary.plist` couldn't be opened
+
+- Ky log shfaqet kur aplikacioni ekzekutohet në macOS ose në simulatorë pa motor haptik të disponueshëm.
+- Gabimi nuk ndikon në funksionimin e aplikacionit; versioni aktual kontrollon automatikisht nëse pajisja mbështet haptikë dhe nuk tenton të prodhojë feedback kur mungon.
+- Për të testuar feedback-un haptik, përdor një pajisje iOS me motor Taptic.
+
 ## Sjellja e shënimeve
 - Çdo përdorues mund të ruajë **një** shënim për çdo kombinim (sure, ajet).
 - Ruajtja përdor `upsert` në Supabase dhe nuk ekziston asnjë veprim për fshirje.
