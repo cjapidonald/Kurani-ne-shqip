@@ -125,11 +125,11 @@ final class ReaderViewModel: ObservableObject {
         UserDefaults.standard.set(lineSpacingScale, forKey: AppStorageKeys.lineSpacingScale)
     }
 
-    func toggleFavorite(for ayah: Ayah) {
+    func toggleFavoriteStatus(for ayah: Ayah) {
         favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
     }
 
-    func isFavorite(_ ayah: Ayah) -> Bool {
+    func isFavoriteAyah(_ ayah: Ayah) -> Bool {
         favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
     }
 
