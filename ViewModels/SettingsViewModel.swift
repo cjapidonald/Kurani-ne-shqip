@@ -8,6 +8,7 @@ final class SettingsViewModel: ObservableObject {
     @Published var readingReminderEnabled: Bool
     @Published var readingReminderTime: Date
     @Published var verseOfDayEnabled: Bool
+    @Published var verseOfDayTime: Date
 
     private let progressStore: ReadingProgressStore
     private let translationStore: TranslationStore
@@ -18,6 +19,7 @@ final class SettingsViewModel: ObservableObject {
         static let readingReminderEnabled = "settings.readingReminder.enabled"
         static let readingReminderTime = "settings.readingReminder.time"
         static let verseOfDayEnabled = "settings.verseOfDay.enabled"
+        static let verseOfDayTime = "settings.verseOfDay.time"
     }
 
     init(
@@ -35,6 +37,8 @@ final class SettingsViewModel: ObservableObject {
         readingReminderTime = storedTime
         readingReminderEnabled = defaults.object(forKey: Keys.readingReminderEnabled) as? Bool ?? false
         verseOfDayEnabled = defaults.object(forKey: Keys.verseOfDayEnabled) as? Bool ?? false
+        let storedVerseTime = defaults.object(forKey: Keys.verseOfDayTime) as? Date ?? Self.defaultVerseOfDayTime()
+        verseOfDayTime = storedVerseTime
     }
 
     func resetReadingProgress() {
@@ -74,6 +78,38 @@ final class SettingsViewModel: ObservableObject {
 
     func setVerseOfDayEnabled(_ isOn: Bool) {
         Task { await handleVerseOfDayToggle(isOn) }
+    }
+
+    func updateVerseOfDayTime(_ newTime: Date) {
+        verseOfDayTime = newTime
+        defaults.set(newTime, forKey: Keys.verseOfDayTime)
+
+        guard verseOfDayEnabled else { return }
+
+        Task {
+            guard await ensureAuthorization() else {
+                verseOfDayEnabled = false
+                defaults.set(false, forKey: Keys.verseOfDayEnabled)
+                toast = LocalizedStringKey("settings.notifications.permissionDenied")
+                return
+            }
+
+            switch await scheduleVerseOfDayNotifications() {
+            case .success:
+                defaults.set(true, forKey: Keys.verseOfDayEnabled)
+                toast = LocalizedStringKey("settings.notifications.verseTimeUpdated")
+            case .noVerses:
+                await notificationManager.cancelVerseOfDay()
+                verseOfDayEnabled = false
+                defaults.set(false, forKey: Keys.verseOfDayEnabled)
+                toast = LocalizedStringKey("settings.notifications.verseUnavailable")
+            case .failure:
+                await notificationManager.cancelVerseOfDay()
+                verseOfDayEnabled = false
+                defaults.set(false, forKey: Keys.verseOfDayEnabled)
+                toast = LocalizedStringKey("settings.notifications.error")
+            }
+        }
     }
 
     // MARK: - Notification Scheduling
@@ -162,9 +198,13 @@ final class SettingsViewModel: ObservableObject {
         let verses = translationStore.randomAyahs(count: 30)
         guard !verses.isEmpty else { return .noVerses }
 
+        let verseComponents = Calendar.current.dateComponents([.hour, .minute], from: verseOfDayTime)
+        let hour = verseComponents.hour ?? 7
+        let minute = verseComponents.minute ?? 0
+
         guard let firstFireDate = Calendar.current.nextDate(
             after: Date(),
-            matching: DateComponents(hour: 7, minute: 0),
+            matching: DateComponents(hour: hour, minute: minute),
             matchingPolicy: .nextTime,
             direction: .forward
         ) else {
@@ -223,5 +263,11 @@ final class SettingsViewModel: ObservableObject {
         let calendar = Calendar.current
         let now = Date()
         return calendar.date(bySettingHour: 20, minute: 0, second: 0, of: now) ?? now
+    }
+
+    private static func defaultVerseOfDayTime() -> Date {
+        let calendar = Calendar.current
+        let now = Date()
+        return calendar.date(bySettingHour: 7, minute: 0, second: 0, of: now) ?? now
     }
 }

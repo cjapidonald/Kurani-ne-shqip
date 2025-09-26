@@ -24,6 +24,8 @@ struct ReaderView: View {
     @State private var selectedDictionaryEntry: ArabicDictionaryEntry?
     @State private var pendingDictionaryWord: String?
     @State private var ayahForFolderSelection: Ayah?
+    @State private var fullscreenControlsVisible = false
+    @State private var fullscreenHideWorkItem: DispatchWorkItem?
 
     private let noteFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -263,54 +265,72 @@ struct ReaderView: View {
             Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
         }
         .overlay(alignment: .top) {
-            VStack(spacing: 12) {
-                if showToast, let toastMessage = viewModel.toast {
-                    ToastView(message: toastMessage)
-                        .transition(.move(edge: .top).combined(with: .opacity))
-                }
-
+            ZStack(alignment: .top) {
                 if isChromeHidden {
-                    HStack(spacing: 24) {
-                        Button {
-                            isChromeHidden = false
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.backward")
-                                .font(.system(size: 16, weight: .semibold))
-                        }
-                        .accessibilityLabel(LocalizedStringKey("action.back"))
-                        .buttonStyle(.plain)
-
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                isChromeHidden = false
-                            }
-                        } label: {
-                            Image(systemName: "arrow.down.right.and.arrow.up.left")
-                                .font(.system(size: 16, weight: .semibold))
-                        }
-                        .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
-                        .buttonStyle(.plain)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .background(.ultraThinMaterial, in: Capsule())
-                    .foregroundStyle(Color.kuraniAccentLight)
+                    Color.clear
+                        .frame(height: 120)
+                        .contentShape(Rectangle())
+                        .onTapGesture { revealFullscreenChrome() }
                 }
+
+                VStack(spacing: 12) {
+                    if showToast, let toastMessage = viewModel.toast {
+                        ToastView(message: toastMessage)
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                    }
+
+                    if isChromeHidden, fullscreenControlsVisible {
+                        HStack(spacing: 24) {
+                            Button {
+                                isChromeHidden = false
+                                dismiss()
+                            } label: {
+                                Image(systemName: "chevron.backward")
+                                    .font(.system(size: 16, weight: .semibold))
+                            }
+                            .accessibilityLabel(LocalizedStringKey("action.back"))
+                            .buttonStyle(.plain)
+
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    isChromeHidden = false
+                                }
+                            } label: {
+                                Image(systemName: "arrow.down.right.and.arrow.up.left")
+                                    .font(.system(size: 16, weight: .semibold))
+                            }
+                            .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(.ultraThinMaterial, in: Capsule())
+                        .foregroundStyle(Color.kuraniAccentLight)
+                    }
+                }
+                .padding(.top, 40)
+                .padding(.horizontal, 16)
             }
-            .padding(.top, 40)
-            .padding(.horizontal, 16)
         }
         .overlay(alignment: .bottom) {
-            if viewModel.totalAyahs > 0 {
-                ReaderProgressBar(
-                    progress: viewModel.readingProgress,
-                    percentage: viewModel.progressPercentageString,
-                    detail: viewModel.progressDescription,
-                    isChromeHidden: isChromeHidden
-                )
-                .padding(.horizontal, 20)
-                .padding(.bottom, 24)
+            ZStack(alignment: .bottom) {
+                if isChromeHidden {
+                    Color.clear
+                        .frame(height: 140)
+                        .contentShape(Rectangle())
+                        .onTapGesture { revealFullscreenChrome() }
+                }
+
+                if viewModel.totalAyahs > 0, !isChromeHidden || fullscreenControlsVisible {
+                    ReaderProgressBar(
+                        progress: viewModel.readingProgress,
+                        percentage: viewModel.progressPercentageString,
+                        detail: viewModel.progressDescription,
+                        isChromeHidden: isChromeHidden
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 24)
+                }
             }
         }
         .onChange(of: viewModel.toast) { _, newValue in
@@ -320,6 +340,11 @@ struct ReaderView: View {
                 withAnimation { showToast = false }
                 viewModel.toast = nil
             }
+        }
+        .onChange(of: isChromeHidden) { _, _ in
+            fullscreenHideWorkItem?.cancel()
+            fullscreenHideWorkItem = nil
+            fullscreenControlsVisible = false
         }
     }
 
@@ -405,6 +430,20 @@ struct ReaderView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             pendingDictionaryWord = nil
         }
+    }
+
+    private func revealFullscreenChrome() {
+        guard isChromeHidden else { return }
+        fullscreenHideWorkItem?.cancel()
+        withAnimation { fullscreenControlsVisible = true }
+
+        let workItem = DispatchWorkItem {
+            guard isChromeHidden else { return }
+            withAnimation { fullscreenControlsVisible = false }
+            fullscreenHideWorkItem = nil
+        }
+        fullscreenHideWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: workItem)
     }
 }
 
