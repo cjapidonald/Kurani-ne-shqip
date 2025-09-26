@@ -1,5 +1,6 @@
 "app_name" = "Kurani";
 "tabs.library" = "Suret";
+"tabs.favorites" = "Të preferuarat";
 "tabs.notes" = "Shënimet e mia";
 "tabs.settings" = "Cilësimet";
 
@@ -73,6 +74,12 @@
 "notes.noAccess" = "Hyr për të parë shënimet e tua.";
 "reader.share.subject" = "Ajet nga Kurani";
 "reader.copy.confirmation" = "Teksti u kopjua";
+"reader.favorite.add" = "Shto te të preferuarat";
+"reader.favorite.remove" = "Hiq nga të preferuarat";
 "settings.translation.loaded" = "Përkthimi i ngarkuar";
 "settings.translation.sample" = "Po shfaqet përkthimi i mostrës";
 "reader.jumpLastRead" = "Shko te leximi i fundit";
+"favorites.title" = "Të preferuarat";
+"favorites.empty" = "S’ka ajete të preferuara ende.";
+"favorites.detail" = "Ajeti %d • Sure %@";
+"favorites.remove" = "Hiq nga të preferuarat";
