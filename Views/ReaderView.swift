@@ -58,10 +58,16 @@ struct ReaderView: View {
                             }
 
                             if let note = viewModel.note(for: ayah) {
+                                let formattedDate = noteFormatter.string(from: note.updatedAt)
+                                let bannerText = String(
+                                    format: NSLocalizedString("reader.noteBanner", comment: "banner"),
+                                    formattedDate
+                                )
+
                                 HStack {
                                     Image(systemName: "pencil.and.outline")
                                         .foregroundStyle(Color.kuraniAccentLight)
-                                    Text(String(format: NSLocalizedString("reader.noteBanner", comment: "banner"), noteFormatter.string(from: note.updatedAt)))
+                                    Text(bannerText)
                                         .font(.system(.caption, design: .rounded))
                                         .foregroundColor(.kuraniTextSecondary)
                                 }

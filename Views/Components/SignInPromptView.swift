@@ -82,7 +82,6 @@ struct SignInPromptView: View {
         }
         .background(KuraniTheme.backgroundGradient.ignoresSafeArea())
     }
-}
 
     @MainActor
     private func sendMagicLink() async {
