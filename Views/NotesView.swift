@@ -45,7 +45,7 @@ struct NotesView: View {
                             .tint(.kuraniAccentLight)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if viewModel.sortedSurahNumbers.isEmpty {
+                } else if viewModel.sortedSurahNumbers.isEmpty && !hasFavoriteContent {
                     VStack(spacing: 16) {
                         BrandHeader(titleKey: "notes.title", subtitle: "notes.empty")
                             .padding(.horizontal, 16)
@@ -55,10 +55,17 @@ struct NotesView: View {
                 } else {
                     List {
                         Section {
-                            BrandHeader(titleKey: "notes.title", subtitle: "notes.openReader")
+                            BrandHeader(
+                                titleKey: "notes.title",
+                                subtitle: viewModel.sortedSurahNumbers.isEmpty ? "notes.empty" : "notes.openReader"
+                            )
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.clear)
                                 .padding(.vertical, 8)
+                        }
+
+                        if hasFavoriteContent {
+                            favoritesOverview
                         }
 
                         ForEach(viewModel.sortedSurahNumbers, id: \.self) { surahNumber in
@@ -135,7 +142,6 @@ struct NotesView: View {
         }
         .sheet(item: $creationConfiguration) { configuration in
             AddNoteSheet(
-                translationStore: translationStore,
                 initialSurah: configuration.surah,
                 initialAyah: configuration.ayah,
                 onSave: saveNewNote,
@@ -158,6 +164,10 @@ struct NotesView: View {
 
     private var hasNotes: Bool {
         !notesStore.notes.isEmpty
+    }
+
+    private var hasFavoriteContent: Bool {
+        !favoritesStore.favorites.isEmpty || !favoritesStore.folders.isEmpty
     }
 
     private func openCreationSheet() {
@@ -270,12 +280,153 @@ struct NotesView: View {
         formatter.dateStyle = .medium
         return formatter.string(from: date)
     }
+
+    @ViewBuilder
+    private var favoritesOverview: some View {
+        if !favoritesStore.favorites.isEmpty {
+            favoriteAyahsSection
+        }
+
+        ForEach(favoritesStore.folders) { folder in
+            favoritesFolderSection(for: folder)
+        }
+    }
+
+    private var favoriteAyahsSection: some View {
+        Section(header: Text(LocalizedStringKey("favorites.section.starred"))) {
+            ForEach(favoritesStore.favorites) { favorite in
+                Button {
+                    path.append(ReaderRoute(surah: favorite.surah, ayah: favorite.ayah))
+                } label: {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(favoriteAyahText(for: favorite))
+                            .font(.system(.body, design: .serif))
+                            .foregroundColor(.kuraniTextPrimary)
+                            .lineLimit(4)
+
+                        Text(favoriteDetailText(for: favorite))
+                            .font(.system(.caption, design: .rounded))
+                            .foregroundColor(.kuraniTextSecondary)
+                    }
+                    .appleCard(cornerRadius: 20)
+                    .padding(.horizontal, 20)
+                }
+                .buttonStyle(.plain)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+                .padding(.vertical, 6)
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    Button(role: .destructive) {
+                        withAnimation {
+                            favoritesStore.removeFavorite(surah: favorite.surah, ayah: favorite.ayah)
+                        }
+                    } label: {
+                        Label(LocalizedStringKey("favorites.remove"), systemImage: "trash")
+                    }
+                }
+            }
+        }
+        .listRowBackground(Color.clear)
+    }
+
+    @ViewBuilder
+    private func favoritesFolderSection(for folder: FavoriteFolder) -> some View {
+        Section(header: favoritesFolderHeader(for: folder)) {
+            if folder.entries.isEmpty {
+                Text(LocalizedStringKey("favorites.folder.empty"))
+                    .font(.system(.footnote, design: .rounded))
+                    .foregroundColor(.kuraniTextSecondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .listRowBackground(Color.clear)
+            } else {
+                ForEach(folder.entries) { entry in
+                    Button {
+                        path.append(ReaderRoute(surah: entry.surah, ayah: entry.ayah))
+                    } label: {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(favoriteAyahText(for: entry))
+                                .font(.system(.body, design: .serif))
+                                .foregroundColor(.kuraniTextPrimary)
+                                .lineLimit(4)
+
+                            if let note = entry.note, !note.isEmpty {
+                                Text(note)
+                                    .font(KuraniFont.forTextStyle(.callout))
+                                    .foregroundColor(.kuraniAccentLight)
+                                    .lineLimit(3)
+                            }
+
+                            Text(favoriteFolderDetailText(for: entry))
+                                .font(.system(.caption, design: .rounded))
+                                .foregroundColor(.kuraniTextSecondary)
+                        }
+                        .appleCard(cornerRadius: 20)
+                        .padding(.horizontal, 20)
+                    }
+                    .buttonStyle(.plain)
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                    .padding(.vertical, 6)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            withAnimation {
+                                favoritesStore.removeEntry(entry, from: folder.id)
+                            }
+                        } label: {
+                            Label(LocalizedStringKey("favorites.remove"), systemImage: "trash")
+                        }
+                    }
+                }
+            }
+        }
+        .listRowBackground(Color.clear)
+    }
+
+    @ViewBuilder
+    private func favoritesFolderHeader(for folder: FavoriteFolder) -> some View {
+        HStack {
+            Text(folder.name)
+            Spacer()
+            Button {
+                withAnimation {
+                    favoritesStore.deleteFolder(folder.id)
+                }
+            } label: {
+                Image(systemName: "trash")
+                    .font(.system(size: 14, weight: .semibold))
+            }
+            .buttonStyle(.borderless)
+            .foregroundStyle(Color.kuraniAccentLight)
+            .accessibilityLabel(LocalizedStringKey("favorites.folder.delete"))
+        }
+    }
+
+    private func favoriteAyahText(for favorite: FavoriteAyah) -> String {
+        translationStore.ayahs(for: favorite.surah).first(where: { $0.number == favorite.ayah })?.text ?? ""
+    }
+
+    private func favoriteAyahText(for entry: FavoriteFolder.Entry) -> String {
+        translationStore.ayahs(for: entry.surah).first(where: { $0.number == entry.ayah })?.text ?? ""
+    }
+
+    private func favoriteDetailText(for favorite: FavoriteAyah) -> String {
+        String(
+            format: NSLocalizedString("favorites.detail", comment: "favorite metadata"),
+            favorite.ayah,
+            translationStore.title(for: favorite.surah)
+        )
+    }
+
+    private func favoriteFolderDetailText(for entry: FavoriteFolder.Entry) -> String {
+        String(
+            format: NSLocalizedString("favorites.detail", comment: "favorite metadata"),
+            entry.ayah,
+            translationStore.title(for: entry.surah)
+        )
+    }
 }
 
 private struct AddNoteSheet: View {
-    let translationStore: TranslationStore
-    let initialSurah: Int
-    let initialAyah: Int
     let onSave: (Int, Int, String, String) async -> Bool
     let onDismiss: () -> Void
 
@@ -296,15 +447,11 @@ private struct AddNoteSheet: View {
     }
 
     init(
-        translationStore: TranslationStore,
         initialSurah: Int,
         initialAyah: Int,
         onSave: @escaping (Int, Int, String, String) async -> Bool,
         onDismiss: @escaping () -> Void
     ) {
-        self.translationStore = translationStore
-        self.initialSurah = initialSurah
-        self.initialAyah = initialAyah
         self.onSave = onSave
         self.onDismiss = onDismiss
         _selectedSurah = State(initialValue: initialSurah)
@@ -315,7 +462,6 @@ private struct AddNoteSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    surahSelection
                     titleSection
                     noteSection
                 }
@@ -345,17 +491,7 @@ private struct AddNoteSheet: View {
             }
             .tint(.kuraniAccentLight)
             .onAppear {
-                let ayahCount = max(translationStore.ayahCount(for: selectedSurah), 1)
-                if selectedAyah > ayahCount {
-                    selectedAyah = ayahCount
-                }
                 focusedField = .title
-            }
-            .onChange(of: selectedSurah) { newValue in
-                let ayahCount = max(translationStore.ayahCount(for: newValue), 1)
-                if selectedAyah > ayahCount {
-                    selectedAyah = ayahCount
-                }
             }
             .alert(LocalizedStringKey("notes.saveError"), isPresented: $showError) {
                 Button(LocalizedStringKey("action.ok")) {
@@ -371,59 +507,6 @@ private struct AddNoteSheet: View {
     private var canSave: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
             !noteText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-    }
-
-    private var surahSelection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(LocalizedStringKey("notes.field.surahAyah"))
-                .font(KuraniFont.forTextStyle(.subheadline))
-                .foregroundColor(.kuraniTextSecondary)
-
-            HStack(alignment: .top, spacing: 16) {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(LocalizedStringKey("notes.field.surah"))
-                        .font(KuraniFont.forTextStyle(.caption))
-                        .foregroundColor(.kuraniTextSecondary)
-                    Picker("", selection: $selectedSurah) {
-                        if translationStore.surahs.isEmpty {
-                            ForEach(1...114, id: \.self) { number in
-                                Text(String(format: NSLocalizedString("notes.surahNumber", comment: "surah number"), number))
-                                    .tag(number)
-                            }
-                        } else {
-                            ForEach(translationStore.surahs) { surah in
-                                let name = surah.name.isEmpty
-                                    ? String(format: NSLocalizedString("notes.surahNumber", comment: "surah number"), surah.number)
-                                    : surah.name
-                                Text(name)
-                                    .tag(surah.number)
-                            }
-                        }
-                    }
-                    .labelsHidden()
-                    .pickerStyle(.menu)
-                    .tint(.kuraniAccentLight)
-                }
-
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(LocalizedStringKey("notes.field.ayah"))
-                        .font(KuraniFont.forTextStyle(.caption))
-                        .foregroundColor(.kuraniTextSecondary)
-                    Picker("", selection: $selectedAyah) {
-                        ForEach(ayahOptions, id: \.self) { ayah in
-                            Text("\(ayah)")
-                                .tag(ayah)
-                        }
-                    }
-                    .labelsHidden()
-                    .pickerStyle(.menu)
-                    .tint(.kuraniAccentLight)
-                }
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 20)
-        .background(cardBackground())
     }
 
     private var titleSection: some View {
@@ -469,11 +552,6 @@ private struct AddNoteSheet: View {
             }
             .background(cardBackground())
         }
-    }
-
-    private var ayahOptions: [Int] {
-        let count = max(translationStore.ayahCount(for: selectedSurah), 1)
-        return Array(1...count)
     }
 
     private func cardBackground() -> some View {

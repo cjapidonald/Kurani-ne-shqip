@@ -18,9 +18,13 @@ struct ArabicSelectableTextView: UIViewRepresentable {
         textView.dataDetectorTypes = []
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
+        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.textContainer.maximumNumberOfLines = 0
+        textView.textContainer.widthTracksTextView = true
         textView.delegate = context.coordinator
         textView.tintColor = UIColor(Color.kuraniAccentLight)
         textView.adjustsFontForContentSizeCategory = true
+        textView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         updateTextAttributes(for: textView)
         return textView
