@@ -62,14 +62,14 @@ struct Pill: View {
             .fontWeight(.semibold)
             .padding(.vertical, 6)
             .padding(.horizontal, 12)
-            .foregroundColor(.kuraniTextPrimary)
+            .foregroundColor(.black)
             .background(
                 Capsule()
                     .fill(Color.kuraniAccentLight.opacity(0.9))
             )
             .overlay(
                 Capsule()
-                    .stroke(Color.black.opacity(0.12), lineWidth: 0.8)
+                    .stroke(Color.black, lineWidth: 0.8)
             )
             .shadow(color: Color.kuraniAccentBrand.opacity(0.18), radius: 8, y: 4)
     }
