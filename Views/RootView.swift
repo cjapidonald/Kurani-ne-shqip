@@ -3,10 +3,10 @@ import SwiftUI
 struct RootView: View {
     enum Tab { case library, favorites, notes, settings }
 
-    @ObservedObject var translationStore: TranslationStore
-    @ObservedObject var notesStore: NotesStore
-    @ObservedObject var progressStore: ReadingProgressStore
-    @ObservedObject var favoritesStore: FavoritesStore
+    let translationStore: TranslationStore
+    let notesStore: NotesStore
+    let progressStore: ReadingProgressStore
+    let favoritesStore: FavoritesStore
 
     @StateObject private var libraryViewModel: LibraryViewModel
     @StateObject private var notesViewModel: NotesViewModel
