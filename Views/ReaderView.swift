@@ -9,6 +9,7 @@ struct ReaderView: View {
 
     @EnvironmentObject private var authManager: AuthManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @AppStorage(AppStorageKeys.showArabicText) private var showArabicText = false
     @AppStorage(AppStorageKeys.showAlbanianText) private var showAlbanianText = true
 
@@ -77,7 +78,16 @@ main
                                             .onTapGesture {
                                                 openNoteEditor(for: ayah)
                                             }
+codex/add-button-to-redirect-with-ayah-details
+                                            Button("PYET CHATGPT") {
+                                                askChatGPT(about: ayah)
+                                            }
+                                        }
+                                        .onTapGesture {
+                                            openNoteEditor(for: ayah)
+
                                     }
+ main
 
                                     if showArabicText, let arabic = ayah.arabicText {
                                         ArabicSelectableTextView(
@@ -244,6 +254,7 @@ main
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
             Button(LocalizedStringKey("action.share")) { shareAyah(ayah) }
             Button(LocalizedStringKey("action.edit")) { openNoteEditor(for: ayah) }
+            Button("PYET CHATGPT") { askChatGPT(about: ayah) }
             Button(LocalizedStringKey("action.cancel"), role: .cancel) {}
         }
         .overlay(alignment: .top) {
@@ -309,6 +320,13 @@ main
         showingShareSheet = true
     }
 
+codex/add-button-to-redirect-with-ayah-details
+    private func askChatGPT(about ayah: Ayah) {
+        let prompt = "Më trego më shumë rreth sures \(viewModel.surahTitle), ajeti \(ayah.number). Teksti: \(ayah.text)"
+        guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+        guard let url = URL(string: "https://chat.openai.com/?q=\(encodedPrompt)") else { return }
+        openURL(url)
+
     private func toggleAlbanian() {
         if showAlbanianText {
             if !showArabicText {
@@ -329,6 +347,7 @@ main
         } else {
             showArabicText = true
         }
+main
     }
 
     private func formattedText(for ayah: Ayah) -> String {
