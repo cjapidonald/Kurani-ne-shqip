@@ -1,12 +1,16 @@
 import Foundation
 
-final class ArabicDictionary {
+actor ArabicDictionary {
     static let shared = ArabicDictionary()
 
     private var entriesByNormalizedWord: [String: ArabicDictionaryEntry] = [:]
     private let normalizationSet: CharacterSet
+    private let service: QuranServicing
+    private var didLoadEntries = false
 
-    private init() {
+    init(service: QuranServicing = QuranService()) {
+        self.service = service
+
         var combining = CharacterSet()
         for value in 0x064B...0x065F {
             if let scalar = UnicodeScalar(value) {
@@ -22,41 +26,37 @@ final class ArabicDictionary {
             }
         }
         normalizationSet = combining
-        loadEntries()
     }
 
-    private func loadEntries() {
-        guard let url = Bundle.main.url(forResource: "ArabicDictionary", withExtension: "json") else {
-            return
-        }
+    func lookup(word: String) async throws -> ArabicDictionaryEntry? {
+        try await ensureEntriesLoaded()
 
-        do {
-            let data = try Data(contentsOf: url)
-            let decoder = JSONDecoder()
-            let entries = try decoder.decode([ArabicDictionaryEntry].self, from: data)
-            entriesByNormalizedWord = Dictionary(uniqueKeysWithValues: entries.map { entry in
-                let normalized = normalize(entry.word)
-                return (normalized, entry)
-            })
-        } catch {
-            print("Failed to load Arabic dictionary: \(error)")
-        }
-    }
-
-    func lookup(word: String) -> ArabicDictionaryEntry? {
         let normalized = normalize(word)
         if let entry = entriesByNormalizedWord[normalized] {
             return entry
         }
 
-        // Try trimming common punctuation marks
         let trimmed = word.trimmingCharacters(in: CharacterSet.punctuationCharacters.union(.whitespacesAndNewlines))
-        if trimmed != word {
-            let trimmedNormalized = normalize(trimmed)
-            return entriesByNormalizedWord[trimmedNormalized]
-        }
+        guard trimmed != word else { return nil }
 
-        return nil
+        return entriesByNormalizedWord[normalize(trimmed)]
+    }
+
+    private func ensureEntriesLoaded() async throws {
+        guard !didLoadEntries else { return }
+
+        do {
+            let entries = try await service.loadArabicDictionary()
+            entriesByNormalizedWord = Dictionary(uniqueKeysWithValues: entries.map { entry in
+                let normalized = normalize(entry.word)
+                return (normalized, entry)
+            })
+            didLoadEntries = true
+        } catch {
+            didLoadEntries = false
+            entriesByNormalizedWord = [:]
+            throw error
+        }
     }
 
     private func normalize(_ word: String) -> String {

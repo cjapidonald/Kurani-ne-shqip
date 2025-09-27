@@ -138,6 +138,8 @@
 "favorites.folderPicker.addedMessage" = "U shtua te dosja \"%@\".";
 "favorites.folderPicker.createdMessage" = "U krijua dosja \"%@\".";
 "favorites.folderPicker.updatedMessage" = "U përditësua te dosja \"%@\".";
+"dictionary.loading" = "Po ngarkohet fjalori…";
+"dictionary.error" = "Fjalori s’u ngarkua. Provoni sërish.";
 "dictionary.notFound" = "Kjo fjalë nuk gjendet ende në fjalor.";
 "dictionary.meanings" = "Kuptimet";
 "dictionary.notes" = "Shënime";

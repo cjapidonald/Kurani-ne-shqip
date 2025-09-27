@@ -42,7 +42,6 @@ D4F6B6D02C9F000100000090 /* ArabicDictionaryEntry.swift in Sources */ = {isa = P
 D4F6B6D22C9F000100000092 /* ArabicDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */; };
 D4F6B6D42C9F000100000094 /* ArabicSelectableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D52C9F000100000095 /* ArabicSelectableTextView.swift */; };
                 D4F6B6D62C9F000100000096 /* ArabicDictionaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D72C9F000100000097 /* ArabicDictionaryDetailView.swift */; };
-                D4F6B6D82C9F000100000098 /* ArabicDictionary.json in Resources */ = {isa = PBXBuildFile; fileRef = D4F6B6D92C9F000100000099 /* ArabicDictionary.json */; };
                 F8643BD45C394BFFA5D99674 /* ReadingProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */; };
                 D4FF6AB12D000001000000A1 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF6AB02D000001000000A0 /* TranslationService.swift */; };
                 E4474F56488F4C62929FB0C8 /* ProgressBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333054A5288A4EB490D5C514 /* ProgressBadge.swift */; };
@@ -66,7 +65,6 @@ D4F6B6D12C9F000100000091 /* ArabicDictionaryEntry.swift */ = {isa = PBXFileRefer
 D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionary.swift; sourceTree = "<group>"; };
                 D4F6B6D52C9F000100000095 /* ArabicSelectableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicSelectableTextView.swift; sourceTree = "<group>"; };
                 D4F6B6D72C9F000100000097 /* ArabicDictionaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionaryDetailView.swift; sourceTree = "<group>"; };
-                D4F6B6D92C9F000100000099 /* ArabicDictionary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ArabicDictionary.json; sourceTree = "<group>"; };
                 D4F6B7002C9F0001000000C0 /* AlbanianReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbanianReadingView.swift; sourceTree = "<group>"; };
                 A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingProgressStore.swift; sourceTree = "<group>"; };
                 333054A5288A4EB490D5C514 /* ProgressBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBadge.swift; sourceTree = "<group>"; };
@@ -216,7 +214,6 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
                         children = (
                                 A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */,
                                 D47AD4DA2A6B02A30000001F /* TranslationStore.swift */,
-                                D4F6B6D92C9F000100000099 /* ArabicDictionary.json */,
                         );
 			path = Data;
 			sourceTree = "<group>";
@@ -303,7 +300,6 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 				D4FF6AAA2D00000100000091 /* Fonts in Resources */,
 				D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */,
                                 D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
-                                D4F6B6D82C9F000100000098 /* ArabicDictionary.json in Resources */,
                                 D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
