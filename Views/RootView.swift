@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RootView: View {
-    enum Tab { case library, notes, settings }
+    enum Tab: Hashable { case library, notes, settings }
 
     let translationStore: TranslationStore
     let notesStore: NotesStore
@@ -12,7 +12,7 @@ struct RootView: View {
     @StateObject private var notesViewModel: NotesViewModel
     @StateObject private var settingsViewModel: SettingsViewModel
 
-    @State private var selectedTab: Tab = .library
+    @State private var selectedTab: Tab
 
     init(translationStore: TranslationStore, notesStore: NotesStore, progressStore: ReadingProgressStore, favoritesStore: FavoritesStore) {
         self.translationStore = translationStore
@@ -27,6 +27,7 @@ struct RootView: View {
                 translationStore: translationStore
             )
         )
+        _selectedTab = State(initialValue: .library)
     }
 
     var body: some View {
