@@ -149,7 +149,7 @@ final class QuranService: QuranServicing {
         do {
             let userId = try await requireAuthenticatedUserId()
             let response: PostgrestResponse<[FavoriteViewRow]> = try await client
-                .from("v_favourites")
+                .from("v_favorites_with_text")
                 .select()
                 .eq("user_id", value: userId.uuidString)
                 .order("surah", ascending: true)
