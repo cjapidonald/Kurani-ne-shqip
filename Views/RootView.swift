@@ -1,64 +1,41 @@
 import SwiftUI
 
 struct RootView: View {
-    enum Tab: Hashable { case arabic, albanian, favourites, notes }
+    enum Tab: Hashable { case library, favourites, notes }
 
     let translationStore: TranslationStore
-    let notesStore: NotesStore
-    let quranServiceFactory: () -> QuranServicing
 
     @EnvironmentObject private var favoritesStore: FavoritesStore
     @StateObject private var notesViewModel: NotesViewModel
+    @StateObject private var libraryViewModel: LibraryViewModel
 
     @State private var selectedTab: Tab
-    @State private var arabicSurahSelection: Int
-    @State private var albanianSurahSelection: Int
-    @AppStorage(AppStorageKeys.lastReadSurah) private var persistedSurah = 1
 
     init(
         translationStore: TranslationStore,
         notesStore: NotesStore,
         progressStore: ReadingProgressStore,
-        favoritesStore: FavoritesStore,
-        quranServiceFactory: @escaping () -> QuranServicing = { QuranService() }
+        favoritesStore: FavoritesStore
     ) {
         self.translationStore = translationStore
-        self.notesStore = notesStore
-        self.quranServiceFactory = quranServiceFactory
         _ = progressStore
         _ = favoritesStore
 
-        let storedSurah = UserDefaults.standard.integer(forKey: AppStorageKeys.lastReadSurah)
-        let initialSurah = storedSurah > 0 ? storedSurah : 1
-
         _notesViewModel = StateObject(wrappedValue: NotesViewModel(notesStore: notesStore))
-        _selectedTab = State(initialValue: .arabic)
-        _arabicSurahSelection = State(initialValue: initialSurah)
-        _albanianSurahSelection = State(initialValue: initialSurah)
+        _libraryViewModel = StateObject(wrappedValue: LibraryViewModel(translationStore: translationStore))
+        _selectedTab = State(initialValue: .library)
     }
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            ArabicReaderTab(
-                selectedSurah: $arabicSurahSelection,
-                persistedSurah: $persistedSurah,
-                quranService: quranServiceFactory(),
+            LibraryView(
+                viewModel: libraryViewModel,
                 openNotesTab: { selectedTab = .notes }
             )
             .tabItem {
-                Label("Lexo (AR)", systemImage: "book.closed")
+                Label("Lexo", systemImage: "book")
             }
-            .tag(Tab.arabic)
-
-            AlbanianReaderTab(
-                selectedSurah: $albanianSurahSelection,
-                persistedSurah: $persistedSurah,
-                quranService: quranServiceFactory()
-            )
-            .tabItem {
-                Label("Lexo (SQ)", systemImage: "book")
-            }
-            .tag(Tab.albanian)
+            .tag(Tab.library)
 
             FavoritesView(
                 viewModel: FavoritesViewModel(favoritesStore: favoritesStore),
@@ -80,150 +57,6 @@ struct RootView: View {
     }
 }
 
-private struct ArabicReaderTab: View {
-    @EnvironmentObject private var translationStore: TranslationStore
-    @EnvironmentObject private var notesStore: NotesStore
-    @EnvironmentObject private var progressStore: ReadingProgressStore
-    @EnvironmentObject private var favoritesStore: FavoritesStore
-    @Binding var selectedSurah: Int
-    @Binding var persistedSurah: Int
-    private let quranService: QuranServicing
-    let openNotesTab: () -> Void
-
-    init(
-        selectedSurah: Binding<Int>,
-        persistedSurah: Binding<Int>,
-        quranService: QuranServicing = QuranService(),
-        openNotesTab: @escaping () -> Void = {}
-    ) {
-        _selectedSurah = selectedSurah
-        _persistedSurah = persistedSurah
-        self.quranService = quranService
-        self.openNotesTab = openNotesTab
-    }
-
-    var body: some View {
-        NavigationStack {
-            ReaderView(
-                viewModel: ReaderViewModel(
-                    surahNumber: selectedSurah,
-                    translationStore: translationStore,
-                    notesStore: notesStore,
-                    progressStore: progressStore,
-                    favoritesStore: favoritesStore
-                ),
-                startingAyah: nil,
-                openNotesTab: openNotesTab
-            )
-            .navigationTitle(title(for: selectedSurah))
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
-                        ForEach(translationStore.surahs) { surah in
-                            Button {
-                                selectedSurah = surah.number
-                            } label: {
-                                if surah.number == selectedSurah {
-                                    Label(title(for: surah.number), systemImage: "checkmark")
-                                } else {
-                                    Text(title(for: surah.number))
-                                }
-                            }
-                        }
-                    } label: {
-                        Label(LocalizedStringKey("reader.changeSurah"), systemImage: "list.number")
-                    }
-                    .disabled(translationStore.surahs.isEmpty)
-                }
-            }
-        }
-        .onAppear(perform: ensureValidSelection)
-        .onChange(of: translationStore.surahs.map { $0.number }) { _ in ensureValidSelection() }
-        .onChange(of: selectedSurah) { newValue in
-            persistedSurah = newValue
-        }
-    }
-
-    private func ensureValidSelection() {
-        guard let first = translationStore.surahs.first else { return }
-        if !translationStore.surahs.contains(where: { $0.number == selectedSurah }) {
-            selectedSurah = first.number
-        }
-    }
-
-    private func title(for surah: Int) -> String {
-        let title = translationStore.title(for: surah)
-        if title.isEmpty {
-            return String(format: NSLocalizedString("Surah %d", comment: "surah title"), surah)
-        }
-        return title
-    }
-}
-
-private struct AlbanianReaderTab: View {
-    @EnvironmentObject private var translationStore: TranslationStore
-    @Binding var selectedSurah: Int
-    @Binding var persistedSurah: Int
-    private let quranService: QuranServicing
-
-    init(
-        selectedSurah: Binding<Int>,
-        persistedSurah: Binding<Int>,
-        quranService: QuranServicing = QuranService()
-    ) {
-        _selectedSurah = selectedSurah
-        _persistedSurah = persistedSurah
-        self.quranService = quranService
-    }
-
-    var body: some View {
-        NavigationStack {
-            AlbanianReadingView(surah: selectedSurah, quranService: quranService)
-                .navigationTitle(title(for: selectedSurah))
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Menu {
-                            ForEach(translationStore.surahs) { surah in
-                                Button {
-                                    selectedSurah = surah.number
-                                } label: {
-                                    if surah.number == selectedSurah {
-                                        Label(title(for: surah.number), systemImage: "checkmark")
-                                    } else {
-                                        Text(title(for: surah.number))
-                                    }
-                                }
-                            }
-                        } label: {
-                            Label(LocalizedStringKey("reader.changeSurah"), systemImage: "list.number")
-                        }
-                        .disabled(translationStore.surahs.isEmpty)
-                    }
-                }
-        }
-        .onAppear(perform: ensureValidSelection)
-        .onChange(of: translationStore.surahs.map { $0.number }) { _ in ensureValidSelection() }
-        .onChange(of: selectedSurah) { newValue in
-            persistedSurah = newValue
-        }
-    }
-
-    private func ensureValidSelection() {
-        guard let first = translationStore.surahs.first else { return }
-        if !translationStore.surahs.contains(where: { $0.number == selectedSurah }) {
-            selectedSurah = first.number
-        }
-    }
-
-    private func title(for surah: Int) -> String {
-        let title = translationStore.title(for: surah)
-        if title.isEmpty {
-            return String(format: NSLocalizedString("Surah %d", comment: "surah title"), surah)
-        }
-        return title
-    }
-}
-
 #if DEBUG
 #Preview {
     let translationStore = TranslationStore.previewStore()
@@ -231,14 +64,12 @@ private struct AlbanianReaderTab: View {
     let favoritesStore = FavoritesStore()
     let progressStore = ReadingProgressStore.previewStore()
     let authManager = AuthManager.previewManager()
-    let quranService = MockQuranService()
 
     RootView(
         translationStore: translationStore,
         notesStore: notesStore,
         progressStore: progressStore,
-        favoritesStore: favoritesStore,
-        quranServiceFactory: { quranService }
+        favoritesStore: favoritesStore
     )
     .environmentObject(translationStore)
     .environmentObject(notesStore)
