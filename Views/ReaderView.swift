@@ -21,8 +21,8 @@ struct ReaderView: View {
     @State private var showingShareSheet = false
     @State private var showToast = false
     @State private var isChromeHidden = false
-    @State private var selectedDictionaryEntry: ArabicDictionaryEntry?
-    @State private var pendingDictionaryWord: String?
+    @State private var selectedTranslationWord: TranslationWord?
+    @State private var pendingTranslationSelection: (ayah: Int, index: Int)?
     @State private var fullscreenControlsVisible = false
     @State private var fullscreenHideWorkItem: DispatchWorkItem?
 
@@ -68,7 +68,9 @@ struct ReaderView: View {
                             onAskChatGPT: {
                                 askChatGPT(about: ayah)
                             },
-                            onArabicSelection: handleDictionarySelection
+                            onArabicSelection: { index in
+                                handleDictionarySelection(for: ayah, tokenIndex: index)
+                            }
                         )
                         .id(ayah.number)
                         .onAppear {
@@ -119,12 +121,12 @@ struct ReaderView: View {
         .sheet(isPresented: $showingShareSheet) {
             ShareSheet(items: [shareText])
         }
-        .sheet(item: $selectedDictionaryEntry) { entry in
-            ArabicDictionaryDetailView(entry: entry) {
-                askChatGPT(aboutWord: entry.word)
-            }
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
+        .alert(item: $selectedTranslationWord) { word in
+            Alert(
+                title: Text(word.arabicWord),
+                message: Text(word.albanianWord),
+                dismissButton: .default(Text("OK"))
+            )
         }
         .confirmationDialog(LocalizedStringKey("action.edit"), isPresented: $showingActions, presenting: selectedAyahForActions) { ayah in
             Button(LocalizedStringKey("action.copy")) { copyAyah(ayah) }
@@ -239,11 +241,6 @@ struct ReaderView: View {
         openChatGPT(with: prompt)
     }
 
-    private func askChatGPT(aboutWord word: String) {
-        let prompt = "Përshëndetje! Më trego më shumë për kuptimin e fjalës \"\(word)\" në arabisht."
-        openChatGPT(with: prompt)
-    }
-
     private func openChatGPT(with prompt: String) {
         guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         guard let url = URL(string: "https://chat.openai.com/?q=\(encodedPrompt)") else { return }
@@ -282,16 +279,23 @@ struct ReaderView: View {
         "\(viewModel.surahTitle) \(ayah.number): \(ayah.text)"
     }
 
-    private func handleDictionarySelection(_ word: String) {
-        guard pendingDictionaryWord != word else { return }
-        pendingDictionaryWord = word
-        viewModel.toast = LocalizedStringKey("dictionary.loading")
+    private func handleDictionarySelection(for ayah: Ayah, tokenIndex: Int) {
+        let selection = (ayah: ayah.number, index: tokenIndex)
+        if let pending = pendingTranslationSelection, pending.ayah == selection.ayah, pending.index == selection.index {
+            return
+        }
+
+        pendingTranslationSelection = selection
 
         Task {
+            await MainActor.run {
+                viewModel.toast = LocalizedStringKey("dictionary.loading")
+            }
+
             do {
-                if let entry = try await ArabicDictionary.shared.lookup(word: word) {
+                if let word = try await viewModel.translationWord(for: ayah, at: tokenIndex) {
                     await MainActor.run {
-                        selectedDictionaryEntry = entry
+                        selectedTranslationWord = word
                         viewModel.toast = nil
                     }
                 } else {
@@ -308,7 +312,11 @@ struct ReaderView: View {
             try? await Task.sleep(nanoseconds: 1_000_000_000)
 
             await MainActor.run {
-                pendingDictionaryWord = nil
+                if let pending = pendingTranslationSelection,
+                   pending.ayah == selection.ayah,
+                   pending.index == selection.index {
+                    pendingTranslationSelection = nil
+                }
             }
         }
     }
@@ -447,7 +455,7 @@ private struct AyahRowView: View {
     let onCopy: () -> Void
     let onShare: () -> Void
     let onAskChatGPT: () -> Void
-    let onArabicSelection: (String) -> Void
+    let onArabicSelection: (Int) -> Void
 
     private static let noteFormatter: DateFormatter = {
         let formatter = DateFormatter()

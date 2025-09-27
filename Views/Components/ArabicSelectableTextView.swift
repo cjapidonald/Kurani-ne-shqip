@@ -5,7 +5,7 @@ struct ArabicSelectableTextView: UIViewRepresentable {
     let text: String
     let fontScale: Double
     let lineSpacingScale: Double
-    let onSelection: (String) -> Void
+    let onSelection: (Int) -> Void
 
     func makeUIView(context: Context) -> UITextView {
         let textView = IntrinsicTextView()
@@ -62,29 +62,63 @@ struct ArabicSelectableTextView: UIViewRepresentable {
 
     final class Coordinator: NSObject, UITextViewDelegate {
         private let parent: ArabicSelectableTextView
-        private var lastSelection: String?
+        private var lastSelectionIndex: Int?
 
         init(_ parent: ArabicSelectableTextView) {
             self.parent = parent
         }
 
         func textViewDidChangeSelection(_ textView: UITextView) {
-            guard let selectedRange = textView.selectedTextRange else { return }
-            let selectedText = textView.text(in: selectedRange) ?? ""
-            let trimmed = selectedText.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !trimmed.isEmpty else {
-                lastSelection = nil
+            guard
+                let selectedTextRange = textView.selectedTextRange,
+                let text = textView.text,
+                !text.isEmpty
+            else {
+                lastSelectionIndex = nil
                 return
             }
 
-            // Avoid repeated callbacks for same selection
-            if trimmed == lastSelection { return }
-            lastSelection = trimmed
-            DispatchQueue.main.async {
-                self.parent.onSelection(trimmed)
-                textView.selectedTextRange = nil
-                self.lastSelection = nil
+            let location = textView.offset(from: textView.beginningOfDocument, to: selectedTextRange.start)
+            let length = textView.offset(from: selectedTextRange.start, to: selectedTextRange.end)
+            guard length >= 0 else { return }
+            let range = NSRange(location: location, length: length)
+
+            guard let index = tokenIndex(for: range, in: text) else {
+                lastSelectionIndex = nil
+                return
             }
+
+            if index == lastSelectionIndex { return }
+            lastSelectionIndex = index
+
+            DispatchQueue.main.async {
+                self.parent.onSelection(index)
+                textView.selectedTextRange = nil
+                self.lastSelectionIndex = nil
+            }
+        }
+
+        private func tokenIndex(for selectedRange: NSRange, in text: String) -> Int? {
+            let nsText = text as NSString
+            var currentIndex = 0
+            var matchedIndex: Int?
+            nsText.enumerateSubstrings(
+                in: NSRange(location: 0, length: nsText.length),
+                options: [.byWords, .localized]
+            ) { _, wordRange, _, stop in
+                if NSIntersectionRange(wordRange, selectedRange).length > 0 {
+                    matchedIndex = currentIndex
+                    stop.pointee = true
+                }
+                currentIndex += 1
+            }
+
+            if let matchedIndex { return matchedIndex }
+
+            let prefix = nsText.substring(to: max(0, selectedRange.location))
+            let delimiters = CharacterSet.whitespacesAndNewlines
+            let precedingWords = prefix.unicodeScalars.split(whereSeparator: { delimiters.contains($0) }).count
+            return precedingWords
         }
     }
 }
