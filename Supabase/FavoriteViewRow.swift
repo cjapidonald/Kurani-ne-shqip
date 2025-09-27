@@ -1,13 +1,21 @@
 import Foundation
 
-struct FavoriteViewRow: Codable, Hashable {
+struct FavoriteViewRow: Codable, Hashable, Identifiable {
+    let id: UUID
+    let userId: UUID
     let surah: Int
     let ayah: Int
-    let albanianText: String?
+    let createdAt: Date
+    let arabicAyahText: String?
+    let albanianAyahText: String?
 
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case userId = "user_id"
         case surah
         case ayah
-        case albanianText = "albanian_text"
+        case createdAt = "created_at"
+        case arabicAyahText = "arabic_ayah_text"
+        case albanianAyahText = "albanian_ayah_text"
     }
 }

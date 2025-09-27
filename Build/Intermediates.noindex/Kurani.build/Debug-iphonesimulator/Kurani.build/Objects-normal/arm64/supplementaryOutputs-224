@@ -1,0 +1,30 @@
+{
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/LibraryView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/LibraryView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/LibraryView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/LibraryView.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/LibraryView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/LibraryView.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/NoteEditorView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NoteEditorView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NoteEditorView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NoteEditorView.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NoteEditorView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NoteEditorView.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/NotesView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NotesView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NotesView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NotesView.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NotesView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/NotesView.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/SettingsView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SettingsView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SettingsView.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SettingsView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SettingsView.swiftdeps"
+  }
+}

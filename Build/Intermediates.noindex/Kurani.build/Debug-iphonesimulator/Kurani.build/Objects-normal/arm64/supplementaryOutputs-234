@@ -1,0 +1,23 @@
+{
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/App/QuranApp.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranApp.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranApp.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranApp.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranApp.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranApp.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/App/Theme.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Theme.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Theme.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Theme.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Theme.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Theme.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps"
+  }
+}
