@@ -1,0 +1,56 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Views/AlbanianReadingView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Retry",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "No verses available",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "⭐️",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 153
+        }
+      },
+      {
+        "comment": "",
+        "key": "☆",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 153
+        }
+      },
+      {
+        "comment": "",
+        "key": "📝",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 159
+        }
+      }
+    ]
+  },
+  "version": 1
+}

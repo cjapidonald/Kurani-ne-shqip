@@ -1,5 +1,24 @@
 {
   "source": "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Data/TranslationStore.swift",
-  "tables": {},
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Loading…",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 184
+        }
+      },
+      {
+        "comment": "",
+        "key": "Surah 1",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 171
+        }
+      }
+    ]
+  },
   "version": 1
 }

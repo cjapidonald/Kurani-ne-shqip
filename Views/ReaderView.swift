@@ -367,6 +367,16 @@ private struct LanguageToggleIcon: View {
     }
 }
 
+private struct FontSizeButtonLabel: View {
+    enum Action { case decrease, increase }
+    let action: Action
+
+    var body: some View {
+        Image(systemName: action == .increase ? "textformat.size.larger" : "textformat.size.smaller")
+            .foregroundStyle(Color.kuraniAccentLight)
+    }
+}
+
 private struct ReaderToolbarControls: View {
     let isChromeHidden: Bool
     let showAlbanianText: Bool
