@@ -188,8 +188,9 @@ private extension QuranService {
     }
 
     func mapSupabaseError(_ error: Error) -> Error {
-        if let supabaseError = error as? SupabaseError {
-            return QuranServiceError.supabase(message: supabaseError.errorDescription ?? supabaseError.localizedDescription)
+        if let localizedError = error as? LocalizedError {
+            let description = localizedError.errorDescription ?? localizedError.localizedDescription
+            return QuranServiceError.supabase(message: description)
         }
         return error
     }
