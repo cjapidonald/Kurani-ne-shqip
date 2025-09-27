@@ -16,10 +16,40 @@ enum SupabaseConfigError: LocalizedError {
 }
 
 final class SupabaseClientProvider {
-    static let shared = try! SupabaseClientProvider()
+    private static let lock = NSLock()
+    private static var cachedResult: Result<SupabaseClientProvider, Error>?
 
-    static var client: SupabaseClient { shared.client }
-    static var redirectURL: URL? { shared.redirectURL }
+    static func client(bundle: Bundle = .main) throws -> SupabaseClient {
+        try resolveShared(bundle: bundle).get().client
+    }
+
+    static func clientIfAvailable(bundle: Bundle = .main) -> SupabaseClient? {
+        try? client(bundle: bundle)
+    }
+
+    static var redirectURL: URL? {
+        guard case .success(let provider) = resolveShared(bundle: .main) else {
+            return nil
+        }
+        return provider.redirectURL
+    }
+
+    static func configurationResult(bundle: Bundle = .main) -> Result<SupabaseClientProvider, Error> {
+        resolveShared(bundle: bundle)
+    }
+
+    private static func resolveShared(bundle: Bundle) -> Result<SupabaseClientProvider, Error> {
+        lock.lock()
+        defer { lock.unlock() }
+
+        if let cachedResult {
+            return cachedResult
+        }
+
+        let result = Result { try SupabaseClientProvider(bundle: bundle) }
+        cachedResult = result
+        return result
+    }
 
     struct Configuration {
         let url: URL

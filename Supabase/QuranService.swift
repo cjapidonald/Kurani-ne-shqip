@@ -16,13 +16,18 @@ enum QuranServiceError: LocalizedError {
 }
 
 final class QuranService: QuranServicing {
-    private let client: SupabaseClient
+    private let clientProvider: () throws -> SupabaseClient
 
-    init(client: SupabaseClient = SupabaseClientProvider.client) {
-        self.client = client
+    init(clientProvider: @escaping () throws -> SupabaseClient = SupabaseClientProvider.client) {
+        self.clientProvider = clientProvider
+    }
+
+    convenience init(client: SupabaseClient) {
+        self.init(clientProvider: { client })
     }
 
     func loadTranslationWords(surah: Int, ayah: Int?) async throws -> [TranslationWord] {
+        let client = try clientProvider()
         do {
             var query = client
                 .from("translation")
@@ -54,8 +59,9 @@ final class QuranService: QuranServicing {
     }
 
     func getMyNotesForSurah(surah: Int) async throws -> [NoteRow] {
+        let client = try clientProvider()
         do {
-            let userId = try await requireAuthenticatedUserId()
+            let userId = try await requireAuthenticatedUserId(client: client)
             let response: PostgrestResponse<[NoteRow]> = try await client
                 .from("notes")
                 .select()
@@ -78,8 +84,9 @@ final class QuranService: QuranServicing {
             let note: String
         }
 
+        let client = try clientProvider()
         do {
-            let userId = try await requireAuthenticatedUserId()
+            let userId = try await requireAuthenticatedUserId(client: client)
             let payload = NoteUpsertPayload(
                 user_id: userId,
                 surah: surah,
@@ -98,9 +105,10 @@ final class QuranService: QuranServicing {
     }
 
     func isFavorite(surah: Int, ayah: Int) async throws -> Bool {
+        let client = try clientProvider()
         do {
-            let userId = try await requireAuthenticatedUserId()
-            return try await isFavorite(surah: surah, ayah: ayah, userId: userId)
+            let userId = try await requireAuthenticatedUserId(client: client)
+            return try await isFavorite(surah: surah, ayah: ayah, userId: userId, client: client)
         } catch {
             throw mapSupabaseError(error)
         }
@@ -113,9 +121,10 @@ final class QuranService: QuranServicing {
             let ayah: Int
         }
 
+        let client = try clientProvider()
         do {
-            let userId = try await requireAuthenticatedUserId()
-            if try await isFavorite(surah: surah, ayah: ayah, userId: userId) {
+            let userId = try await requireAuthenticatedUserId(client: client)
+            if try await isFavorite(surah: surah, ayah: ayah, userId: userId, client: client) {
                 _ = try await client
                     .from("favourites")
                     .delete()
@@ -136,8 +145,9 @@ final class QuranService: QuranServicing {
     }
 
     func loadMyFavouritesView() async throws -> [FavoriteViewRow] {
+        let client = try clientProvider()
         do {
-            let userId = try await requireAuthenticatedUserId()
+            let userId = try await requireAuthenticatedUserId(client: client)
             let response: PostgrestResponse<[FavoriteViewRow]> = try await client
                 .from("v_favourites_with_text")
                 .select()
@@ -152,6 +162,7 @@ final class QuranService: QuranServicing {
     }
 
     func loadArabicDictionary() async throws -> [ArabicDictionaryEntry] {
+        let client = try clientProvider()
         do {
             let response: PostgrestResponse<[ArabicDictionaryEntry]> = try await client
                 .from("arabic_dictionary")
@@ -166,7 +177,7 @@ final class QuranService: QuranServicing {
 }
 
 private extension QuranService {
-    func requireAuthenticatedUserId() async throws -> UUID {
+    func requireAuthenticatedUserId(client: SupabaseClient) async throws -> UUID {
         do {
             let session = try await client.auth.session
             return session.user.id
@@ -175,7 +186,7 @@ private extension QuranService {
         }
     }
 
-    func isFavorite(surah: Int, ayah: Int, userId: UUID) async throws -> Bool {
+    func isFavorite(surah: Int, ayah: Int, userId: UUID, client: SupabaseClient) async throws -> Bool {
         let response: PostgrestResponse<[FavoriteRow]> = try await client
             .from("favourites")
             .select("id", count: .exact)
