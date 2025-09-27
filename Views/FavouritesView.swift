@@ -6,13 +6,17 @@ struct FavouritesView: View {
         let ayah: Int
     }
 
-    private let quranService = QuranService()
+    private let quranService: QuranServicing
 
     @State private var favourites: [FavoriteViewRow] = []
     @State private var isLoading = false
     @State private var loadError: String?
     @State private var path: [Destination] = []
     @State private var alertMessage: String?
+
+    init(quranService: QuranServicing = QuranService()) {
+        self.quranService = quranService
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -145,10 +149,17 @@ struct FavouritesView: View {
     }
 }
 
+#if DEBUG
 #Preview {
-    FavouritesView()
-        .environmentObject(TranslationStore())
-        .environmentObject(NotesStore())
-        .environmentObject(FavoritesStore())
-        .environmentObject(ReadingProgressStore())
+    let translationStore = TranslationStore.previewStore()
+    let notesStore = NotesStore.previewStore()
+    let favoritesStore = FavoritesStore()
+    let progressStore = ReadingProgressStore.previewStore()
+
+    return FavouritesView(quranService: MockQuranService())
+        .environmentObject(translationStore)
+        .environmentObject(notesStore)
+        .environmentObject(favoritesStore)
+        .environmentObject(progressStore)
 }
+#endif

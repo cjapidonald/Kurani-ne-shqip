@@ -4,7 +4,7 @@ struct NoteEditorView: View {
     let surah: Int
     let ayah: Int
     @State private var albanianText: String
-    @State private var userNote: String = ""
+    @State private var userNote: String
     @State private var isLoadingAlbanianText = false
     @State private var isSaving = false
     @State private var showSignInPrompt = false
@@ -13,12 +13,14 @@ struct NoteEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var authManager: AuthManager
 
-    private let quranService = QuranService()
+    private let quranService: QuranServicing
 
-    init(surah: Int, ayah: Int, initialText: String) {
+    init(surah: Int, ayah: Int, initialText: String, existingNote: String = "", quranService: QuranServicing = QuranService()) {
         self.surah = surah
         self.ayah = ayah
+        self.quranService = quranService
         _albanianText = State(initialValue: initialText)
+        _userNote = State(initialValue: existingNote)
     }
 
     var body: some View {
@@ -255,3 +257,17 @@ struct BoundNoteEditorView: View {
         }
     }
 }
+
+#if DEBUG
+#Preview {
+    let authManager = AuthManager.previewManager()
+    return NoteEditorView(
+        surah: 1,
+        ayah: 1,
+        initialText: "Lavdi i qoftë Allahut, Zotit të botëve",
+        existingNote: "Kujtesë për falënderim",
+        quranService: MockQuranService()
+    )
+    .environmentObject(authManager)
+}
+#endif
