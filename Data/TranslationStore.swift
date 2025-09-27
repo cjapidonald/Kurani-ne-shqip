@@ -1,86 +1,54 @@
 import Foundation
 import SwiftUI
 
-struct TranslationFile: Codable {
-    struct SurahTranslation: Codable {
-        let number: Int
-        let ayahs: [Ayah]
-    }
-
-    let surahs: [SurahTranslation]
-}
-
-private struct ArabicTextFile: Codable {
-    struct SurahText: Codable {
-        let number: Int
-        let ayahs: [AyahText]
-    }
-
-    struct AyahText: Codable {
-        let number: Int
-        let text: String
-    }
-
-    let surahs: [SurahText]
-}
-
-private struct MetaEntry: Codable {
-    let number: Int
-    let name: String
-    let ayahs: Int
-}
-
 @MainActor
 final class TranslationStore: ObservableObject {
     @Published private(set) var surahs: [Surah] = []
     @Published private(set) var ayahsBySurah: [Int: [Ayah]] = [:]
 
-    private let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return decoder
-    }()
-
+    private let service: TranslationService
     private var arabicAyahsBySurah: [Int: [Int: String]] = [:]
 
-    func loadInitialData() async {
-        await loadSurahMeta()
-        await loadArabicText()
-        await loadSampleTranslation()
+    init(service: TranslationService = SupabaseTranslationService()) {
+        self.service = service
     }
 
-    private func loadSurahMeta() async {
+    func loadInitialData() async {
+        await fetchSurahMetadata()
+        await fetchArabicText()
+        await fetchTranslations()
+    }
+
+    private func fetchSurahMetadata() async {
         do {
-            let meta = try FileIO.loadBundleJSON("QuranMeta", as: [MetaEntry].self)
-            let mapped: [Surah] = meta.map { Surah(number: $0.number, name: $0.name, ayahCount: $0.ayahs) }
-            self.surahs = mapped.sorted { $0.number < $1.number }
+            let metadata = try await service.fetchSurahMetadata()
+            surahs = metadata.sorted { $0.number < $1.number }
         } catch {
             print("Failed to load surah metadata", error)
         }
     }
 
-    private func loadArabicText() async {
+    private func fetchArabicText() async {
         do {
-            let file = try FileIO.loadBundleJSON("ArabicText", as: ArabicTextFile.self)
-            arabicAyahsBySurah = file.surahs.reduce(into: [:]) { result, entry in
-                result[entry.number] = entry.ayahs.reduce(into: [:]) { ayahMap, ayah in
-                    ayahMap[ayah.number] = ayah.text
-                }
-            }
+            arabicAyahsBySurah = try await service.fetchArabicTextBySurah()
         } catch {
             print("Failed to load Arabic text", error)
+            arabicAyahsBySurah = [:]
         }
     }
 
-    private func loadSampleTranslation() async {
+    private func fetchTranslations() async {
         do {
-            let translation = try FileIO.loadBundleJSON("sample_translation", as: TranslationFile.self)
-            ayahsBySurah = translation.surahs.reduce(into: [:]) { result, entry in
-                let sorted = entry.ayahs.sorted { $0.number < $1.number }
-                result[entry.number] = applyArabicTextIfAvailable(to: sorted, surahNumber: entry.number)
+            let translations = try await service.fetchAyahsBySurah()
+            var merged: [Int: [Ayah]] = [:]
+            for (surah, ayahs) in translations {
+                let sorted = ayahs.sorted { $0.number < $1.number }
+                merged[surah] = applyArabicTextIfAvailable(to: sorted, surahNumber: surah)
             }
+            ayahsBySurah = merged
         } catch {
             print("Failed to load translation", error)
+            ayahsBySurah = [:]
         }
     }
 
