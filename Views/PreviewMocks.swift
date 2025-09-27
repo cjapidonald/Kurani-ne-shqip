@@ -3,73 +3,12 @@ import Foundation
 import Supabase
 
 struct MockQuranService: QuranServicing {
-    private static let previewClient: SupabaseClient? = {
-        guard ProcessInfo.processInfo.environment["ENABLE_SUPABASE_PREVIEWS"] == "1" else {
-            return nil
-        }
-        return SupabaseClientProvider.client
-    }()
-
     private let service: QuranServicing?
-    private let placeholderWords: [Int: [TranslationWord]]
-    private let placeholderFavourites: [FavoriteViewRow]
-    private let placeholderDictionary: [ArabicDictionaryEntry]
+    private let sampleData: SampleData
 
-    init(client: SupabaseClient? = MockQuranService.previewClient) {
-        if let client {
-            service = QuranService(client: client)
-        } else {
-            service = nil
-        }
-
-        let sampleWords = [
-            TranslationWord(surah: 1, ayah: 1, position: 1, arabicWord: "مِثال", albanianWord: "Shembull"),
-            TranslationWord(surah: 1, ayah: 1, position: 2, arabicWord: "كَلِمَة", albanianWord: "fjalë"),
-            TranslationWord(surah: 1, ayah: 1, position: 3, arabicWord: "مُشْتَرَكة", albanianWord: "e përbashkët"),
-            TranslationWord(surah: 1, ayah: 2, position: 1, arabicWord: "نَصّ", albanianWord: "tekst"),
-            TranslationWord(surah: 2, ayah: 255, position: 1, arabicWord: "مَعْرِفَة", albanianWord: "dituri"),
-            TranslationWord(surah: 2, ayah: 255, position: 2, arabicWord: "حِكْمَة", albanianWord: "urtësi")
-        ]
-
-        placeholderWords = Dictionary(grouping: sampleWords, by: { $0.surah })
-
-        placeholderFavourites = [
-            FavoriteViewRow(
-                id: UUID(),
-                userId: UUID(),
-                surah: 1,
-                ayah: 1,
-                createdAt: Date(),
-                arabicAyahText: "Tekst demonstrues arab.",
-                albanianAyahText: "Tekst demonstrues në shqip."
-            ),
-            FavoriteViewRow(
-                id: UUID(),
-                userId: UUID(),
-                surah: 2,
-                ayah: 255,
-                createdAt: Date(),
-                arabicAyahText: "Shembull i dytë arab.",
-                albanianAyahText: "Shembull i dytë në shqip."
-            )
-        ]
-
-        placeholderDictionary = [
-            ArabicDictionaryEntry(
-                id: UUID().uuidString,
-                word: "علم",
-                transliteration: "ilm",
-                meanings: ["dituri", "njohuri"],
-                notes: "Shembull demonstrues i përkthimit."
-            ),
-            ArabicDictionaryEntry(
-                id: UUID().uuidString,
-                word: "سلام",
-                transliteration: "selam",
-                meanings: ["paqe", "përshëndetje"],
-                notes: nil
-            )
-        ]
+    init(service: QuranServicing? = MockQuranService.makeLiveService(), sampleData: SampleData = .default) {
+        self.service = service
+        self.sampleData = sampleData
     }
 
     func loadTranslationWords(surah: Int, ayah: Int?) async throws -> [TranslationWord] {
@@ -80,15 +19,11 @@ struct MockQuranService: QuranServicing {
                     return words
                 }
             } catch {
-                // Fall back to placeholders if the preview client cannot reach Supabase.
+                // Fall back to deterministic sample data for previews.
             }
         }
 
-        let words = placeholderWords[surah] ?? []
-        if let ayah {
-            return words.filter { $0.ayah == ayah }
-        }
-        return words
+        return sampleData.translationWords(for: surah, ayah: ayah)
     }
 
     func rebuildAlbanianAyah(surah: Int, ayah: Int) async throws -> String {
@@ -101,30 +36,32 @@ struct MockQuranService: QuranServicing {
         if let service {
             do {
                 return try await service.getMyNotesForSurah(surah: surah)
-            } catch {}
+            } catch {
+                // Use preview sample data.
+            }
         }
-        return []
+        return sampleData.notes(for: surah)
     }
 
     func upsertMyNote(surah: Int, ayah: Int, albanianText: String, note: String) async throws {
-        if let service {
-            try? await service.upsertMyNote(surah: surah, ayah: ayah, albanianText: albanianText, note: note)
-        }
+        guard let service else { return }
+        try? await service.upsertMyNote(surah: surah, ayah: ayah, albanianText: albanianText, note: note)
     }
 
     func isFavorite(surah: Int, ayah: Int) async throws -> Bool {
         if let service {
             do {
                 return try await service.isFavorite(surah: surah, ayah: ayah)
-            } catch {}
+            } catch {
+                // Use preview sample data.
+            }
         }
-        return false
+        return sampleData.isFavorite(surah: surah, ayah: ayah)
     }
 
     func toggleFavorite(surah: Int, ayah: Int) async throws {
-        if let service {
-            try? await service.toggleFavorite(surah: surah, ayah: ayah)
-        }
+        guard let service else { return }
+        try? await service.toggleFavorite(surah: surah, ayah: ayah)
     }
 
     func loadMyFavouritesView() async throws -> [FavoriteViewRow] {
@@ -134,9 +71,11 @@ struct MockQuranService: QuranServicing {
                 if !favourites.isEmpty {
                     return favourites
                 }
-            } catch {}
+            } catch {
+                // Use preview sample data.
+            }
         }
-        return placeholderFavourites
+        return sampleData.favourites
     }
 
     func loadArabicDictionary() async throws -> [ArabicDictionaryEntry] {
@@ -146,15 +85,136 @@ struct MockQuranService: QuranServicing {
                 if !entries.isEmpty {
                     return entries
                 }
-            } catch {}
+            } catch {
+                // Use preview sample data.
+            }
         }
-        return placeholderDictionary
+        return sampleData.dictionaryEntries
+    }
+
+    private static func makeLiveService() -> QuranServicing? {
+        guard let provider = try? SupabaseClientProvider() else { return nil }
+        return QuranService(client: provider.client)
+    }
+}
+
+private extension MockQuranService {
+    struct SampleData {
+        struct FavoriteKey: Hashable {
+            let surah: Int
+            let ayah: Int
+        }
+
+        let translationWordsBySurah: [Int: [TranslationWord]]
+        let favourites: [FavoriteViewRow]
+        let dictionaryEntries: [ArabicDictionaryEntry]
+        let notesBySurah: [Int: [NoteRow]]
+        let favoriteLookup: Set<FavoriteKey>
+
+        static let `default`: SampleData = {
+            let translationWords: [Int: [TranslationWord]] = [
+                1: [
+                    TranslationWord(surah: 1, ayah: 1, position: 1, arabicWord: "ٱلْحَمْدُ", albanianWord: "Lavdërimi"),
+                    TranslationWord(surah: 1, ayah: 1, position: 2, arabicWord: "لِلَّهِ", albanianWord: "i takon Allahut"),
+                    TranslationWord(surah: 1, ayah: 1, position: 3, arabicWord: "رَبِّ", albanianWord: "Zoti i"),
+                    TranslationWord(surah: 1, ayah: 1, position: 4, arabicWord: "ٱلْعَالَمِينَ", albanianWord: "botëve"),
+                    TranslationWord(surah: 1, ayah: 2, position: 1, arabicWord: "ٱلرَّحْمَٰنِ", albanianWord: "Mëshiruesit"),
+                    TranslationWord(surah: 1, ayah: 2, position: 2, arabicWord: "ٱلرَّحِيمِ", albanianWord: "Mëshirëbërësit")
+                ],
+                2: [
+                    TranslationWord(surah: 2, ayah: 255, position: 1, arabicWord: "ٱللَّهُ", albanianWord: "Allahu"),
+                    TranslationWord(surah: 2, ayah: 255, position: 2, arabicWord: "لَآ إِلَٰهَ", albanianWord: "nuk ka zot"),
+                    TranslationWord(surah: 2, ayah: 255, position: 3, arabicWord: "إِلَّا", albanianWord: "përveç"),
+                    TranslationWord(surah: 2, ayah: 255, position: 4, arabicWord: "هُوَ", albanianWord: "Atij"),
+                    TranslationWord(surah: 2, ayah: 255, position: 5, arabicWord: "ٱلْحَىُّ", albanianWord: "i Gjalli"),
+                    TranslationWord(surah: 2, ayah: 255, position: 6, arabicWord: "ٱلْقَيُّومُ", albanianWord: "Mbajtësi i gjithësisë")
+                ]
+            ]
+
+            let favourites: [FavoriteViewRow] = [
+                FavoriteViewRow(
+                    id: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+                    userId: UUID(uuidString: "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA")!,
+                    surah: 1,
+                    ayah: 1,
+                    createdAt: Date(timeIntervalSince1970: 1_700_000_000),
+                    arabicAyahText: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ",
+                    albanianAyahText: "Lavdërimi i takon Allahut, Zotit të botëve"
+                ),
+                FavoriteViewRow(
+                    id: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!,
+                    userId: UUID(uuidString: "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA")!,
+                    surah: 2,
+                    ayah: 255,
+                    createdAt: Date(timeIntervalSince1970: 1_700_086_400),
+                    arabicAyahText: "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ",
+                    albanianAyahText: "Allahu – nuk ka zot tjetër përveç Tij, i Gjalli, Mbajtësi i gjithësisë"
+                )
+            ]
+
+            let dictionaryEntries = [
+                ArabicDictionaryEntry(
+                    id: "dictionary-entry-rahma",
+                    word: "رحمة",
+                    transliteration: "rahme",
+                    meanings: ["mëshirë", "dashamirësi"],
+                    notes: "Shembull i një përkufizimi për fjalorin arab."
+                ),
+                ArabicDictionaryEntry(
+                    id: "dictionary-entry-selam",
+                    word: "سلام",
+                    transliteration: "selam",
+                    meanings: ["paqe", "përshëndetje"],
+                    notes: nil
+                )
+            ]
+
+            let notes: [Int: [NoteRow]] = [
+                1: [
+                    NoteRow(
+                        id: UUID(uuidString: "33333333-3333-3333-3333-333333333333")!,
+                        userId: UUID(uuidString: "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA")!,
+                        surah: 1,
+                        ayah: 1,
+                        albanianText: "Lavdërimi i takon Allahut, Zotit të botëve",
+                        note: "Kujton rëndësinë e mirënjohjes.",
+                        createdAt: Date(timeIntervalSince1970: 1_699_913_600),
+                        updatedAt: Date(timeIntervalSince1970: 1_699_913_600)
+                    )
+                ]
+            ]
+
+            let favoriteLookup = Set(favourites.map { FavoriteKey(surah: $0.surah, ayah: $0.ayah) })
+
+            return SampleData(
+                translationWordsBySurah: translationWords,
+                favourites: favourites,
+                dictionaryEntries: dictionaryEntries,
+                notesBySurah: notes,
+                favoriteLookup: favoriteLookup
+            )
+        }()
+
+        func translationWords(for surah: Int, ayah: Int?) -> [TranslationWord] {
+            let words = translationWordsBySurah[surah] ?? []
+            guard let ayah else { return words }
+            return words.filter { $0.ayah == ayah }
+        }
+
+        func notes(for surah: Int) -> [NoteRow] {
+            notesBySurah[surah] ?? []
+        }
+
+        func isFavorite(surah: Int, ayah: Int) -> Bool {
+            favoriteLookup.contains(FavoriteKey(surah: surah, ayah: ayah))
+        }
     }
 }
 
 extension NotesStore {
-    static func previewStore() -> NotesStore {
-        NotesStore(client: SupabaseClientProvider.client)
+    static func previewStore(client: SupabaseClient? = nil) -> NotesStore {
+        let resolvedClient = client ?? (try? SupabaseClientProvider())?.client
+        return NotesStore(client: resolvedClient)
     }
 }
 
@@ -169,8 +229,9 @@ extension ReadingProgressStore {
 }
 
 extension AuthManager {
-    static func previewManager() -> AuthManager {
-        AuthManager(client: SupabaseClientProvider.client)
+    static func previewManager(client: SupabaseClient? = nil) -> AuthManager {
+        let resolvedClient = client ?? (try? SupabaseClientProvider())?.client
+        return AuthManager(client: resolvedClient)
     }
 }
 

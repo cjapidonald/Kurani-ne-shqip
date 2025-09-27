@@ -106,6 +106,7 @@ final class TranslationStore: ObservableObject {
 
 #if DEBUG
 extension TranslationStore {
+ codex/implement-per-surah-word-lists-in-translationservice
     private struct PreviewData {
         static let surahs: [Surah] = [
             Surah(number: 1, name: "Al-Fatiha", ayahCount: 7)
@@ -157,10 +158,17 @@ extension TranslationStore {
             }
         }
 
+
+    static func previewStore() -> TranslationStore {
+        let service = PreviewTranslationService()
+        let store = TranslationStore(service: service)
+        Task { await store.loadInitialData() }
+ main
         return store
     }
 }
 
+codex/implement-per-surah-word-lists-in-translationservice
 private struct TranslationStorePreviewHost: View {
     @StateObject private var store = TranslationStore.previewStore(preload: false)
 
@@ -191,5 +199,56 @@ private struct TranslationStorePreviewHost: View {
 
 #Preview("TranslationStore Surah 1") {
     TranslationStorePreviewHost()
+
+private struct PreviewTranslationService: TranslationService {
+    private let surahMetadata: [Surah]
+    private let ayahs: [Int: [Ayah]]
+    private let arabicBySurah: [Int: [Int: String]]
+
+    init() {
+        surahMetadata = [
+            Surah(number: 1, name: "El-Fatiha", ayahCount: 7),
+            Surah(number: 2, name: "El-Bekare", ayahCount: 286)
+        ]
+
+        let fatihaAyahs = [
+            Ayah(number: 1, text: "Lavdërimi i takon Allahut, Zotit të botëve", arabicText: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ"),
+            Ayah(number: 2, text: "Mëshiruesi, Mëshirëbërësi", arabicText: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"),
+            Ayah(number: 3, text: "Sunduesi i Ditës së Gjykimit", arabicText: "مَالِكِ يَوْمِ ٱلدِّينِ")
+        ]
+
+        let ayatulKursi = [
+            Ayah(
+                number: 255,
+                text: "Allahu – nuk ka zot tjetër përveç Tij, i Gjalli, Mbajtësi i gjithësisë",
+                arabicText: "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ"
+            )
+        ]
+
+        ayahs = [
+            1: fatihaAyahs,
+            2: ayatulKursi
+        ]
+
+        arabicBySurah = ayahs.mapValues { ayahs in
+            Dictionary(uniqueKeysWithValues: ayahs.compactMap { ayah -> (Int, String)? in
+                guard let arabic = ayah.arabicText else { return nil }
+                return (ayah.number, arabic)
+            })
+        }
+    }
+
+    func fetchSurahMetadata() async throws -> [Surah] {
+        surahMetadata
+    }
+
+    func fetchAyahsBySurah() async throws -> [Int: [Ayah]] {
+        ayahs
+    }
+
+    func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] {
+        arabicBySurah
+    }
+ main
 }
 #endif
