@@ -26,7 +26,9 @@ final class SupabaseTranslationService: TranslationService {
     private var fullyLoadedSurahs: Set<Int> = []
     private var hasLoadedAllArabicText = false
 
-    init(clientProvider: @escaping () throws -> SupabaseClient = SupabaseClientProvider.client) {
+    init(clientProvider: @escaping () throws -> SupabaseClient = {
+        try SupabaseClientProvider.configurationResult().get().client
+    }) {
         self.clientProvider = clientProvider
     }
 
@@ -58,7 +60,9 @@ final class SupabaseTranslationService: TranslationService {
             .order("number", ascending: true)
             .execute()
 
-        let surahs = response.value.map { Surah(number: $0.number, name: $0.name, ayahCount: $0.ayahCount) }
+        let surahs = response.value.map {
+            Surah(number: $0.number, name: $0.name, ayahCount: $0.ayahCount)
+        }
         cachedSurahs = surahs
         return surahs
     }
@@ -184,3 +188,4 @@ private extension SupabaseTranslationService {
         return combined.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
+
