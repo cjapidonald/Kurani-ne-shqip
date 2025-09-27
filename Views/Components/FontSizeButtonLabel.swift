@@ -9,8 +9,8 @@ struct FontSizeButtonLabel: View {
     let action: Action
 
     var body: some View {
-        Text("A")
-            .font(.system(size: fontSize, weight: .semibold))
+        Text(symbol)
+            .font(.system(size: fontSize, weight: fontWeight))
             .frame(width: 28, height: 28)
             .foregroundStyle(Color.kuraniAccentLight)
             .accessibilityHidden(true)
@@ -19,9 +19,27 @@ struct FontSizeButtonLabel: View {
     private var fontSize: CGFloat {
         switch action {
         case .decrease:
-            return 16
+            return 18
         case .increase:
             return 20
+        }
+    }
+
+    private var fontWeight: Font.Weight {
+        switch action {
+        case .decrease:
+            return .regular
+        case .increase:
+            return .semibold
+        }
+    }
+
+    private var symbol: String {
+        switch action {
+        case .decrease:
+            return "a"
+        case .increase:
+            return "A"
         }
     }
 }

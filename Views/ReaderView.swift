@@ -121,14 +121,6 @@ struct ReaderView: View {
                         FontSizeButtonLabel(action: .increase)
                     }
                     .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
-                    Menu {
-                        Button(LocalizedStringKey("reader.lineSpacing.decrease")) { viewModel.decreaseLineSpacing() }
-                        Button(LocalizedStringKey("reader.lineSpacing.increase")) { viewModel.increaseLineSpacing() }
-                    } label: {
-                        Image(systemName: "text.line.first.and.arrowtriangle.forward")
-                            .foregroundStyle(Color.kuraniAccentLight)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.lineSpacing"))
                     Button {
                         openNotesTab()
                     } label: {
