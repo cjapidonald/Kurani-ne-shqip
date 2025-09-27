@@ -123,30 +123,38 @@ final class FavoritesStore: ObservableObject {
 
     private let storage = LocalFavoritesStorage()
     private let folderStorage = LocalFavoriteFoldersStorage()
+    private let remoteClientAvailable: Bool
 
-    init() {
+    init(client: SupabaseClient? = nil) {
+        remoteClientAvailable = client != nil
         favorites = storage.load().sorted { $0.addedAt > $1.addedAt }
         folders = folderStorage.load()
     }
 
     func toggleFavorite(surah: Int, ayah: Int) {
-        if isFavorite(surah: surah, ayah: ayah) {
-            removeFavorite(surah: surah, ayah: ayah)
-        } else {
-            addFavorite(surah: surah, ayah: ayah)
+        guard !remoteClientAvailable else { return }
+        setFavorite(surah: surah, ayah: ayah, isFavorite: !isFavorite(surah: surah, ayah: ayah))
+    }
+
+    func setFavorite(surah: Int, ayah: Int, isFavorite: Bool, addedAt: Date = Date()) {
+        let originalFavorites = favorites
+        favorites.removeAll { $0.surah == surah && $0.ayah == ayah }
+
+        if isFavorite {
+            let favorite = FavoriteAyah(surah: surah, ayah: ayah, addedAt: addedAt)
+            favorites.append(favorite)
         }
+
+        guard favorites != originalFavorites else { return }
+        saveFavorites()
     }
 
     func addFavorite(surah: Int, ayah: Int) {
-        guard !isFavorite(surah: surah, ayah: ayah) else { return }
-        let favorite = FavoriteAyah(surah: surah, ayah: ayah, addedAt: Date())
-        favorites.insert(favorite, at: 0)
-        saveFavorites()
+        setFavorite(surah: surah, ayah: ayah, isFavorite: true)
     }
 
     func removeFavorite(surah: Int, ayah: Int) {
-        favorites.removeAll { $0.surah == surah && $0.ayah == ayah }
-        saveFavorites()
+        setFavorite(surah: surah, ayah: ayah, isFavorite: false)
     }
 
     func isFavorite(surah: Int, ayah: Int) -> Bool {

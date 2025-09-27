@@ -172,14 +172,24 @@ struct AlbanianReadingView: View {
     }
 
     private func toggleFavorite(for ayah: Int) {
+        let originalState = favoritesStore.isFavorite(surah: surah, ayah: ayah)
+        let originalFavorite = favoritesStore.favorites.first { $0.surah == surah && $0.ayah == ayah }
+
         Task {
             do {
                 try await quranService.toggleFavorite(surah: surah, ayah: ayah)
+                let isFavorite = try await quranService.isFavorite(surah: surah, ayah: ayah)
                 await MainActor.run {
-                    favoritesStore.toggleFavorite(surah: surah, ayah: ayah)
+                    favoritesStore.setFavorite(surah: surah, ayah: ayah, isFavorite: isFavorite)
                 }
             } catch {
                 await MainActor.run {
+                    favoritesStore.setFavorite(
+                        surah: surah,
+                        ayah: ayah,
+                        isFavorite: originalState,
+                        addedAt: originalFavorite?.addedAt ?? Date()
+                    )
                     alertContent = AlertContent(
                         title: NSLocalizedString("Error", comment: "error"),
                         message: error.localizedDescription
