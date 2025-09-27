@@ -92,3 +92,38 @@ final class TranslationStore: ObservableObject {
         }
     }
 }
+
+#if DEBUG
+extension TranslationStore {
+    static func previewStore() -> TranslationStore {
+        let service = PreviewTranslationService()
+        let store = TranslationStore(service: service)
+        store.surahs = service.sampleSurahs
+        store.ayahsBySurah = service.sampleAyahs
+        return store
+    }
+}
+
+private struct PreviewTranslationService: TranslationService {
+    let sampleSurahs: [Surah] = [
+        Surah(number: 1, name: "Al-Fatiha", ayahCount: 7),
+        Surah(number: 2, name: "Al-Baqara", ayahCount: 286)
+    ]
+
+    let sampleAyahs: [Int: [Ayah]] = [
+        1: [
+            Ayah(number: 1, text: "Lavdi i qoftë Allahut, Zotit të botëve", arabicText: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ"),
+            Ayah(number: 2, text: "Mëshiruesi, Mëshirëploti", arabicText: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ")
+        ],
+        2: [
+            Ayah(number: 255, text: "Allahu! Nuk ka zot tjetër përveç Atij", arabicText: "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ")
+        ]
+    ]
+
+    func fetchSurahMetadata() async throws -> [Surah] { sampleSurahs }
+
+    func fetchAyahsBySurah() async throws -> [Int: [Ayah]] { sampleAyahs }
+
+    func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] { [:] }
+}
+#endif
