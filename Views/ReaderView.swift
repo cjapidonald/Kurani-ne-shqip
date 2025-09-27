@@ -419,17 +419,6 @@ private struct ReaderProgressBar: View {
     }
 }
 
-private struct FontSizeButtonLabel: View {
-    enum Action { case increase, decrease }
-    let action: Action
-
-    var body: some View {
-        let systemName = action == .increase ? "textformat.size.larger" : "textformat.size.smaller"
-        Image(systemName: systemName)
-            .foregroundStyle(Color.kuraniAccentLight)
-    }
-}
-
 private struct AyahRowView: View {
     let ayah: Ayah
     let showAlbanianText: Bool
