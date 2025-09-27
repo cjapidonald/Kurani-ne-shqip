@@ -18,18 +18,18 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-        <key>CFBundleVersion</key>
-        <string>1</string>
-        <key>SUPABASE_URL</key>
-        <string>$(SUPABASE_URL)</string>
-        <key>SUPABASE_ANON_KEY</key>
-        <string>$(SUPABASE_ANON_KEY)</string>
-        <key>UIAppFonts</key>
-        <array>
-                <string>KGPrimaryPenmanship.ttf</string>
-        </array>
-        <key>LSRequiresIPhoneOS</key>
-        <true/>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>SUPABASE_URL</key>
+	<string>https://fmnmjlltsmwhvjedcknj.supabase.co</string>
+	<key>SUPABASE_ANON_KEY</key>
+	<string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZtbm1qbGx0c213aHZqZWRja25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4MTMyOTAsImV4cCI6MjA3NDM4OTI5MH0.28OemTyo4VsV4xh7g4TWGsc9xGKlDInKz8bqH_keb0M</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>KGPrimaryPenmanship.ttf</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
