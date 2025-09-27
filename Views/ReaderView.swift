@@ -41,102 +41,35 @@ struct ReaderView: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 12) {
                     ForEach(viewModel.ayahs) { ayah in
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack(alignment: .top, spacing: 12) {
-                                Button {
-                                    selectedAyahForActions = ayah
-                                    showingActions = true
-                                } label: {
-                                    ZStack(alignment: .topTrailing) {
-                                        Pill(number: ayah.number)
-                                        if viewModel.note(for: ayah) != nil {
-                                            NoteMarker()
-                                                .offset(x: 8, y: -8)
-                                        }
-                                    }
-                                }
-                                .buttonStyle(.plain)
-
-                                VStack(alignment: .leading, spacing: 6) {
-                                    if showAlbanianText {
-                                        Text(ayah.text)
-                                            .font(KuraniFont.size(18 * viewModel.fontScale, relativeTo: .body))
-                                            .foregroundColor(.kuraniTextPrimary)
-                                            .lineSpacing(4 * viewModel.lineSpacingScale)
-                                            .contextMenu {
-                                                Button(LocalizedStringKey("reader.addToNotes")) {
-                                                    openNoteEditor(for: ayah)
-                                                }
-                                                Button(LocalizedStringKey("action.copy")) {
-                                                    copyAyah(ayah)
-                                                }
-                                                Button(LocalizedStringKey("action.share")) {
-                                                    shareAyah(ayah)
-                                                }
-                                                Button("PYET CHATGPT") {
-                                                    askChatGPT(about: ayah)
-                                                }
-                                            }
-                                            .onTapGesture {
-                                                openNoteEditor(for: ayah)
-                                            }
-                                    }
-
-                                    if showArabicText, let arabic = ayah.arabicText {
-                                        ArabicSelectableTextView(
-                                            text: arabic,
-                                            fontScale: viewModel.fontScale,
-                                            lineSpacingScale: viewModel.lineSpacingScale,
-                                            onSelection: handleDictionarySelection
-                                        )
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                    }
-                                }
-
-                                Spacer(minLength: 12)
-
-                                Button {
-                                    viewModel.toggleFavoriteStatus(for: ayah)
-                                } label: {
-                                    let isFavorite = viewModel.isFavoriteAyah(ayah)
-                                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                                        .font(.system(size: 18, weight: .semibold))
-                                        .foregroundStyle(isFavorite ? Color.kuraniAccentBrand : Color.kuraniAccentLight.opacity(0.8))
-                                        .accessibilityHidden(true)
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityLabel(viewModel.isFavoriteAyah(ayah) ? LocalizedStringKey("reader.favorite.remove") : LocalizedStringKey("reader.favorite.add"))
-                            }
-
-                            if let note = viewModel.note(for: ayah) {
-                                let formattedDate = noteFormatter.string(from: note.updatedAt)
-                                let bannerText = String(
-                                    format: NSLocalizedString("reader.noteBanner", comment: "banner"),
-                                    formattedDate
-                                )
-
-                                HStack {
-                                    Image(systemName: "pencil.and.outline")
-                                        .foregroundStyle(Color.kuraniAccentLight)
-                                    Text(bannerText)
-                                        .font(KuraniFont.forTextStyle(.caption))
-                                        .foregroundColor(.kuraniTextSecondary)
-                                }
-                                .padding(.vertical, 10)
-                                .padding(.horizontal, 14)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                        .fill(Color.kuraniPrimarySurface.opacity(0.68))
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                                .stroke(Color.kuraniPrimaryBrand.opacity(0.12), lineWidth: 0.6)
-                                        )
-                                )
-                            }
-                        }
-                        .appleCard(cornerRadius: 22)
-                        .padding(.horizontal, 16)
+                        AyahRowView(
+                            ayah: ayah,
+                            showAlbanianText: showAlbanianText,
+                            showArabicText: showArabicText,
+                            fontScale: viewModel.fontScale,
+                            lineSpacingScale: viewModel.lineSpacingScale,
+                            isFavorite: viewModel.isFavoriteAyah(ayah),
+                            note: viewModel.note(for: ayah),
+                            onOpenActions: {
+                                selectedAyahForActions = ayah
+                                showingActions = true
+                            },
+                            onToggleFavorite: {
+                                viewModel.toggleFavoriteStatus(for: ayah)
+                            },
+                            onOpenNoteEditor: {
+                                openNoteEditor(for: ayah)
+                            },
+                            onCopy: {
+                                copyAyah(ayah)
+                            },
+                            onShare: {
+                                shareAyah(ayah)
+                            },
+                            onAskChatGPT: {
+                                askChatGPT(about: ayah)
+                            },
+                            onArabicSelection: handleDictionarySelection
+                        )
                         .id(ayah.number)
                         .onAppear {
                             viewModel.updateLastRead(ayah: ayah.number)
@@ -494,3 +427,120 @@ private struct ReaderProgressBar: View {
     }
 }
 
+private struct FontSizeButtonLabel: View {
+    enum Action { case increase, decrease }
+    let action: Action
+
+    var body: some View {
+        let systemName = action == .increase ? "textformat.size.larger" : "textformat.size.smaller"
+        Image(systemName: systemName)
+            .foregroundStyle(Color.kuraniAccentLight)
+    }
+}
+
+private struct AyahRowView: View {
+    let ayah: Ayah
+    let showAlbanianText: Bool
+    let showArabicText: Bool
+    let fontScale: Double
+    let lineSpacingScale: Double
+    let isFavorite: Bool
+    let note: Note?
+    let onOpenActions: () -> Void
+    let onToggleFavorite: () -> Void
+    let onOpenNoteEditor: () -> Void
+    let onCopy: () -> Void
+    let onShare: () -> Void
+    let onAskChatGPT: () -> Void
+    let onArabicSelection: (String) -> Void
+
+    private static let noteFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .top, spacing: 12) {
+                Button(action: onOpenActions) {
+                    ZStack(alignment: .topTrailing) {
+                        Pill(number: ayah.number)
+                        if note != nil {
+                            NoteMarker()
+                                .offset(x: 8, y: -8)
+                        }
+                    }
+                }
+                .buttonStyle(.plain)
+
+                VStack(alignment: .leading, spacing: 6) {
+                    if showAlbanianText {
+                        Text(ayah.text)
+                            .font(KuraniFont.size(18 * fontScale, relativeTo: .body))
+                            .foregroundColor(.kuraniTextPrimary)
+                            .lineSpacing(4 * lineSpacingScale)
+                            .contextMenu {
+                                Button(LocalizedStringKey("reader.addToNotes")) { onOpenNoteEditor() }
+                                Button(LocalizedStringKey("action.copy")) { onCopy() }
+                                Button(LocalizedStringKey("action.share")) { onShare() }
+                                Button("PYET CHATGPT") { onAskChatGPT() }
+                            }
+                            .onTapGesture { onOpenNoteEditor() }
+                    }
+
+                    if showArabicText, let arabic = ayah.arabicText {
+                        ArabicSelectableTextView(
+                            text: arabic,
+                            fontScale: fontScale,
+                            lineSpacingScale: lineSpacingScale,
+                            onSelection: onArabicSelection
+                        )
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+
+                Spacer(minLength: 12)
+
+                Button(action: onToggleFavorite) {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(isFavorite ? Color.kuraniAccentBrand : Color.kuraniAccentLight.opacity(0.8))
+                        .accessibilityHidden(true)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(isFavorite ? LocalizedStringKey("reader.favorite.remove") : LocalizedStringKey("reader.favorite.add"))
+            }
+
+            if let note {
+                let formattedDate = Self.noteFormatter.string(from: note.updatedAt)
+                let bannerText = String(
+                    format: NSLocalizedString("reader.noteBanner", comment: "banner"),
+                    formattedDate
+                )
+
+                HStack {
+                    Image(systemName: "pencil.and.outline")
+                        .foregroundStyle(Color.kuraniAccentLight)
+                    Text(bannerText)
+                        .font(KuraniFont.forTextStyle(.caption))
+                        .foregroundColor(.kuraniTextSecondary)
+                }
+                .padding(.vertical, 10)
+                .padding(.horizontal, 14)
+                .background(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .fill(Color.kuraniPrimarySurface.opacity(0.68))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                .stroke(Color.kuraniPrimaryBrand.opacity(0.12), lineWidth: 0.6)
+                        )
+                )
+            }
+        }
+        .appleCard(cornerRadius: 22)
+        .padding(.horizontal, 16)
+    }
+}

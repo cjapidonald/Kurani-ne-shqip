@@ -1,0 +1,23 @@
+{
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/supabase-swift/Sources/Realtime/Deprecated/Presence.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Presence.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Presence.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Presence.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Presence.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Presence.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/supabase-swift/Sources/Realtime/Deprecated/Push.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Push.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Push.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Push.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Push.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/Push.swiftdeps"
+  },
+  "/Users/donaldcjapi/Library/Developer/Xcode/DerivedData/Kurani-cdhnndzbzdsyvhagrkblzfdkqgng/SourcePackages/checkouts/supabase-swift/Sources/Realtime/Deprecated/RealtimeChannel.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/RealtimeChannel.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/RealtimeChannel.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/RealtimeChannel.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/RealtimeChannel.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Supabase.build/Debug-iphonesimulator/Realtime.build/Objects-normal/arm64/RealtimeChannel.swiftdeps"
+  }
+}
