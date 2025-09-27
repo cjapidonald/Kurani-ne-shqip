@@ -24,19 +24,20 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension DeveloperToolsSupport.ColorResource {
 
-    /// The "Accent" asset catalog color resource.
-    static let accent = DeveloperToolsSupport.ColorResource(name: "Accent", bundle: resourceBundle)
-
-    #warning("The \"Accent Color\" color asset name resolves to the symbol \"accent\" which already exists. Try renaming the asset.")
+    /// The "AccentColor" asset catalog color resource.
+    static let accent = DeveloperToolsSupport.ColorResource(name: "AccentColor", bundle: resourceBundle)
 
     /// The "AccentLight" asset catalog color resource.
     static let accentLight = DeveloperToolsSupport.ColorResource(name: "AccentLight", bundle: resourceBundle)
 
+    /// The "BrandAccent" asset catalog color resource.
+    static let brandAccent = DeveloperToolsSupport.ColorResource(name: "BrandAccent", bundle: resourceBundle)
+
+    /// The "BrandPrimary" asset catalog color resource.
+    static let brandPrimary = DeveloperToolsSupport.ColorResource(name: "BrandPrimary", bundle: resourceBundle)
+
     /// The "DarkBackground" asset catalog color resource.
     static let darkBackground = DeveloperToolsSupport.ColorResource(name: "DarkBackground", bundle: resourceBundle)
-
-    /// The "Primary" asset catalog color resource.
-    static let primary = DeveloperToolsSupport.ColorResource(name: "Primary", bundle: resourceBundle)
 
     /// The "PrimarySurface" asset catalog color resource.
     static let primarySurface = DeveloperToolsSupport.ColorResource(name: "PrimarySurface", bundle: resourceBundle)
@@ -66,7 +67,7 @@ extension DeveloperToolsSupport.ImageResource {
 @available(macCatalyst, unavailable)
 extension AppKit.NSColor {
 
-    /// The "Accent" asset catalog color.
+    /// The "AccentColor" asset catalog color.
     static var accent: AppKit.NSColor {
 #if !targetEnvironment(macCatalyst)
         .init(resource: .accent)
@@ -84,19 +85,28 @@ extension AppKit.NSColor {
 #endif
     }
 
-    /// The "DarkBackground" asset catalog color.
-    static var darkBackground: AppKit.NSColor {
+    /// The "BrandAccent" asset catalog color.
+    static var brandAccent: AppKit.NSColor {
 #if !targetEnvironment(macCatalyst)
-        .init(resource: .darkBackground)
+        .init(resource: .brandAccent)
 #else
         .init()
 #endif
     }
 
-    /// The "Primary" asset catalog color.
-    static var primary: AppKit.NSColor {
+    /// The "BrandPrimary" asset catalog color.
+    static var brandPrimary: AppKit.NSColor {
 #if !targetEnvironment(macCatalyst)
-        .init(resource: .primary)
+        .init(resource: .brandPrimary)
+#else
+        .init()
+#endif
+    }
+
+    /// The "DarkBackground" asset catalog color.
+    static var darkBackground: AppKit.NSColor {
+#if !targetEnvironment(macCatalyst)
+        .init(resource: .darkBackground)
 #else
         .init()
 #endif
@@ -137,7 +147,7 @@ extension AppKit.NSColor {
 @available(watchOS, unavailable)
 extension UIKit.UIColor {
 
-    /// The "Accent" asset catalog color.
+    /// The "AccentColor" asset catalog color.
     static var accent: UIKit.UIColor {
 #if !os(watchOS)
         .init(resource: .accent)
@@ -155,19 +165,28 @@ extension UIKit.UIColor {
 #endif
     }
 
-    /// The "DarkBackground" asset catalog color.
-    static var darkBackground: UIKit.UIColor {
+    /// The "BrandAccent" asset catalog color.
+    static var brandAccent: UIKit.UIColor {
 #if !os(watchOS)
-        .init(resource: .darkBackground)
+        .init(resource: .brandAccent)
 #else
         .init()
 #endif
     }
 
-    /// The "Primary" asset catalog color.
-    static var primary: UIKit.UIColor {
+    /// The "BrandPrimary" asset catalog color.
+    static var brandPrimary: UIKit.UIColor {
 #if !os(watchOS)
-        .init(resource: .primary)
+        .init(resource: .brandPrimary)
+#else
+        .init()
+#endif
+    }
+
+    /// The "DarkBackground" asset catalog color.
+    static var darkBackground: UIKit.UIColor {
+#if !os(watchOS)
+        .init(resource: .darkBackground)
 #else
         .init()
 #endif
@@ -207,16 +226,20 @@ extension UIKit.UIColor {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension SwiftUI.Color {
 
-    /// The "Accent" asset catalog color.
+    /// The "AccentColor" asset catalog color.
     static var accent: SwiftUI.Color { .init(.accent) }
 
     /// The "AccentLight" asset catalog color.
     static var accentLight: SwiftUI.Color { .init(.accentLight) }
 
+    /// The "BrandAccent" asset catalog color.
+    static var brandAccent: SwiftUI.Color { .init(.brandAccent) }
+
+    /// The "BrandPrimary" asset catalog color.
+    static var brandPrimary: SwiftUI.Color { .init(.brandPrimary) }
+
     /// The "DarkBackground" asset catalog color.
     static var darkBackground: SwiftUI.Color { .init(.darkBackground) }
-
-    #warning("The \"Primary\" color asset name resolves to a conflicting Color symbol \"primary\". Try renaming the asset.")
 
     /// The "PrimarySurface" asset catalog color.
     static var primarySurface: SwiftUI.Color { .init(.primarySurface) }
@@ -232,11 +255,17 @@ extension SwiftUI.Color {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension SwiftUI.ShapeStyle where Self == SwiftUI.Color {
 
-    /// The "Accent" asset catalog color.
+    /// The "AccentColor" asset catalog color.
     static var accent: SwiftUI.Color { .init(.accent) }
 
     /// The "AccentLight" asset catalog color.
     static var accentLight: SwiftUI.Color { .init(.accentLight) }
+
+    /// The "BrandAccent" asset catalog color.
+    static var brandAccent: SwiftUI.Color { .init(.brandAccent) }
+
+    /// The "BrandPrimary" asset catalog color.
+    static var brandPrimary: SwiftUI.Color { .init(.brandPrimary) }
 
     /// The "DarkBackground" asset catalog color.
     static var darkBackground: SwiftUI.Color { .init(.darkBackground) }

@@ -27,5 +27,7 @@
 			<string>AppIcon</string>
 		</dict>
 	</dict>
+	<key>NSAccentColorName</key>
+	<string>AccentColor</string>
 </dict>
 </plist>

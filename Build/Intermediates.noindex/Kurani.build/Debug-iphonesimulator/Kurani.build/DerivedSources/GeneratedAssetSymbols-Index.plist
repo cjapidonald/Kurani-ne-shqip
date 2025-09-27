@@ -8,19 +8,9 @@
 			<key>catalogPath</key>
 			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
 			<key>objcSymbol</key>
-			<string>ACColorNameAccent</string>
-			<key>relativePath</key>
-			<string>./Accent.colorset</string>
-			<key>swiftSymbol</key>
-			<string>accent</string>
-		</dict>
-		<dict>
-			<key>catalogPath</key>
-			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
-			<key>objcSymbol</key>
 			<string>ACColorNameAccentColor</string>
 			<key>relativePath</key>
-			<string>./Accent Color.colorset</string>
+			<string>./AccentColor.colorset</string>
 			<key>swiftSymbol</key>
 			<string>accent</string>
 		</dict>
@@ -38,21 +28,31 @@
 			<key>catalogPath</key>
 			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
 			<key>objcSymbol</key>
-			<string>ACColorNameDarkBackground</string>
+			<string>ACColorNameBrandAccent</string>
 			<key>relativePath</key>
-			<string>./DarkBackground.colorset</string>
+			<string>./BrandAccent.colorset</string>
 			<key>swiftSymbol</key>
-			<string>darkBackground</string>
+			<string>brandAccent</string>
 		</dict>
 		<dict>
 			<key>catalogPath</key>
 			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
 			<key>objcSymbol</key>
-			<string>ACColorNamePrimary</string>
+			<string>ACColorNameBrandPrimary</string>
 			<key>relativePath</key>
-			<string>./Primary.colorset</string>
+			<string>./BrandPrimary.colorset</string>
 			<key>swiftSymbol</key>
-			<string>primary</string>
+			<string>brandPrimary</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACColorNameDarkBackground</string>
+			<key>relativePath</key>
+			<string>./DarkBackground.colorset</string>
+			<key>swiftSymbol</key>
+			<string>darkBackground</string>
 		</dict>
 		<dict>
 			<key>catalogPath</key>

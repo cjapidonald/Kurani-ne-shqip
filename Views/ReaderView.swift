@@ -37,114 +37,90 @@ struct ReaderView: View {
     private let fullscreenTapZoneHeightBottom: CGFloat = 96
 
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 12) {
-                    ForEach(viewModel.ayahs) { ayah in
-                        AyahRowView(
-                            ayah: ayah,
-                            showAlbanianText: showAlbanianText,
-                            showArabicText: showArabicText,
-                            fontScale: viewModel.fontScale,
-                            lineSpacingScale: viewModel.lineSpacingScale,
-                            isFavorite: viewModel.isFavoriteAyah(ayah),
-                            note: viewModel.note(for: ayah),
-                            onOpenActions: {
-                                selectedAyahForActions = ayah
-                                showingActions = true
-                            },
-                            onToggleFavorite: {
-                                viewModel.toggleFavoriteStatus(for: ayah)
-                            },
-                            onOpenNoteEditor: {
-                                openNoteEditor(for: ayah)
-                            },
-                            onCopy: {
-                                copyAyah(ayah)
-                            },
-                            onShare: {
-                                shareAyah(ayah)
-                            },
-                            onAskChatGPT: {
-                                askChatGPT(about: ayah)
-                            },
-                            onArabicSelection: handleDictionarySelection
-                        )
-                        .id(ayah.number)
-                        .onAppear {
-                            viewModel.updateLastRead(ayah: ayah.number)
-                        }
-                    }
-                }
-                .padding(.bottom, 56)
+        ReaderScrollContent(
+            viewModel: viewModel,
+            showAlbanianText: showAlbanianText,
+            showArabicText: showArabicText,
+            startingAyah: startingAyah,
+            onOpenActionsForAyah: { ayah in
+                selectedAyahForActions = ayah
+                showingActions = true
+            },
+            onToggleFavorite: { ayah in
+                viewModel.toggleFavoriteStatus(for: ayah)
+            },
+            onOpenNoteEditor: { ayah in
+                openNoteEditor(for: ayah)
+            },
+            onCopy: { ayah in
+                copyAyah(ayah)
+            },
+            onShare: { ayah in
+                shareAyah(ayah)
+            },
+            onAskChatGPT: { ayah in
+                askChatGPT(about: ayah)
+            },
+            onArabicSelection: handleDictionarySelection
+        )
+        .background(KuraniTheme.background.ignoresSafeArea())
+        .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
+        .toolbarColorScheme(.light, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                ReaderProgressTitle(title: viewModel.surahTitle, percentage: viewModel.progressPercentageString)
             }
-            .background(KuraniTheme.background.ignoresSafeArea())
-            .toolbarBackground(Color.kuraniDarkBackground, for: .navigationBar)
-            .toolbarColorScheme(.light, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    ReaderProgressTitle(title: viewModel.surahTitle, percentage: viewModel.progressPercentageString)
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            isChromeHidden.toggle()
-                        }
-                    } label: {
-                        Image(systemName: isChromeHidden ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                            .foregroundStyle(Color.kuraniAccentLight)
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isChromeHidden.toggle()
                     }
-                    .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
+                } label: {
+                    Image(systemName: isChromeHidden ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                        .foregroundStyle(Color.kuraniAccentLight)
+                }
+                .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
 
-                    Button {
-                        toggleAlbanian()
-                    } label: {
-                        LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
+                Button {
+                    toggleAlbanian()
+                } label: {
+                    LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
+                }
+                .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
 
-                    Button {
-                        toggleArabic()
-                    } label: {
-                        LanguageToggleIcon(label: "AR", isActive: showArabicText)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
-                    Button {
-                        viewModel.decreaseFont()
-                    } label: {
-                        FontSizeButtonLabel(action: .decrease)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
-                    Button {
-                        viewModel.increaseFont()
-                    } label: {
-                        FontSizeButtonLabel(action: .increase)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
-                    Button {
-                        openNotesTab()
-                    } label: {
-                        Image(systemName: "note.text")
-                            .foregroundStyle(Color.kuraniAccentLight)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.notesButton"))
+                Button {
+                    toggleArabic()
+                } label: {
+                    LanguageToggleIcon(label: "AR", isActive: showArabicText)
                 }
-            }
-            .tint(Color.kuraniAccentLight)
-            .toolbar(isChromeHidden ? .hidden : .visible, for: .navigationBar)
-            .toolbar(isChromeHidden ? .hidden : .visible, for: .tabBar)
-            .onAppear {
-                isChromeHidden = false
-                if let startingAyah, viewModel.ayahs.contains(where: { $0.number == startingAyah }) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation {
-                            proxy.scrollTo(startingAyah, anchor: .center)
-                        }
-                    }
+                .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
+                Button {
+                    viewModel.decreaseFont()
+                } label: {
+                    FontSizeButtonLabel(action: .decrease)
                 }
+                .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
+                Button {
+                    viewModel.increaseFont()
+                } label: {
+                    FontSizeButtonLabel(action: .increase)
+                }
+                .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
+                Button {
+                    openNotesTab()
+                } label: {
+                    Image(systemName: "note.text")
+                        .foregroundStyle(Color.kuraniAccentLight)
+                }
+                .accessibilityLabel(LocalizedStringKey("reader.notesButton"))
             }
         }
-        .background(KuraniTheme.background.ignoresSafeArea())
+        .tint(Color.kuraniAccentLight)
+        .toolbar(isChromeHidden ? .hidden : .visible, for: .navigationBar)
+        .toolbar(isChromeHidden ? .hidden : .visible, for: .tabBar)
+        .onAppear {
+            isChromeHidden = false
+        }
         .statusBarHidden(isChromeHidden)
         .sheet(isPresented: $viewModel.isNoteEditorPresented) {
             if let ayah = viewModel.selectedAyah {
@@ -336,6 +312,61 @@ struct ReaderView: View {
     }
 }
 
+private struct ReaderScrollContent: View {
+    @ObservedObject var viewModel: ReaderViewModel
+    let showAlbanianText: Bool
+    let showArabicText: Bool
+    let startingAyah: Int?
+    let onOpenActionsForAyah: (Ayah) -> Void
+    let onToggleFavorite: (Ayah) -> Void
+    let onOpenNoteEditor: (Ayah) -> Void
+    let onCopy: (Ayah) -> Void
+    let onShare: (Ayah) -> Void
+    let onAskChatGPT: (Ayah) -> Void
+    let onArabicSelection: (String) -> Void
+
+    var body: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 12) {
+                    ForEach(viewModel.ayahs) { ayah in
+                        AyahRowView(
+                            ayah: ayah,
+                            showAlbanianText: showAlbanianText,
+                            showArabicText: showArabicText,
+                            fontScale: viewModel.fontScale,
+                            lineSpacingScale: viewModel.lineSpacingScale,
+                            isFavorite: viewModel.isFavoriteAyah(ayah),
+                            note: viewModel.note(for: ayah),
+                            onOpenActions: { onOpenActionsForAyah(ayah) },
+                            onToggleFavorite: { onToggleFavorite(ayah) },
+                            onOpenNoteEditor: { onOpenNoteEditor(ayah) },
+                            onCopy: { onCopy(ayah) },
+                            onShare: { onShare(ayah) },
+                            onAskChatGPT: { onAskChatGPT(ayah) },
+                            onArabicSelection: onArabicSelection
+                        )
+                        .id(ayah.number)
+                        .onAppear {
+                            viewModel.updateLastRead(ayah: ayah.number)
+                        }
+                    }
+                }
+                .padding(.bottom, 56)
+            }
+            .onAppear {
+                if let startingAyah, viewModel.ayahs.contains(where: { $0.number == startingAyah }) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation {
+                            proxy.scrollTo(startingAyah, anchor: .center)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 private struct NoteMarker: View {
     var body: some View {
         Image(systemName: "note.text")
@@ -366,6 +397,16 @@ private struct LanguageToggleIcon: View {
                 .foregroundStyle(isActive ? Color.kuraniDarkBackground : Color.kuraniAccentLight)
         }
         .frame(width: 30, height: 30)
+    }
+}
+
+private struct FontSizeButtonLabel: View {
+    enum Action { case increase, decrease }
+    let action: Action
+
+    var body: some View {
+        Image(systemName: action == .increase ? "textformat.size.larger" : "textformat.size.smaller")
+            .foregroundStyle(Color.kuraniAccentLight)
     }
 }
 

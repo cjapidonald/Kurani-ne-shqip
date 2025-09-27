@@ -9,20 +9,20 @@
 /// The resource bundle ID.
 static NSString * const ACBundleID AC_SWIFT_PRIVATE = @"com.example.Kurani";
 
-/// The "Accent" asset catalog color resource.
-static NSString * const ACColorNameAccent AC_SWIFT_PRIVATE = @"Accent";
-
-/// The "Accent Color" asset catalog color resource.
-static NSString * const ACColorNameAccentColor AC_SWIFT_PRIVATE = @"Accent Color";
+/// The "AccentColor" asset catalog color resource.
+static NSString * const ACColorNameAccentColor AC_SWIFT_PRIVATE = @"AccentColor";
 
 /// The "AccentLight" asset catalog color resource.
 static NSString * const ACColorNameAccentLight AC_SWIFT_PRIVATE = @"AccentLight";
 
+/// The "BrandAccent" asset catalog color resource.
+static NSString * const ACColorNameBrandAccent AC_SWIFT_PRIVATE = @"BrandAccent";
+
+/// The "BrandPrimary" asset catalog color resource.
+static NSString * const ACColorNameBrandPrimary AC_SWIFT_PRIVATE = @"BrandPrimary";
+
 /// The "DarkBackground" asset catalog color resource.
 static NSString * const ACColorNameDarkBackground AC_SWIFT_PRIVATE = @"DarkBackground";
-
-/// The "Primary" asset catalog color resource.
-static NSString * const ACColorNamePrimary AC_SWIFT_PRIVATE = @"Primary";
 
 /// The "PrimarySurface" asset catalog color resource.
 static NSString * const ACColorNamePrimarySurface AC_SWIFT_PRIVATE = @"PrimarySurface";
