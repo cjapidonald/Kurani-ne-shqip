@@ -28,6 +28,9 @@ final class TranslationStore: ObservableObject {
         hasLoadedInitialData = true
 
         loadAlbanianText()
+#if DEBUG
+        logAlbanianAvailability(for: [1, 2], ayahRange: 1...5)
+#endif
         if !arabicAyahsBySurah.isEmpty {
             applyArabicTextToLocalDataset()
         }
@@ -130,8 +133,36 @@ final class TranslationStore: ObservableObject {
             }
             ayahsBySurah[surahNumber] = ayahs
         }
+#if DEBUG
+        logArabicWordCounts(for: [1, 2], ayahRange: 1...5)
+#endif
     }
 }
+
+#if DEBUG
+private extension TranslationStore {
+    func logAlbanianAvailability(for surahNumbers: [Int], ayahRange: ClosedRange<Int>) {
+        for surah in surahNumbers {
+            for ayahNumber in ayahRange {
+                let ayah = ayahsBySurah[surah]?.first(where: { $0.number == ayahNumber })
+                let hasText = !(ayah?.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+                print("Loaded AL(surah:\(surah), ayah:\(ayahNumber)) available:\(hasText)")
+            }
+        }
+    }
+
+    func logArabicWordCounts(for surahNumbers: [Int], ayahRange: ClosedRange<Int>) {
+        for surah in surahNumbers {
+            for ayahNumber in ayahRange {
+                let ayah = ayahsBySurah[surah]?.first(where: { $0.number == ayahNumber })
+                let arabicText = ayah?.arabicText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                let wordCount = arabicText.isEmpty ? 0 : arabicText.split { $0.isWhitespace }.count
+                print("Loaded AR(surah:\(surah), ayah:\(ayahNumber)) wordCount:\(wordCount)")
+            }
+        }
+    }
+}
+#endif
 
 private extension TranslationStore {
     struct TranslationWordCacheKey: Hashable {
