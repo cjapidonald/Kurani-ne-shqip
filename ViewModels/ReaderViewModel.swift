@@ -33,7 +33,7 @@ final class ReaderViewModel: ObservableObject {
         notesStore: NotesStore,
         progressStore: ReadingProgressStore,
         favoritesStore: FavoritesStore,
-        quranService: QuranServicing? = ReaderViewModel.makeQuranServiceIfAvailable()
+        quranService: QuranServicing? = nil
     ) {
         self.surahNumber = surahNumber
         self.translationStore = translationStore
@@ -41,7 +41,7 @@ final class ReaderViewModel: ObservableObject {
         self.progressStore = progressStore
         self.favoritesStore = favoritesStore
         self.readingProgressStore = progressStore
-        self.quranService = quranService
+        self.quranService = quranService ?? ReaderViewModel.makeQuranServiceIfAvailable()
 
         let storedFont = UserDefaults.standard.double(forKey: AppStorageKeys.fontScale)
         fontScale = storedFont == 0 ? 1.0 : storedFont
@@ -221,3 +221,4 @@ final class ReaderViewModel: ObservableObject {
         return QuranService(client: client)
     }
 }
+
