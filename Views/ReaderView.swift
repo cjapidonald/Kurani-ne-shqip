@@ -104,7 +104,7 @@ struct ReaderView: View {
         .statusBarHidden(isChromeHidden)
         .sheet(isPresented: $viewModel.isNoteEditorPresented) {
             if let ayah = viewModel.selectedAyah {
-                NoteEditorView(
+                BoundNoteEditorView(
                     ayah: ayah,
                     draft: $viewModel.noteDraft,
                     isSaving: viewModel.isSavingNote,
