@@ -8,15 +8,23 @@ final class TranslationStore: ObservableObject {
 
     private let service: TranslationService
     private var arabicAyahsBySurah: [Int: [Int: String]] = [:]
+    private var hasLoadedInitialData = false
 
     init(service: TranslationService = SupabaseTranslationService()) {
         self.service = service
     }
 
     func loadInitialData() async {
+        guard !hasLoadedInitialData else { return }
+        hasLoadedInitialData = true
+
         await fetchSurahMetadata()
         await fetchArabicText()
         await fetchTranslations()
+
+        if surahs.isEmpty || ayahsBySurah.isEmpty {
+            hasLoadedInitialData = false
+        }
     }
 
     private func fetchSurahMetadata() async {
@@ -25,6 +33,7 @@ final class TranslationStore: ObservableObject {
             surahs = metadata.sorted { $0.number < $1.number }
         } catch {
             print("Failed to load surah metadata", error)
+            hasLoadedInitialData = false
         }
     }
 
@@ -34,6 +43,7 @@ final class TranslationStore: ObservableObject {
         } catch {
             print("Failed to load Arabic text", error)
             arabicAyahsBySurah = [:]
+            hasLoadedInitialData = false
         }
     }
 
@@ -49,6 +59,7 @@ final class TranslationStore: ObservableObject {
         } catch {
             print("Failed to load translation", error)
             ayahsBySurah = [:]
+            hasLoadedInitialData = false
         }
     }
 
@@ -95,12 +106,90 @@ final class TranslationStore: ObservableObject {
 
 #if DEBUG
 extension TranslationStore {
-    static func previewStore() -> TranslationStore {
-        let store = TranslationStore(service: SupabaseTranslationService())
-        Task {
-            await store.loadInitialData()
+    private struct PreviewData {
+        static let surahs: [Surah] = [
+            Surah(number: 1, name: "Al-Fatiha", ayahCount: 7)
+        ]
+
+        static let albanianAyahs: [Int: [Ayah]] = [
+            1: [
+                Ayah(number: 1, text: "Me emrin e Allahut, Mëshiruesit, Mëshirëbërësit.", arabicText: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"),
+                Ayah(number: 2, text: "Falënderimi i qoftë Allahut, Zotit të botëve.", arabicText: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ"),
+                Ayah(number: 3, text: "Mëshiruesit, Mëshirëbërësit.", arabicText: "الرَّحْمَٰنِ الرَّحِيمِ"),
+                Ayah(number: 4, text: "Sunduesit të Ditës së Gjykimit.", arabicText: "مَالِكِ يَوْمِ الدِّينِ"),
+                Ayah(number: 5, text: "Vetëm Ty të adhurojmë dhe vetëm prej Teje ndihmë kërkojmë.", arabicText: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ"),
+                Ayah(number: 6, text: "Na udhëzo në rrugën e drejtë.", arabicText: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ"),
+                Ayah(number: 7, text: "Rrugën e atyre që i ke begatuar, e jo të atyre që janë zemëruar dhe as të atyre që kanë humbur.", arabicText: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ")
+            ]
+        ]
+
+        static let arabicTexts: [Int: [Int: String]] = {
+            var mapping: [Int: [Int: String]] = [:]
+            for (surah, ayahs) in albanianAyahs {
+                mapping[surah] = Dictionary(uniqueKeysWithValues: ayahs.map { ($0.number, $0.arabicText ?? "") })
+            }
+            return mapping
+        }()
+    }
+
+    private final class PreviewTranslationService: TranslationService {
+        func fetchSurahMetadata() async throws -> [Surah] { PreviewData.surahs }
+
+        func fetchAyahsBySurah() async throws -> [Int: [Ayah]] { PreviewData.albanianAyahs }
+
+        func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] { PreviewData.arabicTexts }
+    }
+
+    static func previewStore(preload: Bool = true) -> TranslationStore {
+        let service = PreviewTranslationService()
+        let store = TranslationStore(service: service)
+
+        if preload {
+            store.surahs = PreviewData.surahs
+            store.ayahsBySurah = PreviewData.albanianAyahs
+            store.arabicAyahsBySurah = PreviewData.arabicTexts
+            store.hasLoadedInitialData = true
+            assert(store.ayahsBySurah[1]?.first?.text == PreviewData.albanianAyahs[1]?.first?.text)
+        } else {
+            Task {
+                await store.loadInitialData()
+                assert(store.ayahsBySurah[1]?.count == 7)
+            }
         }
+
         return store
     }
+}
+
+private struct TranslationStorePreviewHost: View {
+    @StateObject private var store = TranslationStore.previewStore(preload: false)
+
+    var body: some View {
+        List {
+            if let ayahs = store.ayahsBySurah[1] {
+                Section("Surah 1") {
+                    ForEach(ayahs) { ayah in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(ayah.text)
+                            if let arabic = ayah.arabicText {
+                                Text(arabic)
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+            } else {
+                Text("Loading…")
+            }
+        }
+        .task {
+            await store.loadInitialData()
+        }
+    }
+}
+
+#Preview("TranslationStore Surah 1") {
+    TranslationStorePreviewHost()
 }
 #endif
