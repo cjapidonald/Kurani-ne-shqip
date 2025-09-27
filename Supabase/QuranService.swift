@@ -1,17 +1,6 @@
 import Foundation
 import Supabase
 
-protocol QuranServicing {
-    func loadTranslationWords(surah: Int, ayah: Int?) async throws -> [TranslationWord]
-    func rebuildAlbanianAyah(surah: Int, ayah: Int) async throws -> String
-    func getMyNotesForSurah(surah: Int) async throws -> [NoteRow]
-    func upsertMyNote(surah: Int, ayah: Int, albanianText: String, note: String) async throws
-    func isFavorite(surah: Int, ayah: Int) async throws -> Bool
-    func toggleFavorite(surah: Int, ayah: Int) async throws
-    func loadMyFavouritesView() async throws -> [FavoriteViewRow]
-    func loadArabicDictionary() async throws -> [ArabicDictionaryEntry]
-}
-
 enum QuranServiceError: LocalizedError {
     case unauthenticated
     case supabase(message: String)
@@ -199,12 +188,9 @@ private extension QuranService {
     }
 
     func mapSupabaseError(_ error: Error) -> Error {
-        if let quranError = error as? QuranServiceError {
-            return quranError
+        if let supabaseError = error as? SupabaseError {
+            return QuranServiceError.supabase(message: supabaseError.errorDescription ?? supabaseError.localizedDescription)
         }
-        if let postgrestError = error as? PostgrestError {
-            return QuranServiceError.supabase(message: postgrestError.message)
-        }
-        return QuranServiceError.supabase(message: error.localizedDescription)
+        return error
     }
 }
