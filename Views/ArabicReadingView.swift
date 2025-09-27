@@ -28,6 +28,7 @@ struct ArabicReadingView: View {
     }
 
     let surah: Int
+    let scrollToAyah: Int?
     private let quranService = QuranService()
 
     @EnvironmentObject private var notesStore: NotesStore
@@ -43,44 +44,60 @@ struct ArabicReadingView: View {
     @State private var noteRoute: NoteRoute?
     @State private var noteDraft: String = ""
     @State private var isSavingNote = false
+    @State private var pendingScrollAyah: Int?
+
+    init(surah: Int, scrollToAyah: Int? = nil) {
+        self.surah = surah
+        self.scrollToAyah = scrollToAyah
+        _pendingScrollAyah = State(initialValue: scrollToAyah)
+    }
 
     var body: some View {
         NavigationStack {
-            Group {
-                if isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if let loadError {
-                    VStack(spacing: 16) {
-                        Text(loadError)
-                            .multilineTextAlignment(.center)
-                            .font(KuraniFont.forTextStyle(.body))
-                            .foregroundColor(.kuraniTextSecondary)
-                        Button(action: { Task { await loadWords() } }) {
-                            Text(LocalizedStringKey("Retry"))
+            ScrollViewReader { proxy in
+                Group {
+                    if isLoading {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else if let loadError {
+                        VStack(spacing: 16) {
+                            Text(loadError)
+                                .multilineTextAlignment(.center)
                                 .font(KuraniFont.forTextStyle(.body))
+                                .foregroundColor(.kuraniTextSecondary)
+                            Button(action: { Task { await loadWords() } }) {
+                                Text(LocalizedStringKey("Retry"))
+                                    .font(KuraniFont.forTextStyle(.body))
+                            }
+                            .buttonStyle(.borderedProminent)
                         }
-                        .buttonStyle(.borderedProminent)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 18) {
-                            Picker("Mode", selection: $selectedMode) {
-                                ForEach(LanguageMode.allCases) { mode in
-                                    Text(mode.title)
-                                        .tag(mode)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 18) {
+                                Picker("Mode", selection: $selectedMode) {
+                                    ForEach(LanguageMode.allCases) { mode in
+                                        Text(mode.title)
+                                            .tag(mode)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+
+                                ForEach(ayahNumbers, id: \.self) { ayah in
+                                    ayahView(ayah)
+                                        .id(ayah)
                                 }
                             }
-                            .pickerStyle(.segmented)
-
-                            ForEach(ayahNumbers, id: \.self) { ayah in
-                                ayahView(ayah)
-                            }
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 24)
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 24)
                     }
+                }
+                .onChange(of: ayahNumbers) { _ in
+                    scrollToPendingAyah(proxy)
+                }
+                .onChange(of: pendingScrollAyah) { _ in
+                    scrollToPendingAyah(proxy)
                 }
             }
             .navigationTitle(navigationTitle)
@@ -131,6 +148,7 @@ struct ArabicReadingView: View {
                 wordsByAyah = grouped.mapValues { $0.sorted(by: { $0.position < $1.position }) }
                 ayahNumbers = sortedAyahs
                 isLoading = false
+                pendingScrollAyah = scrollToAyah
             }
         } catch {
             await MainActor.run {
@@ -180,6 +198,16 @@ struct ArabicReadingView: View {
             }
         }
         .appleCard(cornerRadius: 24)
+    }
+
+    private func scrollToPendingAyah(_ proxy: ScrollViewProxy) {
+        guard let target = pendingScrollAyah, ayahNumbers.contains(target) else { return }
+        DispatchQueue.main.async {
+            withAnimation {
+                proxy.scrollTo(target, anchor: .top)
+            }
+            self.pendingScrollAyah = nil
+        }
     }
 
     private func displayText(for word: TranslationWord) -> String {
