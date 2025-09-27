@@ -39,14 +39,11 @@ extension NotesStore {
     let favoritesStore = FavoritesStore()
     let progressStore = ReadingProgressStore.previewStore()
     let authManager = AuthManager.previewManager()
-    let quranService = MockQuranService()
-
     RootView(
         translationStore: translationStore,
         notesStore: notesStore,
         progressStore: progressStore,
-        favoritesStore: favoritesStore,
-        quranServiceFactory: { quranService }
+        favoritesStore: favoritesStore
     )
     .environmentObject(translationStore)
     .environmentObject(notesStore)
