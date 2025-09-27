@@ -15,17 +15,18 @@ Kurani është një aplikacion SwiftUI për iOS 17 që ofron një përvojë lexi
 
 ## Konfigurimi i Supabase
 1. **Krijo projektin Supabase** dhe shto paketën [`supabase-swift`](https://github.com/supabase-community/supabase-swift) në projekt nëpërmjet Swift Package Manager (File > Add Packages… > paste URL-në).
-2. Kopjo skedarin `Config.xcconfig` në projekt dhe lidhe me target-in kryesor.
-   - Ruaj aty vlerat për `SUPABASE_URL` dhe `SUPABASE_ANON_KEY` për të shmangur përfshirjen e sekreteve në kontrollin e versioneve.
-   - Alternativisht, përdor `xcconfig` ose `User-Defined Setting` në *Build Settings* me `SUPABASE_URL` dhe `SUPABASE_ANON_KEY` të vendosura vetëm në ambientin lokal/CI.
-3. Shto çelësat në `Info.plist` duke përdorur variablat e konfigurimit në vijim:
+2. Kopjo `Config.xcconfig` në një skedar të ri lokal (p.sh. `Config.local.xcconfig`) dhe mos e shto në git.
+   - Vendos vlerat reale për `SUPABASE_URL` dhe `SUPABASE_ANON_KEY` në skedarin lokal.
+   - Në Xcode cakto `Config.local.xcconfig` si **Base Configuration** për konfigurimet ku ndërtohet aplikacioni (lokalisht, në CI, e kështu me radhë). `Config.xcconfig` i versionuar në repo mbetet me placeholder-a.
+3. `App/Info.plist` tashmë përmban çelësat që lexojnë këto variabla në runtime:
    ```xml
    <key>SUPABASE_URL</key>
    <string>$(SUPABASE_URL)</string>
    <key>SUPABASE_ANON_KEY</key>
    <string>$(SUPABASE_ANON_KEY)</string>
    ```
-4. Në Supabase SQL Editor ekzekuto skriptin në vijim për të krijuar tabelën e shënimeve dhe politikat e RLS:
+4. (Opsionale) Për të përdorur Supabase edhe në SwiftUI Previews, vendos variablën e ambientit `ENABLE_SUPABASE_PREVIEWS=1` për ta lejuar aplikacionin të përdorë të njëjtin konfigurim si në runtime.
+5. Në Supabase SQL Editor ekzekuto skriptin në vijim për të krijuar tabelën e shënimeve dhe politikat e RLS:
    ```sql
    create table if not exists public.notes (
      id uuid primary key default gen_random_uuid(),
@@ -52,8 +53,8 @@ Kurani është një aplikacion SwiftUI për iOS 17 që ofron një përvojë lexi
    using ( auth.uid() = user_id )
    with check ( auth.uid() = user_id );
    ```
-5. Aktivizo ofruesit e autentikimit në Supabase: **Sign in with Apple** dhe **Email (magic link)**. Në panelin e Supabase > Authentication sigurohu që Apple Sign-In të ketë domain dhe redirect URL të konfiguruar sipas udhëzimeve.
-6. Përditëso Info.plist:
+6. Aktivizo ofruesit e autentikimit në Supabase: **Sign in with Apple** dhe **Email (magic link)**. Në panelin e Supabase > Authentication sigurohu që Apple Sign-In të ketë domain dhe redirect URL të konfiguruar sipas udhëzimeve.
+7. Përditëso Info.plist:
    - `CFBundleDevelopmentRegion = sq`
    - `CFBundleDisplayName = Kurani`
 
@@ -65,9 +66,9 @@ App/
 Models/
   Surah.swift, Ayah.swift, Note.swift
 Data/
-  QuranMeta.json, sample_translation.json, TranslationStore.swift
+  TranslationStore.swift, ArabicDictionary.json, ReadingProgressStore.swift
 Supabase/
-  SupabaseClientProvider.swift, AuthManager.swift, NotesStore.swift
+  SupabaseClientProvider.swift, AuthManager.swift, NotesStore.swift, TranslationService.swift
 ViewModels/
   LibraryViewModel.swift, ReaderViewModel.swift, NotesViewModel.swift, SettingsViewModel.swift
 Views/
@@ -75,18 +76,17 @@ Views/
   NoteEditorView.swift, NotesView.swift, SettingsView.swift,
   Components/BrandHeader, Pill, GradientButton, ToastView, SignInPromptView
 Utils/
-  FileIO.swift, AppStorageKeys.swift, Haptics.swift, ShareSheet.swift
+  AppStorageKeys.swift, Haptics.swift, ShareSheet.swift
 Resources/
   Assets.xcassets/ (ngjyrat e temës)
 ```
 
-## Burimet e përfshira
-- `QuranMeta.json`: metadata për të 114 suret (numri, emri në shqip, numri i ajeteve).
-- `sample_translation.json`: përkthimi i plotë në shqip (Sherif Ahmeti) për të gjitha 114 suret, i marrë nga projekti [fawazahmed0/quran-api](https://github.com/fawazahmed0/quran-api) (licencë publike). Ky është përkthimi i vetëm i përfshirë.
+## Burimet e jashtme
+Lexuesi i Kuranit nuk përfshin më tekste të ngulitura lokalisht. Metadata, tekstet në arabisht dhe përkthimet në shqip do të tërhiqen përmes Supabase.
 
 ## Ekzekutimi
 1. Hap projektin në Xcode.
-2. Sigurohu që skedarët `QuranMeta.json`, `sample_translation.json`, `Assets.xcassets` dhe `Config.xcconfig` janë pjesë e target-it.
+2. Sigurohu që `Assets.xcassets` dhe `Config.xcconfig` janë pjesë e target-it.
 3. Ndërto dhe ekzekuto aplikacionin në simulator ose pajisje me iOS 17.
 
 ## Zgjidhja e problemeve
@@ -103,4 +103,4 @@ Resources/
 - Shënimet duken në tab-in “Shënimet e mia” të grupuara sipas sures dhe mund të hapin lexuesin për përditësim.
 
 ## Licenca e përkthimit
-Përkthimi i përfshirë (Sherif Ahmeti) është publikuar në projektin [quran-api](https://github.com/fawazahmed0/quran-api) nën licencë publike (Unlicense). Përkthimet e tjera të plota mund të jenë të mbrojtura nga të drejtat e autorit; ato nuk shpërndahen me këtë aplikacion.
+Përkthimet dhe tekstet në arabisht do të merren nga Supabase sipas konfigurimit që siguron përdoruesi i aplikacionit.

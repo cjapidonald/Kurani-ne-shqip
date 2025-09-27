@@ -15,6 +15,7 @@
 "action.share" = "Ndaj";
 "action.edit" = "Sheno";
 "action.add" = "Shto";
+"action.retry" = "Riprovo";
 "action.signin" = "Hyr";
 "action.signout" = "Dil";
 
@@ -117,6 +118,7 @@
 "reader.jumpLastRead" = "Shko te leximi i fundit";
 "favorites.title" = "Të preferuarat";
 "favorites.empty" = "S’ka ajete të preferuara ende.";
+"favorites.error" = "S’u përditësuan të preferuarat.";
 "favorites.detail" = "Ajeti %d • Sure %@";
 "favorites.remove" = "Hiq nga të preferuarat";
 "favorites.section.starred" = "Të shënuarat";
@@ -136,6 +138,8 @@
 "favorites.folderPicker.addedMessage" = "U shtua te dosja \"%@\".";
 "favorites.folderPicker.createdMessage" = "U krijua dosja \"%@\".";
 "favorites.folderPicker.updatedMessage" = "U përditësua te dosja \"%@\".";
+"dictionary.loading" = "Po ngarkohet fjalori…";
+"dictionary.error" = "Fjalori s’u ngarkua. Provoni sërish.";
 "dictionary.notFound" = "Kjo fjalë nuk gjendet ende në fjalor.";
 "dictionary.meanings" = "Kuptimet";
 "dictionary.notes" = "Shënime";

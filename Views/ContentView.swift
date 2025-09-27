@@ -2,8 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var translationStore = TranslationStore()
-    @StateObject private var notesStore = NotesStore(client: SupabaseClientProvider.shared.client)
-    @StateObject private var authManager = AuthManager(client: SupabaseClientProvider.shared.client)
+    @StateObject private var notesStore = NotesStore(client: SupabaseClientProvider.client)
+    @StateObject private var authManager = AuthManager(client: SupabaseClientProvider.client)
     @StateObject private var favoritesStore = FavoritesStore()
     @StateObject private var progressStore = ReadingProgressStore()
 
@@ -27,6 +27,26 @@ struct ContentView: View {
     }
 }
 
+#if DEBUG
 #Preview {
-    ContentView()
+    let translationStore = TranslationStore.previewStore()
+    let notesStore = NotesStore.previewStore()
+    let favoritesStore = FavoritesStore()
+    let progressStore = ReadingProgressStore.previewStore()
+    let authManager = AuthManager.previewManager()
+    let quranService = MockQuranService()
+
+    return RootView(
+        translationStore: translationStore,
+        notesStore: notesStore,
+        progressStore: progressStore,
+        favoritesStore: favoritesStore,
+        quranServiceFactory: { quranService }
+    )
+    .environmentObject(translationStore)
+    .environmentObject(notesStore)
+    .environmentObject(favoritesStore)
+    .environmentObject(progressStore)
+    .environmentObject(authManager)
 }
+#endif

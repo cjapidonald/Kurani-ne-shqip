@@ -1,6 +1,197 @@
 import SwiftUI
 
 struct NoteEditorView: View {
+    let surah: Int
+    let ayah: Int
+    @State private var albanianText: String
+    @State private var userNote: String
+    @State private var isLoadingAlbanianText = false
+    @State private var isSaving = false
+    @State private var showSignInPrompt = false
+    @State private var errorMessage: String?
+
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var authManager: AuthManager
+
+    private let quranService: QuranServicing
+
+    init(surah: Int, ayah: Int, initialText: String, existingNote: String = "", quranService: QuranServicing = QuranService()) {
+        self.surah = surah
+        self.ayah = ayah
+        self.quranService = quranService
+        _albanianText = State(initialValue: initialText)
+        _userNote = State(initialValue: existingNote)
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    header
+                    albanianSection
+                    noteSection
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 24)
+            }
+            .background(KuraniTheme.background.ignoresSafeArea())
+            .navigationTitle(LocalizedStringKey("reader.note.edit"))
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(LocalizedStringKey("action.cancel")) {
+                        dismiss()
+                    }
+                    .font(KuraniFont.forTextStyle(.body))
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(action: { Task { await saveNote() } }) {
+                        if isSaving {
+                            ProgressView()
+                        } else {
+                            Text(LocalizedStringKey("action.ok"))
+                                .font(KuraniFont.forTextStyle(.body))
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .disabled(!isAuthenticated || isSaving)
+                }
+            }
+            .alert(isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })) {
+                Alert(
+                    title: Text(LocalizedStringKey("Error")),
+                    message: Text(errorMessage ?? ""),
+                    dismissButton: .default(Text(LocalizedStringKey("action.ok")))
+                )
+            }
+            .task { await loadAlbanianTextIfNeeded() }
+            .onAppear { handleInitialAuthenticationState() }
+            .onReceive(authManager.$userId) { userId in
+                showSignInPrompt = userId == nil && AuthService.shared.currentUserId() == nil
+            }
+        }
+        .sheet(isPresented: $showSignInPrompt) {
+            SignInPromptView()
+                .environmentObject(authManager)
+        }
+    }
+}
+
+private extension NoteEditorView {
+    var header: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(String(format: NSLocalizedString("Surah %d", comment: "surah"), surah))
+                .font(KuraniFont.forTextStyle(.subheadline))
+                .foregroundColor(.kuraniTextSecondary)
+            Text(String(format: NSLocalizedString("Ayah %d", comment: "ayah"), ayah))
+                .font(KuraniFont.forTextStyle(.headline))
+                .foregroundColor(.kuraniTextPrimary)
+        }
+    }
+
+    @ViewBuilder
+    var albanianSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(LocalizedStringKey("Albanian Text"))
+                .font(KuraniFont.forTextStyle(.callout))
+                .foregroundColor(.kuraniTextSecondary)
+            Group {
+                if isLoadingAlbanianText {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.kuraniAccentLight)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                } else {
+                    Text(albanianText)
+                        .font(KuraniFont.forTextStyle(.body))
+                        .foregroundColor(.kuraniTextPrimary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding(.vertical, 18)
+            .padding(.horizontal, 16)
+            .background(cardBackground)
+        }
+    }
+
+    var noteSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(LocalizedStringKey("Personal Note"))
+                .font(KuraniFont.forTextStyle(.callout))
+                .foregroundColor(.kuraniTextSecondary)
+            TextEditor(text: $userNote)
+                .frame(minHeight: 160)
+                .padding(.vertical, 18)
+                .padding(.horizontal, 16)
+                .background(cardBackground)
+                .foregroundColor(.kuraniTextPrimary)
+                .font(KuraniFont.forTextStyle(.body))
+        }
+    }
+
+    var cardBackground: some View {
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .fill(Color.kuraniPrimarySurface.opacity(0.58))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(Color.kuraniPrimaryBrand.opacity(0.12), lineWidth: 0.8)
+            )
+    }
+
+    var isAuthenticated: Bool {
+        authManager.userId != nil
+    }
+
+    func handleInitialAuthenticationState() {
+        if AuthService.shared.currentUserId() == nil {
+            showSignInPrompt = true
+        }
+    }
+
+    func loadAlbanianTextIfNeeded() async {
+        guard albanianText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        await MainActor.run { isLoadingAlbanianText = true }
+        do {
+            let rebuilt = try await quranService.rebuildAlbanianAyah(surah: surah, ayah: ayah)
+            await MainActor.run {
+                albanianText = rebuilt
+                isLoadingAlbanianText = false
+            }
+        } catch {
+            await MainActor.run {
+                isLoadingAlbanianText = false
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+
+    func saveNote() async {
+        guard isAuthenticated else {
+            showSignInPrompt = true
+            return
+        }
+
+        await MainActor.run { isSaving = true }
+        do {
+            try await quranService.upsertMyNote(
+                surah: surah,
+                ayah: ayah,
+                albanianText: albanianText,
+                note: userNote
+            )
+            await MainActor.run {
+                isSaving = false
+                dismiss()
+            }
+        } catch {
+            await MainActor.run {
+                isSaving = false
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+}
+
+struct BoundNoteEditorView: View {
     let ayah: Ayah
     @Binding var draft: String
     let isSaving: Bool
@@ -66,3 +257,17 @@ struct NoteEditorView: View {
         }
     }
 }
+
+#if DEBUG
+#Preview {
+    let authManager = AuthManager.previewManager()
+    return NoteEditorView(
+        surah: 1,
+        ayah: 1,
+        initialText: "",
+        existingNote: "",
+        quranService: MockQuranService()
+    )
+    .environmentObject(authManager)
+}
+#endif

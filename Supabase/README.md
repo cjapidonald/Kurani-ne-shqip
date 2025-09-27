@@ -80,3 +80,37 @@ With this schema the app can:
 - Toggle favourites by inserting or deleting records tied to the authenticated user.
 
 After running the SQL above, the `SupabaseClientProvider` will be able to connect using the `SUPABASE_URL` and `SUPABASE_ANON_KEY` entries defined in your app's `Info.plist` or build settings.
+
+## 4. iOS authentication configuration
+
+To use the new `AuthService` helpers you need to configure a redirect URL and the platform capabilities required by Sign in with Apple and Google OAuth flows.
+
+### Info.plist keys
+
+- `SUPABASE_REDIRECT_URL`: the custom scheme Supabase should redirect to after OAuth completes (for example `io.supabase.kurani://auth/callback`).
+- `CFBundleURLTypes`: register the same scheme so iOS can hand the callback URL back to the app. A minimal entry looks like:
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleURLName</key>
+    <string>SupabaseAuth</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>io.supabase.kurani</string>
+    </array>
+  </dict>
+</array>
+<key>SUPABASE_REDIRECT_URL</key>
+<string>io.supabase.kurani://auth/callback</string>
+```
+
+Make sure the same redirect URL is allowed in your Supabase project's Authentication settings (`Authentication → URL Configuration`).
+
+### Capabilities and entitlements
+
+- **Sign in with Apple**: add the "Sign In with Apple" capability to the target. Xcode will create the `com.apple.developer.applesignin` entitlement automatically.
+- **Google OAuth**: no additional entitlements are required when using Supabase's PKCE flow, but the redirect scheme above must be registered so `ASWebAuthenticationSession` can return control to the app.

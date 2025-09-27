@@ -17,7 +17,6 @@
 		D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000026 /* AuthManager.swift */; };
 		D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */; };
 		D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000028 /* ShareSheet.swift */; };
-		D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000029 /* FileIO.swift */; };
 D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002A /* Haptics.swift */; };
 D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */; };
 D47AD4DA2A6B02A300000048 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */; };
@@ -35,22 +34,20 @@ D4FF6AAA2D00000100000093 /* KuraniFont.swift in Sources */ = {isa = PBXBuildFile
 		D47AD4DA2A6B02A300000053 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000037 /* ContentView.swift */; };
 		D47AD4DA2A6B02A300000054 /* SignInPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000038 /* SignInPromptView.swift */; };
 D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000019 /* Assets.xcassets */; };
-D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000020 /* QuranMeta.json */; };
-D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000021 /* sample_translation.json */; };
 D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47AD4DA2A6B02A300000039 /* Localizable.strings */; };
 D47AD4DA2A6B02A300000059 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D47AD4DA2A6B02A30000005B /* Supabase */; };
 D4FF6AAA2D00000100000091 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D4FF6AAA2D00000100000090 /* Fonts */; };
 D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FA5A8D2B12345600000060 /* LaunchScreen.storyboard */; };
-D4F6B6C22C9F000100000081 /* ArabicText.json in Resources */ = {isa = PBXBuildFile; fileRef = D4F6B6C12C9F000100000080 /* ArabicText.json */; };
 D4F6B6D02C9F000100000090 /* ArabicDictionaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D12C9F000100000091 /* ArabicDictionaryEntry.swift */; };
 D4F6B6D22C9F000100000092 /* ArabicDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */; };
 D4F6B6D42C9F000100000094 /* ArabicSelectableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D52C9F000100000095 /* ArabicSelectableTextView.swift */; };
                 D4F6B6D62C9F000100000096 /* ArabicDictionaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D72C9F000100000097 /* ArabicDictionaryDetailView.swift */; };
-                D4F6B6D82C9F000100000098 /* ArabicDictionary.json in Resources */ = {isa = PBXBuildFile; fileRef = D4F6B6D92C9F000100000099 /* ArabicDictionary.json */; };
                 F8643BD45C394BFFA5D99674 /* ReadingProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */; };
+                D4FF6AB12D000001000000A1 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF6AB02D000001000000A0 /* TranslationService.swift */; };
                 E4474F56488F4C62929FB0C8 /* ProgressBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333054A5288A4EB490D5C514 /* ProgressBadge.swift */; };
                 D4F6B6E42C9F0001000000AA /* FavoriteFolderPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6E32C9F0001000000AA /* FavoriteFolderPickerView.swift */; };
                 D4F6B6F82C9F0001000000B3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6F72C9F0001000000B2 /* NotificationManager.swift */; };
+                D4F6B7012C9F0001000000C1 /* AlbanianReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B7002C9F0001000000C0 /* AlbanianReadingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,26 +58,23 @@ D4F6B6D42C9F000100000094 /* ArabicSelectableTextView.swift in Sources */ = {isa 
 		D47AD4DA2A6B02A30000001D /* QuranApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranApp.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000001E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A30000001F /* TranslationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationStore.swift; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000020 /* QuranMeta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuranMeta.json; sourceTree = "<group>"; };
-D47AD4DA2A6B02A300000021 /* sample_translation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample_translation.json; sourceTree = "<group>"; };
 D47AD4DA2A6B02A300000022 /* Ayah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ayah.swift; sourceTree = "<group>"; };
 D47AD4DA2A6B02A300000023 /* Surah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surah.swift; sourceTree = "<group>"; };
 D47AD4DA2A6B02A300000024 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-D4F6B6C12C9F000100000080 /* ArabicText.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ArabicText.json; sourceTree = "<group>"; };
 D4F6B6D12C9F000100000091 /* ArabicDictionaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionaryEntry.swift; sourceTree = "<group>"; };
 D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionary.swift; sourceTree = "<group>"; };
-D4F6B6D52C9F000100000095 /* ArabicSelectableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicSelectableTextView.swift; sourceTree = "<group>"; };
+                D4F6B6D52C9F000100000095 /* ArabicSelectableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicSelectableTextView.swift; sourceTree = "<group>"; };
                 D4F6B6D72C9F000100000097 /* ArabicDictionaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionaryDetailView.swift; sourceTree = "<group>"; };
-                D4F6B6D92C9F000100000099 /* ArabicDictionary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ArabicDictionary.json; sourceTree = "<group>"; };
+                D4F6B7002C9F0001000000C0 /* AlbanianReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbanianReadingView.swift; sourceTree = "<group>"; };
                 A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingProgressStore.swift; sourceTree = "<group>"; };
                 333054A5288A4EB490D5C514 /* ProgressBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBadge.swift; sourceTree = "<group>"; };
                 D4F6B6E32C9F0001000000AA /* FavoriteFolderPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderPickerView.swift; sourceTree = "<group>"; };
                 D4F6B6F72C9F0001000000B2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
                 D47AD4DA2A6B02A300000025 /* NotesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesStore.swift; sourceTree = "<group>"; };
 		D47AD4DA2A6B02A300000026 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000028 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
-		D47AD4DA2A6B02A300000029 /* FileIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIO.swift; sourceTree = "<group>"; };
+                D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
+                D4FF6AB02D000001000000A0 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
+                D47AD4DA2A6B02A300000028 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 D47AD4DA2A6B02A30000002A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKeys.swift; sourceTree = "<group>"; };
 D47AD4DA2A6B02A30000002C /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
@@ -151,18 +145,19 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 			path = Models;
 			sourceTree = "<group>";
 		};
-		D47AD4DA2A6B02A30000000F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				D47AD4DA2A6B02A300000010 /* Components */,
-				D47AD4DA2A6B02A300000037 /* ContentView.swift */,
-				D47AD4DA2A6B02A300000035 /* RootView.swift */,
-				D47AD4DA2A6B02A300000031 /* LibraryView.swift */,
-				D47AD4DA2A6B02A300000030 /* ReaderView.swift */,
-				D47AD4DA2A6B02A300000034 /* NotesView.swift */,
-				D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */,
-				D47AD4DA2A6B02A300000032 /* SettingsView.swift */,
-				D47AD4DA2A6B02A300000036 /* SurahRow.swift */,
+                D47AD4DA2A6B02A30000000F /* Views */ = {
+                        isa = PBXGroup;
+                        children = (
+                                D47AD4DA2A6B02A300000010 /* Components */,
+                                D47AD4DA2A6B02A300000037 /* ContentView.swift */,
+                                D47AD4DA2A6B02A300000035 /* RootView.swift */,
+                                D47AD4DA2A6B02A300000031 /* LibraryView.swift */,
+                                D4F6B7002C9F0001000000C0 /* AlbanianReadingView.swift */,
+                                D47AD4DA2A6B02A300000030 /* ReaderView.swift */,
+                                D47AD4DA2A6B02A300000034 /* NotesView.swift */,
+                                D47AD4DA2A6B02A300000033 /* NoteEditorView.swift */,
+                                D47AD4DA2A6B02A300000032 /* SettingsView.swift */,
+                                D47AD4DA2A6B02A300000036 /* SurahRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,8 +188,7 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 		D47AD4DA2A6B02A300000012 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				D47AD4DA2A6B02A300000028 /* ShareSheet.swift */,
-                                D47AD4DA2A6B02A300000029 /* FileIO.swift */,
+                                D47AD4DA2A6B02A300000028 /* ShareSheet.swift */,
                                 D47AD4DA2A6B02A30000002A /* Haptics.swift */,
                                 D47AD4DA2A6B02A30000002B /* AppStorageKeys.swift */,
                                 D4F6B6F72C9F0001000000B2 /* NotificationManager.swift */,
@@ -204,26 +198,23 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		D47AD4DA2A6B02A300000013 /* Supabase */ = {
-			isa = PBXGroup;
-			children = (
-				D47AD4DA2A6B02A300000025 /* NotesStore.swift */,
-				D47AD4DA2A6B02A300000026 /* AuthManager.swift */,
-				D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */,
-			);
+               D47AD4DA2A6B02A300000013 /* Supabase */ = {
+                        isa = PBXGroup;
+                        children = (
+                                D47AD4DA2A6B02A300000025 /* NotesStore.swift */,
+                                D47AD4DA2A6B02A300000026 /* AuthManager.swift */,
+                                D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */,
+                                D4FF6AB02D000001000000A0 /* TranslationService.swift */,
+                        );
 			path = Supabase;
 			sourceTree = "<group>";
 		};
-		D47AD4DA2A6B02A300000014 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */,
-				D47AD4DA2A6B02A30000001F /* TranslationStore.swift */,
-				D47AD4DA2A6B02A300000020 /* QuranMeta.json */,
-				D47AD4DA2A6B02A300000021 /* sample_translation.json */,
-				D4F6B6C12C9F000100000080 /* ArabicText.json */,
-				D4F6B6D92C9F000100000099 /* ArabicDictionary.json */,
-			);
+               D47AD4DA2A6B02A300000014 /* Data */ = {
+                        isa = PBXGroup;
+                        children = (
+                                A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */,
+                                D47AD4DA2A6B02A30000001F /* TranslationStore.swift */,
+                        );
 			path = Data;
 			sourceTree = "<group>";
 		};
@@ -308,12 +299,8 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 			files = (
 				D4FF6AAA2D00000100000091 /* Fonts in Resources */,
 				D4FA5A8D2B12345600000061 /* LaunchScreen.storyboard in Resources */,
-				D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
-				D47AD4DA2A6B02A300000057 /* sample_translation.json in Resources */,
-				D4F6B6D82C9F000100000098 /* ArabicDictionary.json in Resources */,
-				D4F6B6C22C9F000100000081 /* ArabicText.json in Resources */,
-				D47AD4DA2A6B02A300000056 /* QuranMeta.json in Resources */,
-				D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
+                                D47AD4DA2A6B02A300000058 /* Localizable.strings in Resources */,
+                                D47AD4DA2A6B02A300000055 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,8 +318,9 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
 				D47AD4DA2A6B02A300000050 /* NotesView.swift in Sources */,
 				D47AD4DA2A6B02A30000004F /* NoteEditorView.swift in Sources */,
 				D47AD4DA2A6B02A30000004E /* SettingsView.swift in Sources */,
-				D47AD4DA2A6B02A30000004D /* LibraryView.swift in Sources */,
-				E4474F56488F4C62929FB0C8 /* ProgressBadge.swift in Sources */,
+                                D47AD4DA2A6B02A30000004D /* LibraryView.swift in Sources */,
+                                D4F6B7012C9F0001000000C1 /* AlbanianReadingView.swift in Sources */,
+                                E4474F56488F4C62929FB0C8 /* ProgressBadge.swift in Sources */,
 				D47AD4DA2A6B02A30000004C /* ReaderView.swift in Sources */,
                                 D4F6B6D62C9F000100000096 /* ArabicDictionaryDetailView.swift in Sources */,
                                 D4F6B6E42C9F0001000000AA /* FavoriteFolderPickerView.swift in Sources */,
@@ -344,12 +332,12 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
                                 D47AD4DA2A6B02A300000047 /* AppStorageKeys.swift in Sources */,
                                 D4F6B6F82C9F0001000000B3 /* NotificationManager.swift in Sources */,
                                 D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
-				D4FF6AAA2D00000100000093 /* KuraniFont.swift in Sources */,
-				D47AD4DA2A6B02A300000045 /* FileIO.swift in Sources */,
-				D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */,
+                                D4FF6AAA2D00000100000093 /* KuraniFont.swift in Sources */,
+                                D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */,
 				D4F6B6D22C9F000100000092 /* ArabicDictionary.swift in Sources */,
-				D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */,
-				D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */,
+                                D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */,
+                                D4FF6AB12D000001000000A1 /* TranslationService.swift in Sources */,
+                                D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */,
 				D47AD4DA2A6B02A300000041 /* NotesStore.swift in Sources */,
 				D47AD4DA2A6B02A300000040 /* Note.swift in Sources */,
 				D4F6B6D02C9F000100000090 /* ArabicDictionaryEntry.swift in Sources */,

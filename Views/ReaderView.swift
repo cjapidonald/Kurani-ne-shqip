@@ -104,7 +104,7 @@ struct ReaderView: View {
         .statusBarHidden(isChromeHidden)
         .sheet(isPresented: $viewModel.isNoteEditorPresented) {
             if let ayah = viewModel.selectedAyah {
-                NoteEditorView(
+                BoundNoteEditorView(
                     ayah: ayah,
                     draft: $viewModel.noteDraft,
                     isSaving: viewModel.isSavingNote,
@@ -291,15 +291,31 @@ struct ReaderView: View {
     private func handleDictionarySelection(_ word: String) {
         guard pendingDictionaryWord != word else { return }
         pendingDictionaryWord = word
+        viewModel.toast = LocalizedStringKey("dictionary.loading")
 
-        if let entry = ArabicDictionary.shared.lookup(word: word) {
-            selectedDictionaryEntry = entry
-        } else {
-            viewModel.toast = LocalizedStringKey("dictionary.notFound")
-        }
+        Task {
+            do {
+                if let entry = try await ArabicDictionary.shared.lookup(word: word) {
+                    await MainActor.run {
+                        selectedDictionaryEntry = entry
+                        viewModel.toast = nil
+                    }
+                } else {
+                    await MainActor.run {
+                        viewModel.toast = LocalizedStringKey("dictionary.notFound")
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    viewModel.toast = LocalizedStringKey("dictionary.error")
+                }
+            }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            pendingDictionaryWord = nil
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+
+            await MainActor.run {
+                pendingDictionaryWord = nil
+            }
         }
     }
 

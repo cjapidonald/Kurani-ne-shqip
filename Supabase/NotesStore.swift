@@ -17,12 +17,12 @@ final class NotesStore: ObservableObject {
     @Published private(set) var notes: [Note] = []
     @Published private(set) var isLoading = false
 
-    private let client: SupabaseClient
+    private let client: SupabaseClient?
     private var currentUserId: UUID?
     private let localStorage = LocalNotesStorage()
     private let localUserId = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
 
-    init(client: SupabaseClient) {
+    init(client: SupabaseClient?) {
         self.client = client
         notes = localStorage.load()
     }
@@ -40,7 +40,7 @@ final class NotesStore: ObservableObject {
     }
 
     func fetchAll() async {
-        guard let userId = currentUserId else {
+        guard let userId = currentUserId, let client = client else {
             isLoading = false
             notes = localStorage.load()
             return
@@ -71,7 +71,7 @@ final class NotesStore: ObservableObject {
     func upsertNote(surah: Int, ayah: Int, title: String?, text: String) async throws {
         let sanitizedTitle = title?.trimmingCharacters(in: .whitespacesAndNewlines)
         let finalTitle = sanitizedTitle?.isEmpty == false ? sanitizedTitle : nil
-        if let userId = currentUserId {
+        if let userId = currentUserId, let client = client {
             let payload = NoteInsert(user_id: userId.uuidString, surah: surah, ayah: ayah, title: finalTitle, text: text)
             let response: PostgrestResponse<[NoteDTO]> = try await client.from("notes")
                 .upsert([payload], onConflict: "user_id,surah,ayah")

@@ -1,86 +1,65 @@
 import Foundation
 import SwiftUI
 
-struct TranslationFile: Codable {
-    struct SurahTranslation: Codable {
-        let number: Int
-        let ayahs: [Ayah]
-    }
-
-    let surahs: [SurahTranslation]
-}
-
-private struct ArabicTextFile: Codable {
-    struct SurahText: Codable {
-        let number: Int
-        let ayahs: [AyahText]
-    }
-
-    struct AyahText: Codable {
-        let number: Int
-        let text: String
-    }
-
-    let surahs: [SurahText]
-}
-
-private struct MetaEntry: Codable {
-    let number: Int
-    let name: String
-    let ayahs: Int
-}
-
 @MainActor
 final class TranslationStore: ObservableObject {
     @Published private(set) var surahs: [Surah] = []
     @Published private(set) var ayahsBySurah: [Int: [Ayah]] = [:]
 
-    private let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return decoder
-    }()
-
+    private let service: TranslationService
     private var arabicAyahsBySurah: [Int: [Int: String]] = [:]
+    private var hasLoadedInitialData = false
+
+    init(service: TranslationService = SupabaseTranslationService()) {
+        self.service = service
+    }
 
     func loadInitialData() async {
-        await loadSurahMeta()
-        await loadArabicText()
-        await loadSampleTranslation()
+        guard !hasLoadedInitialData else { return }
+        hasLoadedInitialData = true
+
+        await fetchSurahMetadata()
+        await fetchArabicText()
+        await fetchTranslations()
+
+        if surahs.isEmpty || ayahsBySurah.isEmpty {
+            hasLoadedInitialData = false
+        }
     }
 
-    private func loadSurahMeta() async {
+    private func fetchSurahMetadata() async {
         do {
-            let meta = try FileIO.loadBundleJSON("QuranMeta", as: [MetaEntry].self)
-            let mapped: [Surah] = meta.map { Surah(number: $0.number, name: $0.name, ayahCount: $0.ayahs) }
-            self.surahs = mapped.sorted { $0.number < $1.number }
+            let metadata = try await service.fetchSurahMetadata()
+            surahs = metadata.sorted { $0.number < $1.number }
         } catch {
             print("Failed to load surah metadata", error)
+            hasLoadedInitialData = false
         }
     }
 
-    private func loadArabicText() async {
+    private func fetchArabicText() async {
         do {
-            let file = try FileIO.loadBundleJSON("ArabicText", as: ArabicTextFile.self)
-            arabicAyahsBySurah = file.surahs.reduce(into: [:]) { result, entry in
-                result[entry.number] = entry.ayahs.reduce(into: [:]) { ayahMap, ayah in
-                    ayahMap[ayah.number] = ayah.text
-                }
-            }
+            arabicAyahsBySurah = try await service.fetchArabicTextBySurah()
         } catch {
             print("Failed to load Arabic text", error)
+            arabicAyahsBySurah = [:]
+            hasLoadedInitialData = false
         }
     }
 
-    private func loadSampleTranslation() async {
+    private func fetchTranslations() async {
         do {
-            let translation = try FileIO.loadBundleJSON("sample_translation", as: TranslationFile.self)
-            ayahsBySurah = translation.surahs.reduce(into: [:]) { result, entry in
-                let sorted = entry.ayahs.sorted { $0.number < $1.number }
-                result[entry.number] = applyArabicTextIfAvailable(to: sorted, surahNumber: entry.number)
+            let translations = try await service.fetchAyahsBySurah()
+            var merged: [Int: [Ayah]] = [:]
+            for (surah, ayahs) in translations {
+                let sorted = ayahs.sorted { $0.number < $1.number }
+                merged[surah] = applyArabicTextIfAvailable(to: sorted, surahNumber: surah)
             }
+            ayahsBySurah = merged
         } catch {
             print("Failed to load translation", error)
+            ayahsBySurah = [:]
+            hasLoadedInitialData = false
         }
     }
 
@@ -124,3 +103,152 @@ final class TranslationStore: ObservableObject {
         }
     }
 }
+
+#if DEBUG
+extension TranslationStore {
+ codex/implement-per-surah-word-lists-in-translationservice
+    private struct PreviewData {
+        static let surahs: [Surah] = [
+            Surah(number: 1, name: "Al-Fatiha", ayahCount: 7)
+        ]
+
+        static let albanianAyahs: [Int: [Ayah]] = [
+            1: [
+                Ayah(number: 1, text: "Me emrin e Allahut, Mëshiruesit, Mëshirëbërësit.", arabicText: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"),
+                Ayah(number: 2, text: "Falënderimi i qoftë Allahut, Zotit të botëve.", arabicText: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ"),
+                Ayah(number: 3, text: "Mëshiruesit, Mëshirëbërësit.", arabicText: "الرَّحْمَٰنِ الرَّحِيمِ"),
+                Ayah(number: 4, text: "Sunduesit të Ditës së Gjykimit.", arabicText: "مَالِكِ يَوْمِ الدِّينِ"),
+                Ayah(number: 5, text: "Vetëm Ty të adhurojmë dhe vetëm prej Teje ndihmë kërkojmë.", arabicText: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ"),
+                Ayah(number: 6, text: "Na udhëzo në rrugën e drejtë.", arabicText: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ"),
+                Ayah(number: 7, text: "Rrugën e atyre që i ke begatuar, e jo të atyre që janë zemëruar dhe as të atyre që kanë humbur.", arabicText: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ")
+            ]
+        ]
+
+        static let arabicTexts: [Int: [Int: String]] = {
+            var mapping: [Int: [Int: String]] = [:]
+            for (surah, ayahs) in albanianAyahs {
+                mapping[surah] = Dictionary(uniqueKeysWithValues: ayahs.map { ($0.number, $0.arabicText ?? "") })
+            }
+            return mapping
+        }()
+    }
+
+    private final class PreviewTranslationService: TranslationService {
+        func fetchSurahMetadata() async throws -> [Surah] { PreviewData.surahs }
+
+        func fetchAyahsBySurah() async throws -> [Int: [Ayah]] { PreviewData.albanianAyahs }
+
+        func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] { PreviewData.arabicTexts }
+    }
+
+    static func previewStore(preload: Bool = true) -> TranslationStore {
+        let service = PreviewTranslationService()
+        let store = TranslationStore(service: service)
+
+        if preload {
+            store.surahs = PreviewData.surahs
+            store.ayahsBySurah = PreviewData.albanianAyahs
+            store.arabicAyahsBySurah = PreviewData.arabicTexts
+            store.hasLoadedInitialData = true
+            assert(store.ayahsBySurah[1]?.first?.text == PreviewData.albanianAyahs[1]?.first?.text)
+        } else {
+            Task {
+                await store.loadInitialData()
+                assert(store.ayahsBySurah[1]?.count == 7)
+            }
+        }
+
+
+    static func previewStore() -> TranslationStore {
+        let service = PreviewTranslationService()
+        let store = TranslationStore(service: service)
+        Task { await store.loadInitialData() }
+ main
+        return store
+    }
+}
+
+codex/implement-per-surah-word-lists-in-translationservice
+private struct TranslationStorePreviewHost: View {
+    @StateObject private var store = TranslationStore.previewStore(preload: false)
+
+    var body: some View {
+        List {
+            if let ayahs = store.ayahsBySurah[1] {
+                Section("Surah 1") {
+                    ForEach(ayahs) { ayah in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(ayah.text)
+                            if let arabic = ayah.arabicText {
+                                Text(arabic)
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+            } else {
+                Text("Loading…")
+            }
+        }
+        .task {
+            await store.loadInitialData()
+        }
+    }
+}
+
+#Preview("TranslationStore Surah 1") {
+    TranslationStorePreviewHost()
+
+private struct PreviewTranslationService: TranslationService {
+    private let surahMetadata: [Surah]
+    private let ayahs: [Int: [Ayah]]
+    private let arabicBySurah: [Int: [Int: String]]
+
+    init() {
+        surahMetadata = [
+            Surah(number: 1, name: "El-Fatiha", ayahCount: 7),
+            Surah(number: 2, name: "El-Bekare", ayahCount: 286)
+        ]
+
+        let fatihaAyahs = [
+            Ayah(number: 1, text: "Lavdërimi i takon Allahut, Zotit të botëve", arabicText: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ"),
+            Ayah(number: 2, text: "Mëshiruesi, Mëshirëbërësi", arabicText: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"),
+            Ayah(number: 3, text: "Sunduesi i Ditës së Gjykimit", arabicText: "مَالِكِ يَوْمِ ٱلدِّينِ")
+        ]
+
+        let ayatulKursi = [
+            Ayah(
+                number: 255,
+                text: "Allahu – nuk ka zot tjetër përveç Tij, i Gjalli, Mbajtësi i gjithësisë",
+                arabicText: "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ"
+            )
+        ]
+
+        ayahs = [
+            1: fatihaAyahs,
+            2: ayatulKursi
+        ]
+
+        arabicBySurah = ayahs.mapValues { ayahs in
+            Dictionary(uniqueKeysWithValues: ayahs.compactMap { ayah -> (Int, String)? in
+                guard let arabic = ayah.arabicText else { return nil }
+                return (ayah.number, arabic)
+            })
+        }
+    }
+
+    func fetchSurahMetadata() async throws -> [Surah] {
+        surahMetadata
+    }
+
+    func fetchAyahsBySurah() async throws -> [Int: [Ayah]] {
+        ayahs
+    }
+
+    func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] {
+        arabicBySurah
+    }
+ main
+}
+#endif

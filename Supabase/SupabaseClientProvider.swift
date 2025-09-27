@@ -1,21 +1,40 @@
 import Foundation
 import Supabase
 
-enum SupabaseClientProvider {
-    static let client: SupabaseClient = {
-        let bundle = Bundle.main
+final class SupabaseClientProvider {
+    static let shared = try! SupabaseClientProvider()
 
-        guard
-            let urlString = bundle.object(forInfoDictionaryKey: "SUPABASE_URL") as? String,
-            let url = URL(string: urlString)
-        else {
-            fatalError("Missing or invalid SUPABASE_URL in Info.plist")
+    static var client: SupabaseClient { shared.client }
+    static var redirectURL: URL? { shared.redirectURL }
+
+    let client: SupabaseClient
+    let redirectURL: URL?
+
+    init(bundle: Bundle = .main, secretsLoader: SecretsLoader? = nil) throws {
+        let loader = secretsLoader ?? SecretsLoader(bundle: bundle)
+        redirectURL = SupabaseClientProvider.makeRedirectURL(from: bundle)
+
+        let configuration = try loader.supabaseConfiguration()
+
+        let options: SupabaseClientOptions
+        if let redirectURL {
+            options = SupabaseClientOptions(auth: .init(redirectToURL: redirectURL))
+        } else {
+            options = SupabaseClientOptions()
         }
 
-        guard let anonKey = bundle.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String, !anonKey.isEmpty else {
-            fatalError("Missing SUPABASE_ANON_KEY in Info.plist")
-        }
+        client = SupabaseClient(supabaseURL: configuration.url, supabaseKey: configuration.anonKey, options: options)
 
-        return SupabaseClient(supabaseURL: url, supabaseKey: anonKey)
-    }()
+        #if DEBUG
+        let hostDescription = configuration.url.host ?? configuration.url.absoluteString
+        print("[SupabaseClientProvider] Supabase ✅ (\(hostDescription))")
+        #endif
+    }
+
+    private static func makeRedirectURL(from bundle: Bundle) -> URL? {
+        guard let value = bundle.object(forInfoDictionaryKey: "SUPABASE_REDIRECT_URL") as? String else {
+            return nil
+        }
+        return URL(string: value)
+    }
 }
