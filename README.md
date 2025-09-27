@@ -65,9 +65,9 @@ App/
 Models/
   Surah.swift, Ayah.swift, Note.swift
 Data/
-  QuranMeta.json, sample_translation.json, TranslationStore.swift
+  TranslationStore.swift, ArabicDictionary.json, ReadingProgressStore.swift
 Supabase/
-  SupabaseClientProvider.swift, AuthManager.swift, NotesStore.swift
+  SupabaseClientProvider.swift, AuthManager.swift, NotesStore.swift, TranslationService.swift
 ViewModels/
   LibraryViewModel.swift, ReaderViewModel.swift, NotesViewModel.swift, SettingsViewModel.swift
 Views/
@@ -75,18 +75,17 @@ Views/
   NoteEditorView.swift, NotesView.swift, SettingsView.swift,
   Components/BrandHeader, Pill, GradientButton, ToastView, SignInPromptView
 Utils/
-  FileIO.swift, AppStorageKeys.swift, Haptics.swift, ShareSheet.swift
+  AppStorageKeys.swift, Haptics.swift, ShareSheet.swift
 Resources/
   Assets.xcassets/ (ngjyrat e temës)
 ```
 
-## Burimet e përfshira
-- `QuranMeta.json`: metadata për të 114 suret (numri, emri në shqip, numri i ajeteve).
-- `sample_translation.json`: përkthimi i plotë në shqip (Sherif Ahmeti) për të gjitha 114 suret, i marrë nga projekti [fawazahmed0/quran-api](https://github.com/fawazahmed0/quran-api) (licencë publike). Ky është përkthimi i vetëm i përfshirë.
+## Burimet e jashtme
+Lexuesi i Kuranit nuk përfshin më tekste të ngulitura lokalisht. Metadata, tekstet në arabisht dhe përkthimet në shqip do të tërhiqen përmes Supabase.
 
 ## Ekzekutimi
 1. Hap projektin në Xcode.
-2. Sigurohu që skedarët `QuranMeta.json`, `sample_translation.json`, `Assets.xcassets` dhe `Config.xcconfig` janë pjesë e target-it.
+2. Sigurohu që `Assets.xcassets` dhe `Config.xcconfig` janë pjesë e target-it.
 3. Ndërto dhe ekzekuto aplikacionin në simulator ose pajisje me iOS 17.
 
 ## Zgjidhja e problemeve
@@ -103,4 +102,4 @@ Resources/
 - Shënimet duken në tab-in “Shënimet e mia” të grupuara sipas sures dhe mund të hapin lexuesin për përditësim.
 
 ## Licenca e përkthimit
-Përkthimi i përfshirë (Sherif Ahmeti) është publikuar në projektin [quran-api](https://github.com/fawazahmed0/quran-api) nën licencë publike (Unlicense). Përkthimet e tjera të plota mund të jenë të mbrojtura nga të drejtat e autorit; ato nuk shpërndahen me këtë aplikacion.
+Përkthimet dhe tekstet në arabisht do të merren nga Supabase sipas konfigurimit që siguron përdoruesi i aplikacionit.
