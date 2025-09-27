@@ -7,7 +7,7 @@ struct KuraniApp: App {
     @StateObject private var notesStore: NotesStore
     @StateObject private var authManager: AuthManager
     @StateObject private var progressStore = ReadingProgressStore()
-    @StateObject private var favoritesStore = FavoritesStore()
+    @StateObject private var favoritesStore: FavoritesStore
     #if DEBUG
     @State private var configurationError: Error?
     #endif
@@ -34,6 +34,7 @@ struct KuraniApp: App {
 
         _notesStore = StateObject(wrappedValue: NotesStore(client: client))
         _authManager = StateObject(wrappedValue: AuthManager(client: client))
+        _favoritesStore = StateObject(wrappedValue: FavoritesStore(client: client))
         #if DEBUG
         _configurationError = State(initialValue: debugConfigurationError)
         #endif

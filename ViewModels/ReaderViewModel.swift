@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import Supabase
 
 @MainActor
 final class ReaderViewModel: ObservableObject {
@@ -22,16 +23,25 @@ final class ReaderViewModel: ObservableObject {
     private let notesStore: NotesStore
     private let progressStore: ReadingProgressStore
     private let favoritesStore: FavoritesStore
+    private let quranService: QuranServicing?
     private let readingProgressStore: ReadingProgressStore
     private var cancellables: Set<AnyCancellable> = []
 
-    init(surahNumber: Int, translationStore: TranslationStore, notesStore: NotesStore, progressStore: ReadingProgressStore, favoritesStore: FavoritesStore) {
+    init(
+        surahNumber: Int,
+        translationStore: TranslationStore,
+        notesStore: NotesStore,
+        progressStore: ReadingProgressStore,
+        favoritesStore: FavoritesStore,
+        quranService: QuranServicing? = ReaderViewModel.makeQuranServiceIfAvailable()
+    ) {
         self.surahNumber = surahNumber
         self.translationStore = translationStore
         self.notesStore = notesStore
         self.progressStore = progressStore
         self.favoritesStore = favoritesStore
         self.readingProgressStore = progressStore
+        self.quranService = quranService
 
         let storedFont = UserDefaults.standard.double(forKey: AppStorageKeys.fontScale)
         fontScale = storedFont == 0 ? 1.0 : storedFont
@@ -124,7 +134,7 @@ final class ReaderViewModel: ObservableObject {
     }
 
     func toggleFavoriteStatus(for ayah: Ayah) {
-        favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
+        Task { await toggleFavorite(for: ayah) }
     }
 
     func isFavoriteAyah(_ ayah: Ayah) -> Bool {
@@ -177,11 +187,36 @@ final class ReaderViewModel: ObservableObject {
         readingProgress = readingProgressStore.progress(for: surahNumber, totalAyahs: totalAyahs)
     }
 
-    func toggleFavorite(for ayah: Ayah) {
-        favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
+    private func toggleFavorite(for ayah: Ayah) async {
+        let originalState = favoritesStore.isFavorite(surah: surahNumber, ayah: ayah.number)
+        let originalFavorite = favoritesStore.favorites.first { $0.surah == surahNumber && $0.ayah == ayah.number }
+
+        guard let quranService else {
+            favoritesStore.toggleFavorite(surah: surahNumber, ayah: ayah.number)
+            return
+        }
+
+        do {
+            try await quranService.toggleFavorite(surah: surahNumber, ayah: ayah.number)
+            let isFavorite = try await quranService.isFavorite(surah: surahNumber, ayah: ayah.number)
+            favoritesStore.setFavorite(surah: surahNumber, ayah: ayah.number, isFavorite: isFavorite)
+        } catch {
+            favoritesStore.setFavorite(
+                surah: surahNumber,
+                ayah: ayah.number,
+                isFavorite: originalState,
+                addedAt: originalFavorite?.addedAt ?? Date()
+            )
+            toast = LocalizedStringKey("toast.error")
+        }
     }
 
     func isFavorite(_ ayah: Ayah) -> Bool {
         favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
+    }
+
+    private static func makeQuranServiceIfAvailable() -> QuranServicing? {
+        guard let client = SupabaseClientProvider.clientIfAvailable() else { return nil }
+        return QuranService(client: client)
     }
 }
