@@ -77,6 +77,7 @@ final class ReaderViewModel: ObservableObject {
     func loadAyahs() {
         ayahs = translationStore.ayahs(for: surahNumber)
         totalAyahs = translationStore.ayahCount(for: surahNumber)
+        Task { await translationStore.ensureArabicText(for: surahNumber, prefetchNextSurahCount: 1) }
         refreshProgress()
     }
 

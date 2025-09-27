@@ -36,7 +36,6 @@ final class TranslationStore: ObservableObject {
         }
         guard !surahs.isEmpty, !ayahsBySurah.isEmpty else { return }
         await fetchSurahMetadata()
-        await fetchArabicText()
 
         if surahs.isEmpty || ayahsBySurah.isEmpty {
             hasLoadedInitialData = false
@@ -69,14 +68,16 @@ final class TranslationStore: ObservableObject {
         }
     }
 
-    private func fetchArabicText() async {
-        do {
-            arabicAyahsBySurah = try await service.fetchArabicTextBySurah()
-            applyArabicTextToLocalDataset()
-        } catch {
-            print("Failed to load Arabic text", error)
-            arabicAyahsBySurah = [:]
-            hasLoadedInitialData = false
+    func ensureArabicText(for surah: Int, ayahRange: ClosedRange<Int>? = nil, prefetchNextSurahCount: Int = 0) async {
+        await fetchArabicTextIfNeeded(for: surah, ayahRange: ayahRange)
+
+        guard prefetchNextSurahCount > 0 else { return }
+
+        let availableSurahs = Set(surahs.map(\.number))
+        for offset in 1...prefetchNextSurahCount {
+            let nextSurah = surah + offset
+            guard availableSurahs.contains(nextSurah) else { break }
+            await fetchArabicTextIfNeeded(for: nextSurah, ayahRange: nil)
         }
     }
 
@@ -93,6 +94,12 @@ final class TranslationStore: ObservableObject {
 
     func translationWords(for surah: Int, ayah: Int) async throws -> [TranslationWord] {
         let key = TranslationWordCacheKey(surah: surah, ayah: ayah)
+        if let cached = translationWordsCache[key] {
+            return cached
+        }
+
+        await ensureArabicText(for: surah, ayahRange: ayah...ayah)
+
         if let cached = translationWordsCache[key] {
             return cached
         }
@@ -136,6 +143,47 @@ final class TranslationStore: ObservableObject {
 #if DEBUG
         logArabicWordCounts(for: [1, 2], ayahRange: 1...5)
 #endif
+    }
+
+    private func fetchArabicTextIfNeeded(for surah: Int, ayahRange: ClosedRange<Int>?) async {
+        guard !hasArabicText(for: surah, ayahRange: ayahRange) else { return }
+
+        do {
+            let result = try await service.fetchArabicTextBySurah(surah: surah, ayahRange: ayahRange)
+            arabicAyahsBySurah = result.arabicBySurah
+            cacheTranslationWords(result.fetchedWords)
+            applyArabicTextToLocalDataset()
+        } catch {
+            print("Failed to load Arabic text", error)
+        }
+    }
+
+    private func hasArabicText(for surah: Int, ayahRange: ClosedRange<Int>?) -> Bool {
+        guard let arabic = arabicAyahsBySurah[surah], !arabic.isEmpty else { return false }
+
+        guard let ayahRange else {
+            let expectedCount = ayahsBySurah[surah]?.count ?? arabic.count
+            return arabic.count >= expectedCount && expectedCount > 0
+        }
+        for ayah in ayahRange {
+            if arabic[ayah] == nil {
+                return false
+            }
+        }
+        return true
+    }
+
+    private func cacheTranslationWords(_ words: [TranslationWord]) {
+        guard !words.isEmpty else { return }
+
+        let groupedBySurah = Dictionary(grouping: words, by: { $0.surah })
+        for (surah, surahWords) in groupedBySurah {
+            let groupedByAyah = Dictionary(grouping: surahWords, by: { $0.ayah })
+            for (ayah, ayahWords) in groupedByAyah {
+                let sorted = ayahWords.sorted { $0.position < $1.position }
+                translationWordsCache[TranslationWordCacheKey(surah: surah, ayah: ayah)] = sorted
+            }
+        }
     }
 }
 
@@ -231,7 +279,23 @@ extension TranslationStore {
     private final class PreviewTranslationService: TranslationService {
         func fetchSurahMetadata() async throws -> [Surah] { PreviewData.surahs }
 
-        func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] { PreviewData.arabicTexts }
+        func fetchArabicTextBySurah(surah: Int?, ayahRange: ClosedRange<Int>?) async throws -> ArabicTextFetchResult {
+            var arabic = PreviewData.arabicTexts
+            if let surah, let ayahRange {
+                if var ayahMap = arabic[surah] {
+                    ayahMap = ayahMap.filter { ayahRange.contains($0.key) }
+                    arabic[surah] = ayahMap
+                }
+            }
+
+            let words = PreviewData.translationWords.filter { word in
+                let matchesSurah = surah.map { $0 == word.surah } ?? true
+                let matchesAyah = ayahRange.map { $0.contains(word.ayah) } ?? true
+                return matchesSurah && matchesAyah
+            }
+
+            return ArabicTextFetchResult(arabicBySurah: arabic, fetchedWords: words)
+        }
     }
 
     private final class PreviewQuranService: QuranServicing {
@@ -275,6 +339,12 @@ extension TranslationStore {
             store.surahs = PreviewData.surahs
             store.ayahsBySurah = PreviewData.albanianAyahs
             store.arabicAyahsBySurah = PreviewData.arabicTexts
+            let grouped = Dictionary(grouping: PreviewData.translationWords) { word in
+                TranslationWordCacheKey(surah: word.surah, ayah: word.ayah)
+            }
+            store.translationWordsCache = grouped.mapValues { words in
+                words.sorted { $0.position < $1.position }
+            }
             store.hasLoadedInitialData = true
         } else {
             Task { await store.loadInitialData() }

@@ -1,15 +1,30 @@
 import Foundation
 import Supabase
 
+struct ArabicTextFetchResult {
+    let arabicBySurah: [Int: [Int: String]]
+    let fetchedWords: [TranslationWord]
+
+    static let empty = ArabicTextFetchResult(arabicBySurah: [:], fetchedWords: [])
+}
+
 protocol TranslationService {
     func fetchSurahMetadata() async throws -> [Surah]
-    func fetchArabicTextBySurah() async throws -> [Int: [Int: String]]
+    func fetchArabicTextBySurah(surah: Int?, ayahRange: ClosedRange<Int>?) async throws -> ArabicTextFetchResult
+}
+
+extension TranslationService {
+    func fetchArabicTextBySurah() async throws -> ArabicTextFetchResult {
+        try await fetchArabicTextBySurah(surah: nil, ayahRange: nil)
+    }
 }
 
 final class SupabaseTranslationService: TranslationService {
     private let clientProvider: () throws -> SupabaseClient
     private var cachedSurahs: [Surah]?
-    private var cachedArabicTextBySurah: [Int: [Int: String]]?
+    private var cachedArabicTextBySurah: [Int: [Int: String]] = [:]
+    private var fullyLoadedSurahs: Set<Int> = []
+    private var hasLoadedAllArabicText = false
 
     init(clientProvider: @escaping () throws -> SupabaseClient = SupabaseClientProvider.client) {
         self.clientProvider = clientProvider
@@ -48,31 +63,90 @@ final class SupabaseTranslationService: TranslationService {
         return surahs
     }
 
-    func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] {
-        if let cachedArabicTextBySurah {
-            return cachedArabicTextBySurah
+    func fetchArabicTextBySurah(surah: Int? = nil, ayahRange: ClosedRange<Int>? = nil) async throws -> ArabicTextFetchResult {
+        guard needsFetch(for: surah, ayahRange: ayahRange) else {
+            return ArabicTextFetchResult(arabicBySurah: cachedArabicTextBySurah, fetchedWords: [])
         }
 
-        try await loadArabicDataIfNeeded()
-        return cachedArabicTextBySurah ?? [:]
+        let words = try await loadArabicData(surah: surah, ayahRange: ayahRange)
+        if words.isEmpty {
+            markSurahAsLoadedIfNeeded(surah: surah, ayahRange: ayahRange)
+            return ArabicTextFetchResult(arabicBySurah: cachedArabicTextBySurah, fetchedWords: [])
+        }
+
+        let aggregates = Self.buildArabicAggregates(from: words)
+        mergeArabicAggregates(aggregates)
+        markSurahAsLoadedIfNeeded(surah: surah, ayahRange: ayahRange)
+
+        return ArabicTextFetchResult(arabicBySurah: cachedArabicTextBySurah, fetchedWords: words)
     }
 }
 
 private extension SupabaseTranslationService {
-    func loadArabicDataIfNeeded() async throws {
-        guard cachedArabicTextBySurah == nil else { return }
+    func needsFetch(for surah: Int?, ayahRange: ClosedRange<Int>?) -> Bool {
+        if hasLoadedAllArabicText { return false }
 
+        guard let surah else { return true }
+
+        if let ayahRange {
+            let cachedAyahs = cachedArabicTextBySurah[surah] ?? [:]
+            for ayah in ayahRange {
+                if cachedAyahs[ayah] == nil {
+                    return true
+                }
+            }
+            return false
+        }
+
+        return !fullyLoadedSurahs.contains(surah)
+    }
+
+    func loadArabicData(surah: Int?, ayahRange: ClosedRange<Int>?) async throws -> [TranslationWord] {
         let client = try clientProvider()
-        let response: PostgrestResponse<[TranslationWord]> = try await client
+        var query = client
             .from("translation")
             .select()
+
+        if let surah {
+            query = query.eq("surah", value: surah)
+        }
+
+        if let ayahRange {
+            query = query
+                .gte("ayah", value: ayahRange.lowerBound)
+                .lte("ayah", value: ayahRange.upperBound)
+        }
+
+        let response: PostgrestResponse<[TranslationWord]> = try await query
             .order("surah", ascending: true)
             .order("ayah", ascending: true)
             .order("position", ascending: true)
             .execute()
 
-        let words = response.value
-        cachedArabicTextBySurah = Self.buildArabicAggregates(from: words)
+        return response.value
+    }
+
+    func mergeArabicAggregates(_ aggregates: [Int: [Int: String]]) {
+        guard !aggregates.isEmpty else { return }
+
+        for (surah, ayahMap) in aggregates {
+            var existing = cachedArabicTextBySurah[surah] ?? [:]
+            for (ayah, text) in ayahMap {
+                existing[ayah] = text
+            }
+            cachedArabicTextBySurah[surah] = existing
+        }
+    }
+
+    func markSurahAsLoadedIfNeeded(surah: Int?, ayahRange: ClosedRange<Int>?) {
+        if surah == nil && ayahRange == nil {
+            hasLoadedAllArabicText = true
+            fullyLoadedSurahs = Set(cachedArabicTextBySurah.keys)
+            return
+        }
+
+        guard let surah, ayahRange == nil else { return }
+        fullyLoadedSurahs.insert(surah)
     }
 
     static func buildArabicAggregates(from words: [TranslationWord]) -> [Int: [Int: String]] {
