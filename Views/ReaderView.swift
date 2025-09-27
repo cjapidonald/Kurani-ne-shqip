@@ -179,17 +179,15 @@ struct ReaderView: View {
                     Button {
                         viewModel.decreaseFont()
                     } label: {
-                        Image(systemName: "textformat.size.smaller")
-                            .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
-                            .foregroundStyle(Color.kuraniAccentLight)
+                        FontSizeButtonLabel(action: .decrease)
                     }
+                    .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
                     Button {
                         viewModel.increaseFont()
                     } label: {
-                        Image(systemName: "textformat.size.larger")
-                            .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
-                            .foregroundStyle(Color.kuraniAccentLight)
+                        FontSizeButtonLabel(action: .increase)
                     }
+                    .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
                     Menu {
                         Button(LocalizedStringKey("reader.lineSpacing.decrease")) { viewModel.decreaseLineSpacing() }
                         Button(LocalizedStringKey("reader.lineSpacing.increase")) { viewModel.increaseLineSpacing() }
