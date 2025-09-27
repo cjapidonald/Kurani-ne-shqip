@@ -4,18 +4,38 @@ import UIKit
 enum KuraniFont {
     static let name = "KG Primary Penmanship"
 
+    private static let isFontAvailable: Bool = {
+        UIFont(name: name, size: 12) != nil
+    }()
+
     static func forTextStyle(_ style: Font.TextStyle) -> Font {
         let uiTextStyle = style.uiTextStyle
         let baseSize = UIFont.preferredFont(forTextStyle: uiTextStyle).pointSize
-        return Font.custom(name, size: baseSize, relativeTo: style)
+        return customFont(size: baseSize, relativeTo: style)
     }
 
     static func size(_ size: CGFloat) -> Font {
-        Font.custom(name, size: size)
+        customFont(size: size)
     }
 
     static func size(_ size: CGFloat, relativeTo style: Font.TextStyle) -> Font {
-        Font.custom(name, size: size, relativeTo: style)
+        customFont(size: size, relativeTo: style)
+    }
+
+    private static func customFont(size: CGFloat, relativeTo style: Font.TextStyle? = nil) -> Font {
+        guard isFontAvailable else {
+            if let style {
+                return .system(style)
+            } else {
+                return .system(size: size)
+            }
+        }
+
+        if let style {
+            return .custom(name, size: size, relativeTo: style)
+        } else {
+            return .custom(name, size: size)
+        }
     }
 }
 
