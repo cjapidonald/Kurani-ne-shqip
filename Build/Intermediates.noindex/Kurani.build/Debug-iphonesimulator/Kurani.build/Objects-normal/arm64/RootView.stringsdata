@@ -4,26 +4,50 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "tabs.library",
+        "key": "Lexo (AR)",
         "location": {
-          "startingColumn": 42,
-          "startingLine": 40
+          "startingColumn": 23,
+          "startingLine": 49
         }
       },
       {
         "comment": "",
-        "key": "tabs.notes",
+        "key": "Lexo (SQ)",
         "location": {
-          "startingColumn": 46,
-          "startingLine": 47
+          "startingColumn": 23,
+          "startingLine": 59
         }
       },
       {
         "comment": "",
-        "key": "tabs.settings",
+        "key": "Të preferuarat",
         "location": {
-          "startingColumn": 46,
-          "startingLine": 54
+          "startingColumn": 23,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Shënimet",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.changeSurah",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "reader.changeSurah",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 198
         }
       }
     ]

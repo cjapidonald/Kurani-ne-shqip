@@ -66,7 +66,7 @@ struct NoteEditorView: View {
             .task { await loadAlbanianTextIfNeeded() }
             .onAppear { handleInitialAuthenticationState() }
             .onReceive(authManager.$userId) { userId in
-                showSignInPrompt = userId == nil && AuthService.shared.currentUserId() == nil
+                showSignInPrompt = (userId == nil)
             }
         }
         .sheet(isPresented: $showSignInPrompt) {
@@ -142,7 +142,7 @@ private extension NoteEditorView {
     }
 
     func handleInitialAuthenticationState() {
-        if AuthService.shared.currentUserId() == nil {
+        if authManager.userId == nil {
             showSignInPrompt = true
         }
     }
