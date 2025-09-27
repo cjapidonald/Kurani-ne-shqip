@@ -52,25 +52,24 @@ struct KuraniApp: App {
                 progressStore: progressStore,
                 favoritesStore: favoritesStore
             )
-                .environmentObject(translationStore)
-                .environmentObject(notesStore)
-                .environmentObject(favoritesStore)
-                .environmentObject(authManager)
-                .environmentObject(progressStore)
-                .preferredColorScheme(ColorScheme.light)
-                .appStartTask()
-                .task {
-                    await translationStore.loadInitialData()
-                    await notesStore.observeAuthChanges(authManager: authManager)
+            .environmentObject(translationStore)
+            .environmentObject(notesStore)
+            .environmentObject(favoritesStore)
+            .environmentObject(authManager)
+            .environmentObject(progressStore)
+            .preferredColorScheme(.light)
+            .task {
+                await translationStore.loadInitialData()
+                await notesStore.observeAuthChanges(authManager: authManager)
+            }
+            #if DEBUG
+            .overlay(alignment: Alignment.top) {
+                if let message = configurationErrorMessage {
+                    DebugConfigurationBanner(message: message)
+                        .padding(.top, 16)
                 }
-                #if DEBUG
-                .overlay(alignment: .top) {
-                    if let message = configurationErrorMessage {
-                        DebugConfigurationBanner(message: message)
-                            .padding(.top, 16)
-                    }
-                }
-                #endif
+            }
+            #endif
         }
     }
 }
@@ -106,3 +105,4 @@ private extension KuraniApp {
     }
 }
 #endif
+
