@@ -30,11 +30,28 @@ struct SecretsLoader {
     }
 
     func supabaseURL() throws -> URL {
-        guard let value = bundle.object(forInfoDictionaryKey: "SUPABASE_URL") as? String, !value.isEmpty else {
+        guard let rawValue = bundle.object(forInfoDictionaryKey: "SUPABASE_URL") as? String else {
             throw Secrets.SecretsError.missingValue(key: "SUPABASE_URL")
         }
 
-        guard let url = URL(string: value) else {
+        let value = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !value.isEmpty else {
+            throw Secrets.SecretsError.missingValue(key: "SUPABASE_URL")
+        }
+
+        guard var components = URLComponents(string: value) else {
+            throw Secrets.SecretsError.invalidURL(key: "SUPABASE_URL")
+        }
+
+        guard let scheme = components.scheme?.lowercased(), scheme == "https" else {
+            throw Secrets.SecretsError.invalidURL(key: "SUPABASE_URL")
+        }
+
+        guard let host = components.host, !host.isEmpty else {
+            throw Secrets.SecretsError.invalidURL(key: "SUPABASE_URL")
+        }
+
+        guard let url = components.url else {
             throw Secrets.SecretsError.invalidURL(key: "SUPABASE_URL")
         }
 
@@ -42,7 +59,13 @@ struct SecretsLoader {
     }
 
     func supabaseAnonKey() throws -> String {
-        guard let value = bundle.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String, !value.isEmpty else {
+        guard let rawValue = bundle.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String else {
+            throw Secrets.SecretsError.missingValue(key: "SUPABASE_ANON_KEY")
+        }
+
+        let value = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !value.isEmpty else {
             throw Secrets.SecretsError.missingValue(key: "SUPABASE_ANON_KEY")
         }
 

@@ -2,8 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var translationStore = TranslationStore()
-    @StateObject private var notesStore = NotesStore(client: SupabaseClientProvider.client)
-    @StateObject private var authManager = AuthManager(client: SupabaseClientProvider.client)
+    @StateObject private var notesStore = NotesStore(client: SupabaseClientProvider.clientIfAvailable())
+    @StateObject private var authManager = AuthManager(client: SupabaseClientProvider.clientIfAvailable())
     @StateObject private var favoritesStore = FavoritesStore()
     @StateObject private var progressStore = ReadingProgressStore()
 
@@ -30,7 +30,7 @@ struct ContentView: View {
 #if DEBUG
 extension NotesStore {
     static func previewStore() -> NotesStore {
-        NotesStore(client: SupabaseClientProvider.client)
+        NotesStore(client: SupabaseClientProvider.clientIfAvailable())
     }
 }
 #Preview {

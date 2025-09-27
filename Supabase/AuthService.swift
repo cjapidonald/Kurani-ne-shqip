@@ -7,7 +7,10 @@ import UIKit
 
 @MainActor
 final class AuthService: NSObject {
-    static let shared = AuthService(client: SupabaseClientProvider.client)
+    static func shared(bundle: Bundle = .main) throws -> AuthService {
+        let client = try SupabaseClientProvider.client(bundle: bundle)
+        return AuthService(client: client)
+    }
 
     private let client: SupabaseClient
     private var appleCoordinator: AppleSignInCoordinator?

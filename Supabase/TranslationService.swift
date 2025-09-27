@@ -7,12 +7,16 @@ protocol TranslationService {
 }
 
 final class SupabaseTranslationService: TranslationService {
-    private let client: SupabaseClient
+    private let clientProvider: () throws -> SupabaseClient
     private var cachedSurahs: [Surah]?
     private var cachedArabicTextBySurah: [Int: [Int: String]]?
 
-    init(client: SupabaseClient = SupabaseClientProvider.client) {
-        self.client = client
+    init(clientProvider: @escaping () throws -> SupabaseClient = SupabaseClientProvider.client) {
+        self.clientProvider = clientProvider
+    }
+
+    convenience init(client: SupabaseClient) {
+        self.init(clientProvider: { client })
     }
 
     func fetchSurahMetadata() async throws -> [Surah] {
@@ -32,6 +36,7 @@ final class SupabaseTranslationService: TranslationService {
             }
         }
 
+        let client = try clientProvider()
         let response: PostgrestResponse<[SurahMetadataRow]> = try await client
             .from("surah_metadata")
             .select()
@@ -57,6 +62,7 @@ private extension SupabaseTranslationService {
     func loadArabicDataIfNeeded() async throws {
         guard cachedArabicTextBySurah == nil else { return }
 
+        let client = try clientProvider()
         let response: PostgrestResponse<[TranslationWord]> = try await client
             .from("translation")
             .select()
