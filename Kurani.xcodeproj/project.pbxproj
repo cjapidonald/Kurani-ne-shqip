@@ -44,6 +44,8 @@ D4F6B6D42C9F000100000094 /* ArabicSelectableTextView.swift in Sources */ = {isa 
                 D4F6B6D62C9F000100000096 /* ArabicDictionaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6D72C9F000100000097 /* ArabicDictionaryDetailView.swift */; };
                 F8643BD45C394BFFA5D99674 /* ReadingProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788809F18B943D3B6063A5A /* ReadingProgressStore.swift */; };
                 D4FF6AB12D000001000000A1 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF6AB02D000001000000A0 /* TranslationService.swift */; };
+                D4F6B7A42C9F0001000000D3 /* QuranService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B7A32C9F0001000000D2 /* QuranService.swift */; };
+                D4F6B7A62C9F0001000000D5 /* QuranServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B7A52C9F0001000000D4 /* QuranServicing.swift */; };
                 E4474F56488F4C62929FB0C8 /* ProgressBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333054A5288A4EB490D5C514 /* ProgressBadge.swift */; };
                 D4F6B6E42C9F0001000000AA /* FavoriteFolderPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6E32C9F0001000000AA /* FavoriteFolderPickerView.swift */; };
                 D4F6B6F82C9F0001000000B3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6B6F72C9F0001000000B2 /* NotificationManager.swift */; };
@@ -62,7 +64,9 @@ D47AD4DA2A6B02A300000022 /* Ayah.swift */ = {isa = PBXFileReference; lastKnownFi
 D47AD4DA2A6B02A300000023 /* Surah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surah.swift; sourceTree = "<group>"; };
 D47AD4DA2A6B02A300000024 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 D4F6B6D12C9F000100000091 /* ArabicDictionaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionaryEntry.swift; sourceTree = "<group>"; };
-D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionary.swift; sourceTree = "<group>"; };
+                D4F6B6D32C9F000100000093 /* ArabicDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionary.swift; sourceTree = "<group>"; };
+                D4F6B7A32C9F0001000000D2 /* QuranService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranService.swift; sourceTree = "<group>"; };
+                D4F6B7A52C9F0001000000D4 /* QuranServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranServicing.swift; sourceTree = "<group>"; };
                 D4F6B6D52C9F000100000095 /* ArabicSelectableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicSelectableTextView.swift; sourceTree = "<group>"; };
                 D4F6B6D72C9F000100000097 /* ArabicDictionaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArabicDictionaryDetailView.swift; sourceTree = "<group>"; };
                 D4F6B7002C9F0001000000C0 /* AlbanianReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbanianReadingView.swift; sourceTree = "<group>"; };
@@ -204,6 +208,8 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
                                 D47AD4DA2A6B02A300000025 /* NotesStore.swift */,
                                 D47AD4DA2A6B02A300000026 /* AuthManager.swift */,
                                 D47AD4DA2A6B02A300000027 /* SupabaseClientProvider.swift */,
+                                D4F6B7A32C9F0001000000D2 /* QuranService.swift */,
+                                D4F6B7A52C9F0001000000D4 /* QuranServicing.swift */,
                                 D4FF6AB02D000001000000A0 /* TranslationService.swift */,
                         );
 			path = Supabase;
@@ -334,7 +340,9 @@ D4FF6AAA2D00000100000090 /* Fonts */ = {isa = PBXFileReference; lastKnownFileTyp
                                 D47AD4DA2A6B02A300000046 /* Haptics.swift in Sources */,
                                 D4FF6AAA2D00000100000093 /* KuraniFont.swift in Sources */,
                                 D47AD4DA2A6B02A300000044 /* ShareSheet.swift in Sources */,
-				D4F6B6D22C9F000100000092 /* ArabicDictionary.swift in Sources */,
+                                D4F6B6D22C9F000100000092 /* ArabicDictionary.swift in Sources */,
+                                D4F6B7A42C9F0001000000D3 /* QuranService.swift in Sources */,
+                                D4F6B7A62C9F0001000000D5 /* QuranServicing.swift in Sources */,
                                 D47AD4DA2A6B02A300000043 /* SupabaseClientProvider.swift in Sources */,
                                 D4FF6AB12D000001000000A1 /* TranslationService.swift in Sources */,
                                 D47AD4DA2A6B02A300000042 /* AuthManager.swift in Sources */,

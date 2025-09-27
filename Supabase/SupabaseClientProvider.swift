@@ -7,14 +7,17 @@ final class SupabaseClientProvider {
     static var client: SupabaseClient { shared.client }
     static var redirectURL: URL? { shared.redirectURL }
 
+    struct Configuration {
+        let url: URL
+        let anonKey: String
+    }
+
     let client: SupabaseClient
     let redirectURL: URL?
 
-    init(bundle: Bundle = .main, secretsLoader: SecretsLoader? = nil) throws {
-        let loader = secretsLoader ?? SecretsLoader(bundle: bundle)
+    init(bundle: Bundle = .main, configuration: Configuration? = nil) throws {
+        let configuration = try configuration ?? SupabaseClientProvider.loadConfiguration(from: bundle)
         redirectURL = SupabaseClientProvider.makeRedirectURL(from: bundle)
-
-        let configuration = try loader.supabaseConfiguration()
 
         let options: SupabaseClientOptions
         if let redirectURL {
@@ -29,6 +32,24 @@ final class SupabaseClientProvider {
         let hostDescription = configuration.url.host ?? configuration.url.absoluteString
         print("[SupabaseClientProvider] Supabase ✅ (\(hostDescription))")
         #endif
+    }
+
+    private static func loadConfiguration(from bundle: Bundle) throws -> Configuration {
+        let urlString = try requireValue(forKey: "SUPABASE_URL", in: bundle)
+        let anonKey = try requireValue(forKey: "SUPABASE_ANON_KEY", in: bundle)
+
+        guard let url = URL(string: urlString) else {
+            throw Secrets.SecretsError.invalidURL(key: "SUPABASE_URL")
+        }
+
+        return Configuration(url: url, anonKey: anonKey)
+    }
+
+    private static func requireValue(forKey key: String, in bundle: Bundle) throws -> String {
+        guard let value = bundle.object(forInfoDictionaryKey: key) as? String, !value.isEmpty else {
+            throw Secrets.SecretsError.missingValue(key: key)
+        }
+        return value
     }
 
     private static func makeRedirectURL(from bundle: Bundle) -> URL? {
