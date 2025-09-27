@@ -18,7 +18,9 @@ enum QuranServiceError: LocalizedError {
 final class QuranService: QuranServicing {
     private let clientProvider: () throws -> SupabaseClient
 
-    init(clientProvider: @escaping () throws -> SupabaseClient = SupabaseClientProvider.client) {
+    init(clientProvider: @escaping () throws -> SupabaseClient = {
+        try SupabaseClientProvider.configurationResult().get().client
+    }) {
         self.clientProvider = clientProvider
     }
 
@@ -206,3 +208,4 @@ private extension QuranService {
         return error
     }
 }
+
