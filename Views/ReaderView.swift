@@ -458,17 +458,28 @@ private struct AyahRowView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .top, spacing: 12) {
-                Button(action: onOpenActions) {
-                    ZStack(alignment: .topTrailing) {
-                        Pill(number: ayah.number)
-                        if note != nil {
-                            NoteMarker()
-                                .offset(x: 8, y: -8)
+            HStack(alignment: .top, spacing: 16) {
+                VStack(spacing: 12) {
+                    Button(action: onToggleFavorite) {
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundStyle(isFavorite ? Color.kuraniAccentBrand : Color.kuraniAccentLight.opacity(0.8))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(isFavorite ? LocalizedStringKey("reader.favorite.remove") : LocalizedStringKey("reader.favorite.add"))
+
+                    Button(action: onOpenActions) {
+                        ZStack(alignment: .topTrailing) {
+                            Pill(number: ayah.number)
+                            if note != nil {
+                                NoteMarker()
+                                    .offset(x: 8, y: -8)
+                            }
                         }
                     }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
+                .frame(minWidth: 48)
 
                 VStack(alignment: .leading, spacing: 6) {
                     if showAlbanianText {
@@ -496,17 +507,6 @@ private struct AyahRowView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     }
                 }
-
-                Spacer(minLength: 12)
-
-                Button(action: onToggleFavorite) {
-                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(isFavorite ? Color.kuraniAccentBrand : Color.kuraniAccentLight.opacity(0.8))
-                        .accessibilityHidden(true)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(isFavorite ? LocalizedStringKey("reader.favorite.remove") : LocalizedStringKey("reader.favorite.add"))
             }
 
             if let note {

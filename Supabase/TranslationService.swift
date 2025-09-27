@@ -3,14 +3,12 @@ import Supabase
 
 protocol TranslationService {
     func fetchSurahMetadata() async throws -> [Surah]
-    func fetchAyahsBySurah() async throws -> [Int: [Ayah]]
     func fetchArabicTextBySurah() async throws -> [Int: [Int: String]]
 }
 
 final class SupabaseTranslationService: TranslationService {
     private let client: SupabaseClient
     private var cachedSurahs: [Surah]?
-    private var cachedAyahsBySurah: [Int: [Ayah]]?
     private var cachedArabicTextBySurah: [Int: [Int: String]]?
 
     init(client: SupabaseClient = SupabaseClientProvider.client) {
@@ -45,28 +43,19 @@ final class SupabaseTranslationService: TranslationService {
         return surahs
     }
 
-    func fetchAyahsBySurah() async throws -> [Int: [Ayah]] {
-        if let cachedAyahsBySurah {
-            return cachedAyahsBySurah
-        }
-
-        try await loadTranslationDataIfNeeded()
-        return cachedAyahsBySurah ?? [:]
-    }
-
     func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] {
         if let cachedArabicTextBySurah {
             return cachedArabicTextBySurah
         }
 
-        try await loadTranslationDataIfNeeded()
+        try await loadArabicDataIfNeeded()
         return cachedArabicTextBySurah ?? [:]
     }
 }
 
 private extension SupabaseTranslationService {
-    func loadTranslationDataIfNeeded() async throws {
-        guard cachedAyahsBySurah == nil || cachedArabicTextBySurah == nil else { return }
+    func loadArabicDataIfNeeded() async throws {
+        guard cachedArabicTextBySurah == nil else { return }
 
         let response: PostgrestResponse<[TranslationWord]> = try await client
             .from("translation")
@@ -77,40 +66,29 @@ private extension SupabaseTranslationService {
             .execute()
 
         let words = response.value
-        let aggregates = Self.buildAggregates(from: words)
-        cachedAyahsBySurah = aggregates.ayahsBySurah
-        cachedArabicTextBySurah = aggregates.arabicTextBySurah
+        cachedArabicTextBySurah = Self.buildArabicAggregates(from: words)
     }
 
-    static func buildAggregates(from words: [TranslationWord]) -> (
-        ayahsBySurah: [Int: [Ayah]],
-        arabicTextBySurah: [Int: [Int: String]]
-    ) {
-        guard !words.isEmpty else { return ([:], [:]) }
+    static func buildArabicAggregates(from words: [TranslationWord]) -> [Int: [Int: String]] {
+        guard !words.isEmpty else { return [:] }
 
         let groupedBySurah = Dictionary(grouping: words, by: { $0.surah })
-        var ayahsResult: [Int: [Ayah]] = [:]
         var arabicResult: [Int: [Int: String]] = [:]
 
         for (surah, surahWords) in groupedBySurah {
             let groupedByAyah = Dictionary(grouping: surahWords, by: { $0.ayah })
-            var ayahs: [Ayah] = []
             var arabicTexts: [Int: String] = [:]
 
             for ayahNumber in groupedByAyah.keys.sorted() {
                 guard let ayahWords = groupedByAyah[ayahNumber]?.sorted(by: { $0.position < $1.position }) else { continue }
-                let albanian = combine(words: ayahWords.map(\.albanianWord))
                 let arabic = combine(words: ayahWords.map(\.arabicWord))
-                let ayah = Ayah(number: ayahNumber, text: albanian, arabicText: arabic.isEmpty ? nil : arabic)
-                ayahs.append(ayah)
                 arabicTexts[ayahNumber] = arabic
             }
 
-            ayahsResult[surah] = ayahs
             arabicResult[surah] = arabicTexts
         }
 
-        return (ayahsResult, arabicResult)
+        return arabicResult
     }
 
     static func combine(words: [String]) -> String {

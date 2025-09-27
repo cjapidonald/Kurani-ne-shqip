@@ -24,6 +24,7 @@
 "library.continueReading" = "Vazhdo leximin";
 "library.surah" = "Sure";
 "library.ayahs" = "ajete";
+"library.progress" = "%@ lexuar";
 
 "reader.title.compact" = "%d • %@";
 "reader.textSize" = "Madhësia e tekstit";
@@ -35,6 +36,7 @@
 "reader.note.add" = "Shkruaj shënim";
 "reader.note.edit" = "Ndrysho shënimin";
 "reader.note.saved" = "Shënimi u ruajt";
+"noteEditor.localTextMissing" = "Teksti lokal i ajetit nuk u gjet.";
 
 "notes.title" = "Shënimet e mia";
 "notes.empty" = "S’ka shënime ende";
