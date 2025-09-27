@@ -117,7 +117,7 @@ final class QuranService: QuranServicing {
             let userId = try await requireAuthenticatedUserId()
             if try await isFavorite(surah: surah, ayah: ayah, userId: userId) {
                 _ = try await client
-                    .from("favorites")
+                    .from("favourites")
                     .delete()
                     .eq("user_id", value: userId.uuidString)
                     .eq("surah", value: surah)
@@ -126,7 +126,7 @@ final class QuranService: QuranServicing {
             } else {
                 let payload = FavoriteInsertPayload(user_id: userId, surah: surah, ayah: ayah)
                 _ = try await client
-                    .from("favorites")
+                    .from("favourites")
                     .insert([payload])
                     .execute()
             }
@@ -139,7 +139,7 @@ final class QuranService: QuranServicing {
         do {
             let userId = try await requireAuthenticatedUserId()
             let response: PostgrestResponse<[FavoriteViewRow]> = try await client
-                .from("v_favorites_with_text")
+                .from("v_favourites_with_text")
                 .select()
                 .eq("user_id", value: userId.uuidString)
                 .order("surah", ascending: true)
@@ -177,7 +177,7 @@ private extension QuranService {
 
     func isFavorite(surah: Int, ayah: Int, userId: UUID) async throws -> Bool {
         let response: PostgrestResponse<[FavoriteRow]> = try await client
-            .from("favorites")
+            .from("favourites")
             .select("id", count: .exact)
             .eq("user_id", value: userId.uuidString)
             .eq("surah", value: surah)
