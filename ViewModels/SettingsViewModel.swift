@@ -245,6 +245,60 @@ final class SettingsViewModel: ObservableObject {
         }
     }
 
+#if DEBUG
+    func runArabicAlbanianScopeCheck() {
+        Task { await performArabicAlbanianScopeCheck() }
+    }
+
+    private func performArabicAlbanianScopeCheck() async {
+        await translationStore.loadInitialData()
+
+        let scopes: [(surah: Int, range: ClosedRange<Int>)] = [
+            (1, 1...7),
+            (2, 1...5)
+        ]
+
+        var encounteredError = false
+
+        for (surah, range) in scopes {
+            await translationStore.ensureArabicText(for: surah, ayahRange: range)
+
+            for ayahNumber in range {
+                do {
+                    let words = try await translationStore.translationWords(for: surah, ayah: ayahNumber)
+                    let albanianWordCount = words.filter { !$0.albanianWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }.count
+                    let arabicWordCount = words.filter { !$0.arabicWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }.count
+
+                    let ayah = translationStore.ayahs(for: surah).first(where: { $0.number == ayahNumber })
+                    let albanianTextWordCount = wordCount(for: ayah?.text ?? "")
+                    let arabicTextWordCount = wordCount(for: ayah?.arabicText ?? "")
+
+                    let albanianTextSummary = albanianTextWordCount > 0 ? "\(albanianTextWordCount)" : "missing"
+                    let arabicTextSummary = arabicTextWordCount > 0 ? "\(arabicTextWordCount)" : "missing"
+
+                    let summary = "ScopeCheck S\(surah):\(ayahNumber) AL words:\(albanianWordCount) text:\(albanianTextSummary) | AR words:\(arabicWordCount) text:\(arabicTextSummary)"
+                    print(summary)
+                } catch {
+                    encounteredError = true
+                    let message = "ScopeCheck S\(surah):\(ayahNumber) error: \(error.localizedDescription)"
+                    print(message)
+                }
+            }
+        }
+
+        let toastMessage = encounteredError
+            ? "Scope check completed with issues. See console."
+            : "Scope check complete. See console."
+        toast = LocalizedStringKey(stringLiteral: toastMessage)
+    }
+
+    private func wordCount(for text: String) -> Int {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return 0 }
+        return trimmed.split(whereSeparator: { $0.isWhitespace }).count
+    }
+#endif
+
     private func ensureAuthorization() async -> Bool {
         let status = await notificationManager.authorizationStatus()
         switch status {

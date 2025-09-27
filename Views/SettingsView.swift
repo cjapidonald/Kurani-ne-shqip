@@ -121,6 +121,21 @@ struct SettingsView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
 
+#if DEBUG
+                Section(header: Text("Developer")) {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Button("Run Arabic/Albanian scope check") {
+                            viewModel.runArabicAlbanianScopeCheck()
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .appleCard()
+                    .padding(.horizontal, 12)
+                }
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+#endif
+
                 Section(header: Text(LocalizedStringKey("settings.about"))) {
                     VStack(alignment: .leading, spacing: 12) {
                         Text(LocalizedStringKey("settings.about.disclaimer"))
