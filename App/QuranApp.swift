@@ -32,6 +32,7 @@ struct KuraniApp: App {
                     await translationStore.loadInitialData()
                     await notesStore.observeAuthChanges(authManager: authManager)
                 }
+                .appStartTask()
         }
     }
 }
