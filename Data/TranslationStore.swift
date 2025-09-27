@@ -8,12 +8,19 @@ final class TranslationStore: ObservableObject {
 
     private let service: TranslationService
     private let albanianLoader: AlbanianQuranLoading
+    private let quranService: QuranServicing
     private var arabicAyahsBySurah: [Int: [Int: String]] = [:]
     private var hasLoadedInitialData = false
+    private var translationWordsCache: [TranslationWordCacheKey: [TranslationWord]] = [:]
 
-    init(service: TranslationService = SupabaseTranslationService(), albanianLoader: AlbanianQuranLoading = AlbanianQuranLoader()) {
+    init(
+        service: TranslationService = SupabaseTranslationService(),
+        albanianLoader: AlbanianQuranLoading = AlbanianQuranLoader(),
+        quranService: QuranServicing = QuranService()
+    ) {
         self.service = service
         self.albanianLoader = albanianLoader
+        self.quranService = quranService
     }
 
     func loadInitialData() async {
@@ -81,6 +88,18 @@ final class TranslationStore: ObservableObject {
         return surahs.first(where: { $0.number == surah })?.ayahCount ?? 0
     }
 
+    func translationWords(for surah: Int, ayah: Int) async throws -> [TranslationWord] {
+        let key = TranslationWordCacheKey(surah: surah, ayah: ayah)
+        if let cached = translationWordsCache[key] {
+            return cached
+        }
+
+        let words = try await quranService.loadTranslationWords(surah: surah, ayah: ayah)
+        let sorted = words.sorted { $0.position < $1.position }
+        translationWordsCache[key] = sorted
+        return sorted
+    }
+
     func title(for surah: Int) -> String {
         surahs.first(where: { $0.number == surah })?.name ?? ""
     }
@@ -114,6 +133,13 @@ final class TranslationStore: ObservableObject {
     }
 }
 
+private extension TranslationStore {
+    struct TranslationWordCacheKey: Hashable {
+        let surah: Int
+        let ayah: Int
+    }
+}
+
 
 // MARK: - Preview Support
 
@@ -134,6 +160,24 @@ extension TranslationStore {
                 Ayah(number: 6, text: "Na udhëzo në rrugën e drejtë.", arabicText: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ"),
                 Ayah(number: 7, text: "Rrugën e atyre që Ti i ke bekuar, jo të atyre që kanë hidhërimin Tënd, dhe as të atyre që janë të humbur.", arabicText: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ")
             ]
+        ]
+
+        static let translationWords: [TranslationWord] = [
+            TranslationWord(surah: 1, ayah: 1, position: 1, arabicWord: "بِسْمِ", albanianWord: "Me"),
+            TranslationWord(surah: 1, ayah: 1, position: 2, arabicWord: "ٱللَّهِ", albanianWord: "emrin e Allahut"),
+            TranslationWord(surah: 1, ayah: 2, position: 1, arabicWord: "ٱلْحَمْدُ", albanianWord: "Falënderimi"),
+            TranslationWord(surah: 1, ayah: 2, position: 2, arabicWord: "لِلَّهِ", albanianWord: "i qoftë Allahut"),
+            TranslationWord(surah: 1, ayah: 3, position: 1, arabicWord: "ٱلرَّحْمَٰنِ", albanianWord: "Mëshiruesit"),
+            TranslationWord(surah: 1, ayah: 3, position: 2, arabicWord: "ٱلرَّحِيمِ", albanianWord: "Mëshirëbërësit"),
+            TranslationWord(surah: 1, ayah: 4, position: 1, arabicWord: "مَالِكِ", albanianWord: "Sunduesit"),
+            TranslationWord(surah: 1, ayah: 4, position: 2, arabicWord: "يَوْمِ", albanianWord: "të Ditës"),
+            TranslationWord(surah: 1, ayah: 4, position: 3, arabicWord: "الدِّينِ", albanianWord: "së Gjykimit"),
+            TranslationWord(surah: 1, ayah: 5, position: 1, arabicWord: "إِيَّاكَ", albanianWord: "Vetëm Ty"),
+            TranslationWord(surah: 1, ayah: 5, position: 2, arabicWord: "نَعْبُدُ", albanianWord: "adhurojmë"),
+            TranslationWord(surah: 1, ayah: 6, position: 1, arabicWord: "ٱهْدِنَا", albanianWord: "Na udhëzo"),
+            TranslationWord(surah: 1, ayah: 7, position: 1, arabicWord: "صِرَاطَ", albanianWord: "Rrugën"),
+            TranslationWord(surah: 1, ayah: 7, position: 2, arabicWord: "الَّذِينَ", albanianWord: "e atyre"),
+            TranslationWord(surah: 1, ayah: 7, position: 3, arabicWord: "أَنْعَمْتَ", albanianWord: "që i ke bekuar")
         ]
 
         static let arabicTexts: [Int: [Int: String]] = {
@@ -159,9 +203,42 @@ extension TranslationStore {
         func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] { PreviewData.arabicTexts }
     }
 
+    private final class PreviewQuranService: QuranServicing {
+        func loadTranslationWords(surah: Int, ayah: Int?) async throws -> [TranslationWord] {
+            let words = PreviewData.translationWords.filter { $0.surah == surah }
+            guard let ayah else { return words }
+            return words.filter { $0.ayah == ayah }
+        }
+
+        func rebuildAlbanianAyah(surah: Int, ayah: Int) async throws -> String {
+            if let ayah = PreviewData.albanianAyahs[surah]?.first(where: { $0.number == ayah }) {
+                return ayah.text
+            }
+            let words = try await loadTranslationWords(surah: surah, ayah: ayah)
+            guard !words.isEmpty else { return "" }
+            return words.sorted { $0.position < $1.position }.map(\.albanianWord).joined(separator: " ")
+        }
+
+        func getMyNotesForSurah(surah: Int) async throws -> [NoteRow] { [] }
+
+        func upsertMyNote(surah: Int, ayah: Int, albanianText: String, note: String) async throws {}
+
+        func isFavorite(surah: Int, ayah: Int) async throws -> Bool { false }
+
+        func toggleFavorite(surah: Int, ayah: Int) async throws {}
+
+        func loadMyFavouritesView() async throws -> [FavoriteViewRow] { [] }
+
+        func loadArabicDictionary() async throws -> [ArabicDictionaryEntry] { [] }
+    }
+
     static func previewStore(preload: Bool = true) -> TranslationStore {
         let service = PreviewTranslationService()
-        let store = TranslationStore(service: service, albanianLoader: PreviewAlbanianLoader())
+        let store = TranslationStore(
+            service: service,
+            albanianLoader: PreviewAlbanianLoader(),
+            quranService: PreviewQuranService()
+        )
 
         if preload {
             store.surahs = PreviewData.surahs

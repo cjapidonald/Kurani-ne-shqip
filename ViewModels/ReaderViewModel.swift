@@ -131,6 +131,16 @@ final class ReaderViewModel: ObservableObject {
         favoriteAyahIds.contains(FavoriteAyah.id(for: surahNumber, ayah: ayah.number))
     }
 
+    func translationWords(for ayah: Ayah) async throws -> [TranslationWord] {
+        try await translationStore.translationWords(for: surahNumber, ayah: ayah.number)
+    }
+
+    func translationWord(for ayah: Ayah, at index: Int) async throws -> TranslationWord? {
+        let words = try await translationWords(for: ayah)
+        guard index >= 0, index < words.count else { return nil }
+        return words[index]
+    }
+
     private func resolvedTitle(for ayah: Ayah) -> String {
         if let existing = note(for: ayah)?.title?.trimmingCharacters(in: .whitespacesAndNewlines), !existing.isEmpty {
             return existing
