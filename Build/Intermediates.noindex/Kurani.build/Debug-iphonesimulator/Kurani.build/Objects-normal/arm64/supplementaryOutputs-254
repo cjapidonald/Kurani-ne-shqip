@@ -1,0 +1,23 @@
+{
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Supabase/QuranService.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranService.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranService.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranService.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranService.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranService.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Supabase/QuranServicing.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranServicing.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranServicing.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranServicing.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranServicing.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/QuranServicing.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Supabase/SupabaseClientProvider.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SupabaseClientProvider.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SupabaseClientProvider.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SupabaseClientProvider.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SupabaseClientProvider.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/SupabaseClientProvider.swiftdeps"
+  }
+}

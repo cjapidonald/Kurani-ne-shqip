@@ -1,0 +1,23 @@
+{
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Data/ReadingProgressStore.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/ReadingProgressStore.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/ReadingProgressStore.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/ReadingProgressStore.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/ReadingProgressStore.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/ReadingProgressStore.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Data/TranslationStore.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/TranslationStore.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/TranslationStore.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/TranslationStore.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/TranslationStore.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/TranslationStore.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Models/Ayah.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Ayah.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Ayah.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Ayah.dia",
+    "object" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Ayah.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Kurani-ne-shqip/Build/Intermediates.noindex/Kurani.build/Debug-iphonesimulator/Kurani.build/Objects-normal/arm64/Ayah.swiftdeps"
+  }
+}

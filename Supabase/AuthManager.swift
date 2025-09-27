@@ -161,3 +161,11 @@ private extension AuthManager {
         return hashed.compactMap { String(format: "%02x", $0) }.joined()
     }
 }
+
+#if DEBUG
+extension AuthManager {
+    static func previewManager() -> AuthManager {
+        AuthManager(client: nil)
+    }
+}
+#endif

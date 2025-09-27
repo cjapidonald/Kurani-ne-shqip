@@ -261,7 +261,7 @@ struct BoundNoteEditorView: View {
 #if DEBUG
 #Preview {
     let authManager = AuthManager.previewManager()
-    return NoteEditorView(
+    NoteEditorView(
         surah: 1,
         ayah: 1,
         initialText: "",

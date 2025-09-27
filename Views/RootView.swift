@@ -212,7 +212,7 @@ private struct AlbanianReaderTab: View {
     let authManager = AuthManager.previewManager()
     let quranService = MockQuranService()
 
-    return RootView(
+    RootView(
         translationStore: translationStore,
         notesStore: notesStore,
         progressStore: progressStore,

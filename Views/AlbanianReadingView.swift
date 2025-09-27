@@ -205,7 +205,7 @@ struct AlbanianReadingView: View {
     let favoritesStore = FavoritesStore()
     let authManager = AuthManager.previewManager()
 
-    return NavigationStack {
+    NavigationStack {
         AlbanianReadingView(surah: 1, quranService: MockQuranService())
             .environmentObject(translationStore)
             .environmentObject(favoritesStore)
@@ -213,3 +213,4 @@ struct AlbanianReadingView: View {
     }
 }
 #endif
+

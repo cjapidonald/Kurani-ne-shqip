@@ -28,6 +28,11 @@ struct ContentView: View {
 }
 
 #if DEBUG
+extension NotesStore {
+    static func previewStore() -> NotesStore {
+        NotesStore(client: SupabaseClientProvider.client)
+    }
+}
 #Preview {
     let translationStore = TranslationStore.previewStore()
     let notesStore = NotesStore.previewStore()
@@ -36,7 +41,7 @@ struct ContentView: View {
     let authManager = AuthManager.previewManager()
     let quranService = MockQuranService()
 
-    return RootView(
+    RootView(
         translationStore: translationStore,
         notesStore: notesStore,
         progressStore: progressStore,

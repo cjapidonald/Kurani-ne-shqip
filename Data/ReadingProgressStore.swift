@@ -49,3 +49,13 @@ final class ReadingProgressStore: ObservableObject {
         }
     }
 }
+
+#if DEBUG
+extension ReadingProgressStore {
+    static func previewStore() -> ReadingProgressStore {
+        // Use a separate suite to avoid polluting real defaults during previews
+        let defaults = UserDefaults(suiteName: "ReadingProgressStore.preview") ?? .standard
+        return ReadingProgressStore(userDefaults: defaults)
+    }
+}
+#endif
