@@ -11,8 +11,8 @@ enum KuraniTheme {
 extension Color {
     static let kuraniDarkBackground = Color("DarkBackground")
     static let kuraniPrimarySurface = Color("PrimarySurface")
-    static let kuraniPrimaryBrand = Color("Primary")
-    static let kuraniAccentBrand = Color("Accent")
+    static let kuraniPrimaryBrand = Color("BrandPrimary")
+    static let kuraniAccentBrand = Color("BrandAccent")
     static let kuraniAccentLight = Color("AccentLight")
     static let kuraniTextPrimary = Color("TextPrimary")
     static let kuraniTextSecondary = Color("TextSecondary")
