@@ -12,15 +12,11 @@ enum SupabaseClientProvider {
     }()
 
     static let client: SupabaseClient = {
-        guard
-            let urlString = bundle.object(forInfoDictionaryKey: "SUPABASE_URL") as? String,
-            let url = URL(string: urlString)
-        else {
-            fatalError("Missing or invalid SUPABASE_URL in Info.plist")
-        }
-
-        guard let anonKey = bundle.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String, !anonKey.isEmpty else {
-            fatalError("Missing SUPABASE_ANON_KEY in Info.plist")
+        let configuration: (url: URL, anonKey: String)
+        do {
+            configuration = try Secrets.supabaseConfiguration()
+        } catch {
+            fatalError(error.localizedDescription)
         }
 
         let options: SupabaseClientOptions
@@ -30,6 +26,6 @@ enum SupabaseClientProvider {
             options = SupabaseClientOptions()
         }
 
-        return SupabaseClient(supabaseURL: url, supabaseKey: anonKey, options: options)
+        return SupabaseClient(supabaseURL: configuration.url, supabaseKey: configuration.anonKey, options: options)
     }()
 }

@@ -87,11 +87,11 @@ struct AppStartTaskModifier: ViewModifier {
     }
 
     private func checkNetwork() async {
-        let supabaseURL = Bundle.main.object(forInfoDictionaryKey: "SUPABASE_URL") as? String
-        if let supabaseURL {
-            print("[AppStartTask] Supabase URL: \(supabaseURL)")
-        } else {
-            print("[AppStartTask] Supabase URL missing from Info.plist")
+        do {
+            _ = try Secrets.supabaseURL()
+            print("[AppStartTask] Supabase URL configured.")
+        } catch {
+            print("[AppStartTask] Supabase URL configuration error: \(error.localizedDescription)")
         }
 
         let status = await currentNetworkStatus()

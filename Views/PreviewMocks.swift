@@ -4,8 +4,10 @@ import Supabase
 
 struct MockQuranService: QuranServicing {
     private static let previewClient: SupabaseClient? = {
-        guard let url = URL(string: "https://preview.supabase.co") else { return nil }
-        return SupabaseClient(supabaseURL: url, supabaseKey: "preview-key")
+        guard ProcessInfo.processInfo.environment["ENABLE_SUPABASE_PREVIEWS"] == "1" else {
+            return nil
+        }
+        return SupabaseClientProvider.client
     }()
 
     private let service: QuranServicing?
@@ -152,10 +154,7 @@ struct MockQuranService: QuranServicing {
 
 extension NotesStore {
     static func previewStore() -> NotesStore {
-        let url = URL(string: "https://preview.supabase.co")!
-        let client = SupabaseClient(supabaseURL: url, supabaseKey: "preview-key")
-        let store = NotesStore(client: client)
-        return store
+        NotesStore(client: SupabaseClientProvider.client)
     }
 }
 
@@ -171,9 +170,7 @@ extension ReadingProgressStore {
 
 extension AuthManager {
     static func previewManager() -> AuthManager {
-        let url = URL(string: "https://preview.supabase.co")!
-        let client = SupabaseClient(supabaseURL: url, supabaseKey: "preview-key")
-        return AuthManager(client: client)
+        AuthManager(client: SupabaseClientProvider.client)
     }
 }
 
