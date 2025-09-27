@@ -14,32 +14,54 @@ enum Secrets {
             }
         }
     }
+}
 
-    private static let bundle = Bundle.main
+struct SecretsLoader {
+    private let bundle: Bundle
 
-    static func supabaseConfiguration() throws -> (url: URL, anonKey: String) {
+    init(bundle: Bundle = .main) {
+        self.bundle = bundle
+    }
+
+    func supabaseConfiguration() throws -> (url: URL, anonKey: String) {
         let url = try supabaseURL()
         let anonKey = try supabaseAnonKey()
         return (url, anonKey)
     }
 
-    static func supabaseURL() throws -> URL {
+    func supabaseURL() throws -> URL {
         guard let value = bundle.object(forInfoDictionaryKey: "SUPABASE_URL") as? String, !value.isEmpty else {
-            throw SecretsError.missingValue(key: "SUPABASE_URL")
+            throw Secrets.SecretsError.missingValue(key: "SUPABASE_URL")
         }
 
         guard let url = URL(string: value) else {
-            throw SecretsError.invalidURL(key: "SUPABASE_URL")
+            throw Secrets.SecretsError.invalidURL(key: "SUPABASE_URL")
         }
 
         return url
     }
 
-    static func supabaseAnonKey() throws -> String {
+    func supabaseAnonKey() throws -> String {
         guard let value = bundle.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String, !value.isEmpty else {
-            throw SecretsError.missingValue(key: "SUPABASE_ANON_KEY")
+            throw Secrets.SecretsError.missingValue(key: "SUPABASE_ANON_KEY")
         }
 
         return value
+    }
+}
+
+extension Secrets {
+    private static let loader = SecretsLoader()
+
+    static func supabaseConfiguration() throws -> (url: URL, anonKey: String) {
+        try loader.supabaseConfiguration()
+    }
+
+    static func supabaseURL() throws -> URL {
+        try loader.supabaseURL()
+    }
+
+    static func supabaseAnonKey() throws -> String {
+        try loader.supabaseAnonKey()
     }
 }
