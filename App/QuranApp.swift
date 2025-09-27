@@ -27,7 +27,7 @@ struct KuraniApp: App {
                 .environmentObject(favoritesStore)
                 .environmentObject(authManager)
                 .environmentObject(progressStore)
-                .preferredColorScheme(.light)
+                .preferredColorScheme(ColorScheme.light)
                 .task {
                     await translationStore.loadInitialData()
                     await notesStore.observeAuthChanges(authManager: authManager)
