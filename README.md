@@ -97,6 +97,12 @@ Lexuesi i Kuranit nuk përfshin më tekste të ngulitura lokalisht. Metadata, te
 - Gabimi nuk ndikon në funksionimin e aplikacionit; versioni aktual kontrollon automatikisht nëse pajisja mbështet haptikë dhe nuk tenton të prodhojë feedback kur mungon.
 - Për të testuar feedback-un haptik, përdor një pajisje iOS me motor Taptic.
 
+### Gabim: `Unable to get planned build for identifier …`
+
+- Ky mesazh shfaqet kur `xcodebuild test-without-building` ekzekutohet pa një plan ndërtimi ekzistues në `DerivedData`.
+- Përpara se të tërhiqen rezultatet e testimit, duhet të ekzekutohet një hap `build-for-testing` me të njëjtat parametra (`scheme`, `destination`, `derivedDataPath`).
+- Skripti `Scripts/ci-test.sh` kryen automatikisht këto hapa njëri pas tjetrit, duke krijuar planin e nevojshëm dhe duke ekzekutuar testet me një `resultBundle` të ruajtur në `Build/ci-tests.xcresult`.
+
 ## Sjellja e shënimeve
 - Çdo përdorues mund të ruajë **një** shënim për çdo kombinim (sure, ajet).
 - Ruajtja përdor `upsert` në Supabase dhe nuk ekziston asnjë veprim për fshirje.
