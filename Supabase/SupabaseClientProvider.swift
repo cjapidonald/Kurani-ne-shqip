@@ -1,6 +1,20 @@
 import Foundation
 import Supabase
 
+enum SupabaseConfigError: LocalizedError {
+    case missingValue(key: String)
+    case invalidURL(key: String)
+
+    var errorDescription: String? {
+        switch self {
+        case .missingValue(let key):
+            return "Missing configuration value for \(key)."
+        case .invalidURL(let key):
+            return "Invalid URL in configuration for \(key)."
+        }
+    }
+}
+
 final class SupabaseClientProvider {
     static let shared = try! SupabaseClientProvider()
 
@@ -39,7 +53,7 @@ final class SupabaseClientProvider {
         let anonKey = try requireValue(forKey: "SUPABASE_ANON_KEY", in: bundle)
 
         guard let url = URL(string: urlString) else {
-            throw Secrets.SecretsError.invalidURL(key: "SUPABASE_URL")
+            throw SupabaseConfigError.invalidURL(key: "SUPABASE_URL")
         }
 
         return Configuration(url: url, anonKey: anonKey)
@@ -47,7 +61,7 @@ final class SupabaseClientProvider {
 
     private static func requireValue(forKey key: String, in bundle: Bundle) throws -> String {
         guard let value = bundle.object(forInfoDictionaryKey: key) as? String, !value.isEmpty else {
-            throw Secrets.SecretsError.missingValue(key: key)
+            throw SupabaseConfigError.missingValue(key: key)
         }
         return value
     }
@@ -59,3 +73,4 @@ final class SupabaseClientProvider {
         return URL(string: value)
     }
 }
+
