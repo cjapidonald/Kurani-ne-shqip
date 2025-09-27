@@ -19,7 +19,7 @@ struct ContentView: View {
             .environmentObject(favoritesStore)
             .environmentObject(progressStore)
             .environmentObject(authManager)
-            .preferredColorScheme(.light)
+            .preferredColorScheme(ColorScheme.light)
             .task {
                 await translationStore.loadInitialData()
                 await notesStore.observeAuthChanges(authManager: authManager)
