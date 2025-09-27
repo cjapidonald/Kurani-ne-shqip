@@ -12,15 +12,17 @@ final class AuthManager: NSObject, ObservableObject {
     @Published var lastError: Error?
     @Published var emailMagicLinkSent = false
 
-    private let client: SupabaseClient
+    private let client: SupabaseClient?
     private var authStateTask: Task<Void, Never>?
     private var currentNonce: String?
 
-    init(client: SupabaseClient) {
+    init(client: SupabaseClient?) {
         self.client = client
         super.init()
-        authStateTask = Task { await listenForAuthChanges() }
-        Task { await refreshSession() }
+        if let client {
+            authStateTask = Task { await listenForAuthChanges(client: client) }
+            Task { await refreshSession(client: client) }
+        }
     }
 
     deinit {
@@ -39,6 +41,14 @@ final class AuthManager: NSObject, ObservableObject {
         case .failure(let error):
             self.lastError = error
         case .success(let authorization):
+            guard let client else {
+                lastError = NSError(
+                    domain: "Auth",
+                    code: -3,
+                    userInfo: [NSLocalizedDescriptionKey: "Supabase client unavailable in preview mode."]
+                )
+                return
+            }
             guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
             guard let identityToken = appleIDCredential.identityToken,
                   let token = String(data: identityToken, encoding: .utf8) else {
@@ -57,6 +67,14 @@ final class AuthManager: NSObject, ObservableObject {
 
     func sendMagicLink(to email: String) async {
         emailMagicLinkSent = false
+        guard let client else {
+            lastError = NSError(
+                domain: "Auth",
+                code: -2,
+                userInfo: [NSLocalizedDescriptionKey: "Supabase client unavailable in preview mode."]
+            )
+            return
+        }
         do {
             try await client.auth.signInWithOTP(email: email, redirectTo: nil)
             emailMagicLinkSent = true
@@ -66,6 +84,7 @@ final class AuthManager: NSObject, ObservableObject {
     }
 
     func signOut() async {
+        guard let client else { return }
         do {
             try await client.auth.signOut()
             session = nil
@@ -76,7 +95,7 @@ final class AuthManager: NSObject, ObservableObject {
         }
     }
 
-    private func refreshSession() async {
+    private func refreshSession(client: SupabaseClient) async {
         do {
             let session = try await client.auth.session
             self.session = session
@@ -87,7 +106,7 @@ final class AuthManager: NSObject, ObservableObject {
         }
     }
 
-    private func listenForAuthChanges() async {
+    private func listenForAuthChanges(client: SupabaseClient) async {
         for await change in client.auth.authStateChanges {
             switch change.event {
             case .signedIn, .initialSession, .tokenRefreshed:

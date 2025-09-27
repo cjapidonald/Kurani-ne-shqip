@@ -2,7 +2,7 @@ import Foundation
 import Supabase
 
 final class SupabaseClientProvider {
-    static let shared = SupabaseClientProvider()
+    static let shared = try! SupabaseClientProvider()
 
     static var client: SupabaseClient { shared.client }
     static var redirectURL: URL? { shared.redirectURL }
@@ -10,16 +10,11 @@ final class SupabaseClientProvider {
     let client: SupabaseClient
     let redirectURL: URL?
 
-    init(bundle: Bundle = .main, secretsLoader: SecretsLoader? = nil) {
+    init(bundle: Bundle = .main, secretsLoader: SecretsLoader? = nil) throws {
         let loader = secretsLoader ?? SecretsLoader(bundle: bundle)
         redirectURL = SupabaseClientProvider.makeRedirectURL(from: bundle)
 
-        let configuration: (url: URL, anonKey: String)
-        do {
-            configuration = try loader.supabaseConfiguration()
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        let configuration = try loader.supabaseConfiguration()
 
         let options: SupabaseClientOptions
         if let redirectURL {
