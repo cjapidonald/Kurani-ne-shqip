@@ -85,49 +85,8 @@ struct ReaderView: View {
                 ToolbarItem(placement: .principal) {
                     ReaderProgressTitle(title: viewModel.surahTitle, percentage: viewModel.progressPercentageString)
                 }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            isChromeHidden.toggle()
-                        }
-                    } label: {
-                        Image(systemName: isChromeHidden ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                            .foregroundStyle(Color.kuraniAccentLight)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
-
-                    Button {
-                        toggleAlbanian()
-                    } label: {
-                        LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
-
-                    Button {
-                        toggleArabic()
-                    } label: {
-                        LanguageToggleIcon(label: "AR", isActive: showArabicText)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
-                    Button {
-                        viewModel.decreaseFont()
-                    } label: {
-                        FontSizeButtonLabel(action: .decrease)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
-                    Button {
-                        viewModel.increaseFont()
-                    } label: {
-                        FontSizeButtonLabel(action: .increase)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
-                    Button {
-                        openNotesTab()
-                    } label: {
-                        Image(systemName: "note.text")
-                            .foregroundStyle(Color.kuraniAccentLight)
-                    }
-                    .accessibilityLabel(LocalizedStringKey("reader.notesButton"))
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    trailingToolbarButtons
                 }
             }
             .tint(Color.kuraniAccentLight)
@@ -333,6 +292,57 @@ struct ReaderView: View {
         }
         fullscreenHideWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: workItem)
+    }
+
+    @ViewBuilder
+    private var trailingToolbarButtons: some View {
+        HStack(spacing: 12) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isChromeHidden.toggle()
+                }
+            } label: {
+                Image(systemName: isChromeHidden ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                    .foregroundStyle(Color.kuraniAccentLight)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
+
+            Button {
+                toggleAlbanian()
+            } label: {
+                LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
+
+            Button {
+                toggleArabic()
+            } label: {
+                LanguageToggleIcon(label: "AR", isActive: showArabicText)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
+
+            Button {
+                viewModel.decreaseFont()
+            } label: {
+                FontSizeButtonLabel(action: .decrease)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
+
+            Button {
+                viewModel.increaseFont()
+            } label: {
+                FontSizeButtonLabel(action: .increase)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
+
+            Button {
+                openNotesTab()
+            } label: {
+                Image(systemName: "note.text")
+                    .foregroundStyle(Color.kuraniAccentLight)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.notesButton"))
+        }
     }
 }
 
