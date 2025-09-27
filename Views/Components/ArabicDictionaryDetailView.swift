@@ -2,6 +2,12 @@ import SwiftUI
 
 struct ArabicDictionaryDetailView: View {
     let entry: ArabicDictionaryEntry
+    let onAskChatGPT: (() -> Void)?
+
+    init(entry: ArabicDictionaryEntry, onAskChatGPT: (() -> Void)? = nil) {
+        self.entry = entry
+        self.onAskChatGPT = onAskChatGPT
+    }
 
     var body: some View {
         ScrollView {
@@ -39,6 +45,18 @@ struct ArabicDictionaryDetailView: View {
                             .foregroundColor(.kuraniTextSecondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                }
+
+                if let onAskChatGPT {
+                    Button(action: onAskChatGPT) {
+                        HStack {
+                            Image(systemName: "sparkles")
+                            Text(LocalizedStringKey("dictionary.askChatGPT"))
+                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(GradientButtonStyle())
                 }
             }
             .padding(24)

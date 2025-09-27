@@ -143,4 +143,5 @@
 "dictionary.notFound" = "Kjo fjalë nuk gjendet ende në fjalor.";
 "dictionary.meanings" = "Kuptimet";
 "dictionary.notes" = "Shënime";
+"dictionary.askChatGPT" = "Pyet ChatGPT";
 "reader.addToNotes" = "Shto te shënimet";
