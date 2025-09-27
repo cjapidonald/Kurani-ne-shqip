@@ -135,12 +135,56 @@ struct AppStartTaskModifier: ViewModifier {
     private func loadWords() async {
         let service = quranServiceFactory()
         do {
-            _ = try await service.loadTranslationWords(surah: 1, ayah: nil)
+            #if DEBUG
+            let summary = try await translationWordDiagnosticsSummary(service: service)
+            await MainActor.run {
+                showDiagnosticsToast(LocalizedStringKey(stringLiteral: summary))
+            }
+            #else
+            _ = try await translationWordDiagnosticsSummary(service: service)
+            #endif
         } catch {
             await MainActor.run {
                 showDiagnosticsToast(LocalizedStringKey("Failed to load translation words."))
             }
         }
+    }
+
+    private func translationWordDiagnosticsSummary(service: QuranServicing) async throws -> String {
+        let surah1Words = try await service.loadTranslationWords(surah: 1, ayah: nil)
+        let surah1WordCounts = Dictionary(grouping: surah1Words, by: \.ayah).mapValues(\.count)
+        let surah1ExpectedAyahs = Array(1...7)
+        let surah1MissingAyahs = surah1ExpectedAyahs.filter { surah1WordCounts[$0] == nil }
+        let surah1TotalWords = surah1Words.count
+
+        var surah2WordCounts: [Int: Int] = [:]
+        for ayah in 1...5 {
+            let words = try await service.loadTranslationWords(surah: 2, ayah: ayah)
+            if !words.isEmpty {
+                surah2WordCounts[ayah] = words.count
+            }
+        }
+        let surah2TotalWords = surah2WordCounts.values.reduce(0, +)
+        let surah2ExpectedAyahs = Array(1...5)
+        let surah2MissingAyahs = surah2ExpectedAyahs.filter { surah2WordCounts[$0] == nil }
+
+        let missingAyahs = surah1MissingAyahs.map { "1:\($0)" } + surah2MissingAyahs.map { "2:\($0)" }
+        let surah1Summary = "S1 ayahs: \(surah1WordCounts.count)/\(surah1ExpectedAyahs.count) (\(surah1TotalWords) words)"
+        let surah2Summary = "S2 1-5 ayahs: \(surah2WordCounts.count)/\(surah2ExpectedAyahs.count) (\(surah2TotalWords) words)"
+
+        var message = "Translation words loaded. \(surah1Summary); \(surah2Summary)"
+        if !missingAyahs.isEmpty {
+            message += " | Missing: \(missingAyahs.joined(separator: ", "))"
+        }
+
+        // Manual verification SQL:
+        // SELECT surah, ayah, COUNT(*) AS word_count
+        // FROM translation
+        // WHERE surah = 1 OR (surah = 2 AND ayah BETWEEN 1 AND 5)
+        // GROUP BY surah, ayah
+        // ORDER BY surah, ayah;
+
+        return message
     }
 
     private func verifyLocalAlbanianDataset() async {
