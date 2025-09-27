@@ -264,8 +264,8 @@ struct BoundNoteEditorView: View {
     return NoteEditorView(
         surah: 1,
         ayah: 1,
-        initialText: "Lavdi i qoftë Allahut, Zotit të botëve",
-        existingNote: "Kujtesë për falënderim",
+        initialText: "",
+        existingNote: "",
         quranService: MockQuranService()
     )
     .environmentObject(authManager)

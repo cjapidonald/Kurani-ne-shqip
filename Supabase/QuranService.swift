@@ -9,6 +9,7 @@ protocol QuranServicing {
     func isFavorite(surah: Int, ayah: Int) async throws -> Bool
     func toggleFavorite(surah: Int, ayah: Int) async throws
     func loadMyFavouritesView() async throws -> [FavoriteViewRow]
+    func loadArabicDictionary() async throws -> [ArabicDictionaryEntry]
 }
 
 enum QuranServiceError: LocalizedError {
@@ -154,6 +155,19 @@ final class QuranService: QuranServicing {
                 .eq("user_id", value: userId.uuidString)
                 .order("surah", ascending: true)
                 .order("ayah", ascending: true)
+                .execute()
+            return response.value
+        } catch {
+            throw mapSupabaseError(error)
+        }
+    }
+
+    func loadArabicDictionary() async throws -> [ArabicDictionaryEntry] {
+        do {
+            let response: PostgrestResponse<[ArabicDictionaryEntry]> = try await client
+                .from("arabic_dictionary")
+                .select()
+                .order("word", ascending: true)
                 .execute()
             return response.value
         } catch {
