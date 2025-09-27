@@ -1,5 +1,6 @@
 import SwiftUI
 import Network
+import Foundation
 
 struct AppStartTaskModifier: ViewModifier {
     @EnvironmentObject private var authManager: AuthManager
@@ -67,7 +68,7 @@ struct AppStartTaskModifier: ViewModifier {
     private func runInitialChecks() async {
         await checkNetwork()
         await loadWords()
-        await rebuildAyah()
+        await verifyLocalAlbanianDataset()
     }
 
     private func runPostSignInChecks() async {
@@ -142,13 +143,19 @@ struct AppStartTaskModifier: ViewModifier {
         }
     }
 
-    private func rebuildAyah() async {
-        let service = quranServiceFactory()
+    private func verifyLocalAlbanianDataset() async {
         do {
-            _ = try await service.rebuildAlbanianAyah(surah: 1, ayah: 1)
+            let loader = AlbanianQuranLoader()
+            let dataset = try loader.load()
+            let hasIntroAyah = dataset.ayahsBySurah[1]?.contains(where: { $0.number == 1 && !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) ?? false
+            if !hasIntroAyah {
+                await MainActor.run {
+                    showDiagnosticsToast(LocalizedStringKey("Embedded Albanian text appears to be missing."))
+                }
+            }
         } catch {
             await MainActor.run {
-                showDiagnosticsToast(LocalizedStringKey("Failed to rebuild sample ayah."))
+                showDiagnosticsToast(LocalizedStringKey("Failed to load embedded Albanian text."))
             }
         }
     }

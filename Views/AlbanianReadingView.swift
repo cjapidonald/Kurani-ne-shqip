@@ -106,9 +106,10 @@ struct AlbanianReadingView: View {
             let maxAyahFromNotes = notes.map(\.ayah).max() ?? 0
             let finalCount = max(ayahCount, maxAyahFromNotes)
 
+            let localAyahs = await MainActor.run { translationStore.ayahs(for: surah) }
+            let localTextByAyah = Dictionary(uniqueKeysWithValues: localAyahs.map { ($0.number, $0.text) })
             var resolvedTexts: [Int: String] = [:]
             var resolvedNotes: [Int: String] = [:]
-            var missingAyahs: [Int] = []
             let notesByAyah = Dictionary(uniqueKeysWithValues: notes.map { ($0.ayah, $0) })
 
             if finalCount > 0 {
@@ -121,13 +122,12 @@ struct AlbanianReadingView: View {
                             continue
                         }
                     }
-                    missingAyahs.append(ayah)
+                    if let localText = localTextByAyah[ayah], !localText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        resolvedTexts[ayah] = localText
+                    } else {
+                        resolvedTexts[ayah] = ""
+                    }
                 }
-            }
-
-            for ayah in missingAyahs {
-                let rebuilt = try await quranService.rebuildAlbanianAyah(surah: surah, ayah: ayah)
-                resolvedTexts[ayah] = rebuilt
             }
 
             await MainActor.run {

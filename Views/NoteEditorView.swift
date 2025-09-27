@@ -12,6 +12,7 @@ struct NoteEditorView: View {
 
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var authManager: AuthManager
+    @EnvironmentObject private var translationStore: TranslationStore
 
     private let quranService: QuranServicing
 
@@ -150,16 +151,13 @@ private extension NoteEditorView {
     func loadAlbanianTextIfNeeded() async {
         guard albanianText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         await MainActor.run { isLoadingAlbanianText = true }
-        do {
-            let rebuilt = try await quranService.rebuildAlbanianAyah(surah: surah, ayah: ayah)
-            await MainActor.run {
-                albanianText = rebuilt
-                isLoadingAlbanianText = false
-            }
-        } catch {
-            await MainActor.run {
-                isLoadingAlbanianText = false
-                errorMessage = error.localizedDescription
+        await translationStore.loadInitialData()
+        let text = translationStore.ayahs(for: surah).first(where: { $0.number == ayah })?.text ?? ""
+        await MainActor.run {
+            albanianText = text
+            isLoadingAlbanianText = false
+            if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                errorMessage = NSLocalizedString("noteEditor.localTextMissing", comment: "note editor error")
             }
         }
     }
@@ -261,6 +259,7 @@ struct BoundNoteEditorView: View {
 #if DEBUG
 #Preview {
     let authManager = AuthManager.previewManager()
+    let translationStore = TranslationStore.previewStore()
     NoteEditorView(
         surah: 1,
         ayah: 1,
@@ -269,5 +268,6 @@ struct BoundNoteEditorView: View {
         quranService: MockQuranService()
     )
     .environmentObject(authManager)
+    .environmentObject(translationStore)
 }
 #endif

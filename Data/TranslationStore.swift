@@ -7,22 +7,41 @@ final class TranslationStore: ObservableObject {
     @Published private(set) var ayahsBySurah: [Int: [Ayah]] = [:]
 
     private let service: TranslationService
+    private let albanianLoader: AlbanianQuranLoading
     private var arabicAyahsBySurah: [Int: [Int: String]] = [:]
     private var hasLoadedInitialData = false
 
-    init(service: TranslationService = SupabaseTranslationService()) {
+    init(service: TranslationService = SupabaseTranslationService(), albanianLoader: AlbanianQuranLoading = AlbanianQuranLoader()) {
         self.service = service
+        self.albanianLoader = albanianLoader
     }
 
     func loadInitialData() async {
         guard !hasLoadedInitialData else { return }
         hasLoadedInitialData = true
 
+        loadAlbanianText()
+        if !arabicAyahsBySurah.isEmpty {
+            applyArabicTextToLocalDataset()
+        }
+        guard !surahs.isEmpty, !ayahsBySurah.isEmpty else { return }
         await fetchSurahMetadata()
         await fetchArabicText()
-        await fetchTranslations()
 
         if surahs.isEmpty || ayahsBySurah.isEmpty {
+            hasLoadedInitialData = false
+        }
+    }
+
+    private func loadAlbanianText() {
+        do {
+            let dataset = try albanianLoader.load()
+            surahs = dataset.surahs.sorted { $0.number < $1.number }
+            ayahsBySurah = dataset.ayahsBySurah.mapValues { $0.sorted { $0.number < $1.number } }
+        } catch {
+            print("Failed to load local Albanian Quran", error)
+            surahs = []
+            ayahsBySurah = [:]
             hasLoadedInitialData = false
         }
     }
@@ -30,35 +49,23 @@ final class TranslationStore: ObservableObject {
     private func fetchSurahMetadata() async {
         do {
             let metadata = try await service.fetchSurahMetadata()
-            surahs = metadata.sorted { $0.number < $1.number }
+            guard !metadata.isEmpty else { return }
+            let sorted = metadata.sorted { $0.number < $1.number }
+            if sorted != surahs {
+                surahs = sorted
+            }
         } catch {
             print("Failed to load surah metadata", error)
-            hasLoadedInitialData = false
         }
     }
 
     private func fetchArabicText() async {
         do {
             arabicAyahsBySurah = try await service.fetchArabicTextBySurah()
+            applyArabicTextToLocalDataset()
         } catch {
             print("Failed to load Arabic text", error)
             arabicAyahsBySurah = [:]
-            hasLoadedInitialData = false
-        }
-    }
-
-    private func fetchTranslations() async {
-        do {
-            let translations = try await service.fetchAyahsBySurah()
-            var merged: [Int: [Ayah]] = [:]
-            for (surah, ayahs) in translations {
-                let sorted = ayahs.sorted { $0.number < $1.number }
-                merged[surah] = applyArabicTextIfAvailable(to: sorted, surahNumber: surah)
-            }
-            ayahsBySurah = merged
-        } catch {
-            print("Failed to load translation", error)
-            ayahsBySurah = [:]
             hasLoadedInitialData = false
         }
     }
@@ -92,14 +99,17 @@ final class TranslationStore: ObservableObject {
         return indices.prefix(limit).map { allAyahs[$0] }
     }
 
-    private func applyArabicTextIfAvailable(to ayahs: [Ayah], surahNumber: Int) -> [Ayah] {
-        guard let arabicMap = arabicAyahsBySurah[surahNumber] else { return ayahs }
-        return ayahs.map { ayah in
-            var enriched = ayah
-            if enriched.arabicText == nil {
-                enriched.arabicText = arabicMap[ayah.number]
+    private func applyArabicTextToLocalDataset() {
+        guard !arabicAyahsBySurah.isEmpty else { return }
+        for (surahNumber, arabicMap) in arabicAyahsBySurah {
+            guard var ayahs = ayahsBySurah[surahNumber], !ayahs.isEmpty else { continue }
+            for index in ayahs.indices {
+                let ayahNumber = ayahs[index].number
+                if let arabic = arabicMap[ayahNumber], !arabic.isEmpty {
+                    ayahs[index].arabicText = arabic
+                }
             }
-            return enriched
+            ayahsBySurah[surahNumber] = ayahs
         }
     }
 }
@@ -137,17 +147,21 @@ extension TranslationStore {
         }()
     }
 
+    private struct PreviewAlbanianLoader: AlbanianQuranLoading {
+        func load() throws -> (surahs: [Surah], ayahsBySurah: [Int: [Ayah]]) {
+            (PreviewData.surahs, PreviewData.albanianAyahs)
+        }
+    }
+
     private final class PreviewTranslationService: TranslationService {
         func fetchSurahMetadata() async throws -> [Surah] { PreviewData.surahs }
-
-        func fetchAyahsBySurah() async throws -> [Int: [Ayah]] { PreviewData.albanianAyahs }
 
         func fetchArabicTextBySurah() async throws -> [Int: [Int: String]] { PreviewData.arabicTexts }
     }
 
     static func previewStore(preload: Bool = true) -> TranslationStore {
         let service = PreviewTranslationService()
-        let store = TranslationStore(service: service)
+        let store = TranslationStore(service: service, albanianLoader: PreviewAlbanianLoader())
 
         if preload {
             store.surahs = PreviewData.surahs

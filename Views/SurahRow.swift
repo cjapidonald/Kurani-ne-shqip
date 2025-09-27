@@ -20,6 +20,9 @@ struct SurahRow: View {
                 Text("\(surah.ayahCount) \(NSLocalizedString("library.ayahs", comment: ""))")
                     .font(KuraniFont.forTextStyle(.caption))
                     .foregroundColor(.kuraniTextSecondary)
+                Text(String(format: NSLocalizedString("library.progress", comment: "progress"), percentageString))
+                    .font(KuraniFont.forTextStyle(.caption2))
+                    .foregroundColor(.kuraniAccentLight)
             }
             Spacer()
             ProgressBadge(percentage: percentageString)
