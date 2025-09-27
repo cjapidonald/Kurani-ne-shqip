@@ -1,15 +1,21 @@
 import Foundation
 import Supabase
 
-final class SupabaseClientProvider {
-    static let shared = SupabaseClientProvider()
-
-    let client: SupabaseClient
-
-    private init() {
+enum SupabaseClientProvider {
+    static let client: SupabaseClient = {
         let bundle = Bundle.main
-        let urlString = bundle.object(forInfoDictionaryKey: "SUPABASE_URL") as? String ?? "https://example.supabase.co"
-        let anonKey = bundle.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String ?? ""
-        client = SupabaseClient(supabaseURL: URL(string: urlString)!, supabaseKey: anonKey)
-    }
+
+        guard
+            let urlString = bundle.object(forInfoDictionaryKey: "SUPABASE_URL") as? String,
+            let url = URL(string: urlString)
+        else {
+            fatalError("Missing or invalid SUPABASE_URL in Info.plist")
+        }
+
+        guard let anonKey = bundle.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String, !anonKey.isEmpty else {
+            fatalError("Missing SUPABASE_ANON_KEY in Info.plist")
+        }
+
+        return SupabaseClient(supabaseURL: url, supabaseKey: anonKey)
+    }()
 }

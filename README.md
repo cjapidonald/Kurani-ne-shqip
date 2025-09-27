@@ -14,10 +14,18 @@ Kurani është një aplikacion SwiftUI për iOS 17 që ofron një përvojë lexi
   aplikacionin.
 
 ## Konfigurimi i Supabase
-1. **Krijo projektin Supabase** dhe shto paketën [`supabase-swift`](https://github.com/supabase-community/supabase-swift) në projekt nëpërmjet Swift Package Manager.
+1. **Krijo projektin Supabase** dhe shto paketën [`supabase-swift`](https://github.com/supabase-community/supabase-swift) në projekt nëpërmjet Swift Package Manager (File > Add Packages… > paste URL-në).
 2. Kopjo skedarin `Config.xcconfig` në projekt dhe lidhe me target-in kryesor.
-   - Plotëso `SUPABASE_URL` dhe `SUPABASE_ANON_KEY` me kredencialet nga Supabase.
-3. Në Supabase SQL Editor ekzekuto skriptin në vijim për të krijuar tabelën e shënimeve dhe politikat e RLS:
+   - Ruaj aty vlerat për `SUPABASE_URL` dhe `SUPABASE_ANON_KEY` për të shmangur përfshirjen e sekreteve në kontrollin e versioneve.
+   - Alternativisht, përdor `xcconfig` ose `User-Defined Setting` në *Build Settings* me `SUPABASE_URL` dhe `SUPABASE_ANON_KEY` të vendosura vetëm në ambientin lokal/CI.
+3. Shto çelësat në `Info.plist` duke përdorur variablat e konfigurimit në vijim:
+   ```xml
+   <key>SUPABASE_URL</key>
+   <string>$(SUPABASE_URL)</string>
+   <key>SUPABASE_ANON_KEY</key>
+   <string>$(SUPABASE_ANON_KEY)</string>
+   ```
+4. Në Supabase SQL Editor ekzekuto skriptin në vijim për të krijuar tabelën e shënimeve dhe politikat e RLS:
    ```sql
    create table if not exists public.notes (
      id uuid primary key default gen_random_uuid(),
@@ -44,8 +52,7 @@ Kurani është një aplikacion SwiftUI për iOS 17 që ofron një përvojë lexi
    using ( auth.uid() = user_id )
    with check ( auth.uid() = user_id );
    ```
-4. Aktivizo ofruesit e autentikimit në Supabase: **Sign in with Apple** dhe **Email (magic link)**. Në panelin e Supabase > Authentication sigurohu që Apple Sign-In të ketë domain dhe redirect URL të konfiguruar sipas udhëzimeve.
-5. Në Xcode, importo `Config.xcconfig` dhe konfiguro target-in për të lexuar çelësat e Supabase në Info.plist.
+5. Aktivizo ofruesit e autentikimit në Supabase: **Sign in with Apple** dhe **Email (magic link)**. Në panelin e Supabase > Authentication sigurohu që Apple Sign-In të ketë domain dhe redirect URL të konfiguruar sipas udhëzimeve.
 6. Përditëso Info.plist:
    - `CFBundleDevelopmentRegion = sq`
    - `CFBundleDisplayName = Kurani`
