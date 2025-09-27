@@ -85,55 +85,6 @@ struct ReaderView: View {
                 ToolbarItem(placement: .principal) {
                     ReaderProgressTitle(title: viewModel.surahTitle, percentage: viewModel.progressPercentageString)
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack(spacing: 12) {
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                isChromeHidden.toggle()
-                            }
-                        } label: {
-                            Image(systemName: isChromeHidden ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                                .foregroundStyle(Color.kuraniAccentLight)
-                        }
-                        .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
-
-                        Button {
-                            toggleAlbanian()
-                        } label: {
-                            LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
-                        }
-                        .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
-
-                        Button {
-                            toggleArabic()
-                        } label: {
-                            LanguageToggleIcon(label: "AR", isActive: showArabicText)
-                        }
-                        .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
-
-                        Button {
-                            viewModel.decreaseFont()
-                        } label: {
-                            FontSizeButtonLabel(action: .decrease)
-                        }
-                        .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
-
-                        Button {
-                            viewModel.increaseFont()
-                        } label: {
-                            FontSizeButtonLabel(action: .increase)
-                        }
-                        .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
-
-                        Button {
-                            openNotesTab()
-                        } label: {
-                            Image(systemName: "note.text")
-                                .foregroundStyle(Color.kuraniAccentLight)
-                        }
-                        .accessibilityLabel(LocalizedStringKey("reader.notesButton"))
-                    }
-                }
             }
             .tint(Color.kuraniAccentLight)
             .toolbar(isChromeHidden ? .hidden : .visible, for: .navigationBar)
@@ -193,6 +144,26 @@ struct ReaderView: View {
                     if showToast, let toastMessage = viewModel.toast {
                         ToastView(message: toastMessage)
                             .transition(.move(edge: .top).combined(with: .opacity))
+                    }
+
+                    if !isChromeHidden {
+                        HStack {
+                            Spacer()
+                            ReaderToolbarControls(
+                                isChromeHidden: isChromeHidden,
+                                showAlbanianText: showAlbanianText,
+                                showArabicText: showArabicText,
+                                onToggleChrome: toggleChrome,
+                                onToggleAlbanian: toggleAlbanian,
+                                onToggleArabic: toggleArabic,
+                                onDecreaseFont: viewModel.decreaseFont,
+                                onIncreaseFont: viewModel.increaseFont,
+                                onOpenNotes: openNotesTab
+                            )
+                            .padding(.horizontal, 8)
+                        }
+                        .padding(.horizontal, 16)
+                        .transition(.move(edge: .top).combined(with: .opacity))
                     }
 
                     if isChromeHidden, fullscreenControlsVisible {
@@ -307,6 +278,12 @@ struct ReaderView: View {
         }
     }
 
+    private func toggleChrome() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            isChromeHidden.toggle()
+        }
+    }
+
     private func formattedText(for ayah: Ayah) -> String {
         "\(viewModel.surahTitle) \(ayah.number): \(ayah.text)"
     }
@@ -371,6 +348,58 @@ private struct LanguageToggleIcon: View {
                 .foregroundStyle(isActive ? Color.kuraniDarkBackground : Color.kuraniAccentLight)
         }
         .frame(width: 30, height: 30)
+    }
+}
+
+private struct ReaderToolbarControls: View {
+    let isChromeHidden: Bool
+    let showAlbanianText: Bool
+    let showArabicText: Bool
+    let onToggleChrome: () -> Void
+    let onToggleAlbanian: () -> Void
+    let onToggleArabic: () -> Void
+    let onDecreaseFont: () -> Void
+    let onIncreaseFont: () -> Void
+    let onOpenNotes: () -> Void
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Button(action: onToggleChrome) {
+                Image(systemName: isChromeHidden ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                    .foregroundStyle(Color.kuraniAccentLight)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.toggleChrome"))
+
+            Button(action: onToggleAlbanian) {
+                LanguageToggleIcon(label: "AL", isActive: showAlbanianText)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.toggleAlbanian"))
+
+            Button(action: onToggleArabic) {
+                LanguageToggleIcon(label: "AR", isActive: showArabicText)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.toggleArabic"))
+
+            Button(action: onDecreaseFont) {
+                FontSizeButtonLabel(action: .decrease)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.font.decrease"))
+
+            Button(action: onIncreaseFont) {
+                FontSizeButtonLabel(action: .increase)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.font.increase"))
+
+            Button(action: onOpenNotes) {
+                Image(systemName: "note.text")
+                    .foregroundStyle(Color.kuraniAccentLight)
+            }
+            .accessibilityLabel(LocalizedStringKey("reader.notesButton"))
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(.ultraThinMaterial, in: Capsule())
+        .buttonStyle(.plain)
     }
 }
 
