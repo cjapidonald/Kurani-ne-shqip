@@ -92,7 +92,7 @@ struct ArabicReadingView: View {
             }
             .navigationDestination(item: $noteRoute) { route in
                 let ayahModel = ayahModel(for: route.id)
-                NoteEditorView(
+                BoundNoteEditorView(
                     ayah: ayahModel,
                     draft: $noteDraft,
                     isSaving: isSavingNote,
