@@ -8,6 +8,9 @@ struct AppStartTaskModifier: ViewModifier {
     @State private var hasRunInitialChecks = false
     @State private var hasCompletedPostSignInChecks = false
     @State private var isPresentingSignIn = false
+    @State private var diagnosticsMessage: LocalizedStringKey?
+    @State private var isDiagnosticsToastVisible = false
+    @State private var diagnosticsDismissTask: Task<Void, Never>?
 
     init(quranServiceFactory: @escaping () -> QuranServicing = { QuranService() }) {
         self.quranServiceFactory = quranServiceFactory
@@ -52,6 +55,13 @@ struct AppStartTaskModifier: ViewModifier {
                 SignInPromptView()
                     .environmentObject(authManager)
             }
+            .overlay(alignment: .top) {
+                if isDiagnosticsToastVisible, let diagnosticsMessage {
+                    ToastView(message: diagnosticsMessage)
+                        .padding(.top, 60)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+            }
     }
 
     private func runInitialChecks() async {
@@ -62,71 +72,84 @@ struct AppStartTaskModifier: ViewModifier {
 
     private func runPostSignInChecks() async {
         let service = quranServiceFactory()
+        var encounteredError = false
 
         do {
-            let timestamp = ISO8601DateFormatter().string(from: Date())
-            try await service.upsertMyNote(
-                surah: 1,
-                ayah: 1,
-                albanianText: "AppStartTask",
-                note: "Temporary note created at \(timestamp)"
-            )
-            print("[AppStartTask] upsertMyNote succeeded for surah 1 ayah 1")
+            _ = try await service.getMyNotesForSurah(surah: 1)
         } catch {
-            print("[AppStartTask] upsertMyNote failed: \(error.localizedDescription)")
+            encounteredError = true
+            await MainActor.run {
+                showDiagnosticsToast(LocalizedStringKey("Unable to verify note access."))
+            }
         }
 
         do {
-            let wasFavorite = try await service.isFavorite(surah: 1, ayah: 1)
-            try await service.toggleFavorite(surah: 1, ayah: 1)
-            let isFavoriteNow = try await service.isFavorite(surah: 1, ayah: 1)
-            print("[AppStartTask] toggleFavorite changed from \(wasFavorite) to \(isFavoriteNow) for surah 1 ayah 1")
+            _ = try await service.isFavorite(surah: 1, ayah: 1)
         } catch {
-            print("[AppStartTask] toggleFavorite failed: \(error.localizedDescription)")
+            encounteredError = true
+            await MainActor.run {
+                showDiagnosticsToast(LocalizedStringKey("Unable to verify favourite access."))
+            }
+        }
+
+        if !encounteredError {
+            await MainActor.run {
+                showDiagnosticsToast(LocalizedStringKey("Post sign-in checks completed."))
+            }
         }
     }
 
     private func checkNetwork() async {
+        var configurationValid = false
         do {
             _ = try Secrets.supabaseURL()
-            print("[AppStartTask] Supabase URL configured.")
+            configurationValid = true
         } catch {
-            print("[AppStartTask] Supabase URL configuration error: \(error.localizedDescription)")
+            configurationValid = false
         }
 
         let status = await currentNetworkStatus()
-        let description: String
-        switch status {
-        case .satisfied:
-            description = "satisfied"
-        case .unsatisfied:
-            description = "unsatisfied"
-        case .requiresConnection:
-            description = "requiresConnection"
-        @unknown default:
-            description = "unknown"
+        let message: LocalizedStringKey
+
+        if !configurationValid {
+            message = LocalizedStringKey("Supabase configuration could not be loaded.")
+        } else {
+            switch status {
+            case .satisfied:
+                message = LocalizedStringKey("Startup connectivity checks passed.")
+            case .unsatisfied:
+                message = LocalizedStringKey("Network check failed: connection unavailable.")
+            case .requiresConnection:
+                message = LocalizedStringKey("Network check requires additional connection.")
+            @unknown default:
+                message = LocalizedStringKey("Network check returned an unknown status.")
+            }
         }
-        print("[AppStartTask] Network status: \(description)")
+
+        await MainActor.run {
+            showDiagnosticsToast(message)
+        }
     }
 
     private func loadWords() async {
         let service = quranServiceFactory()
         do {
-            let words = try await service.loadTranslationWords(surah: 1, ayah: nil)
-            let firstWords = words.prefix(5).map(\.albanianWord)
-            print("[AppStartTask] First 5 words for surah 1: \(firstWords.joined(separator: ", "))")
+            _ = try await service.loadTranslationWords(surah: 1, ayah: nil)
         } catch {
-            print("[AppStartTask] Failed to load translation words: \(error.localizedDescription)")
+            await MainActor.run {
+                showDiagnosticsToast(LocalizedStringKey("Failed to load translation words."))
+            }
         }
     }
 
     private func rebuildAyah() async {
         let service = quranServiceFactory()
         do {
-            let rebuilt = try await service.rebuildAlbanianAyah(surah: 1, ayah: 1)
-            print("[AppStartTask] rebuildAlbanianAyah result: \(rebuilt)")
+            _ = try await service.rebuildAlbanianAyah(surah: 1, ayah: 1)
         } catch {
-            print("[AppStartTask] rebuildAlbanianAyah failed: \(error.localizedDescription)")
+            await MainActor.run {
+                showDiagnosticsToast(LocalizedStringKey("Failed to rebuild sample ayah."))
+            }
         }
     }
 
@@ -144,6 +167,27 @@ struct AppStartTaskModifier: ViewModifier {
             }
 
             monitor.start(queue: queue)
+        }
+    }
+}
+
+private extension AppStartTaskModifier {
+    @MainActor
+    private func showDiagnosticsToast(_ message: LocalizedStringKey) {
+        diagnosticsDismissTask?.cancel()
+        diagnosticsMessage = message
+        withAnimation {
+            isDiagnosticsToastVisible = true
+        }
+
+        diagnosticsDismissTask = Task {
+            try? await Task.sleep(nanoseconds: 2_500_000_000)
+            await MainActor.run {
+                withAnimation {
+                    isDiagnosticsToastVisible = false
+                }
+                diagnosticsMessage = nil
+            }
         }
     }
 }
