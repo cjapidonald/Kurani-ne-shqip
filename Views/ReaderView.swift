@@ -120,7 +120,9 @@ struct ReaderView: View {
             ShareSheet(items: [shareText])
         }
         .sheet(item: $selectedDictionaryEntry) { entry in
-            ArabicDictionaryDetailView(entry: entry)
+            ArabicDictionaryDetailView(entry: entry) {
+                askChatGPT(aboutWord: entry.word)
+            }
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
@@ -234,6 +236,15 @@ struct ReaderView: View {
 
     private func askChatGPT(about ayah: Ayah) {
         let prompt = "Më trego më shumë rreth sures \(viewModel.surahTitle), ajeti \(ayah.number). Teksti: \(ayah.text)"
+        openChatGPT(with: prompt)
+    }
+
+    private func askChatGPT(aboutWord word: String) {
+        let prompt = "Përshëndetje! Më trego më shumë për kuptimin e fjalës \"\(word)\" në arabisht."
+        openChatGPT(with: prompt)
+    }
+
+    private func openChatGPT(with prompt: String) {
         guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         guard let url = URL(string: "https://chat.openai.com/?q=\(encodedPrompt)") else { return }
         openURL(url)
